@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -7,15 +10,27 @@ namespace BPA_Tank_Racer_Game
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
+    /// 
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Screen currentScreen;
+        MenuScreen menuScreen;
+
+        public int WindowWidth = 800;
+        public int WindowHeight = 480;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            this.IsMouseVisible = true;
+
+            graphics.PreferredBackBufferWidth = WindowWidth;
+            graphics.PreferredBackBufferHeight = WindowHeight;
+
+            graphics.ApplyChanges();
         }
 
         /// <summary>
@@ -40,7 +55,9 @@ namespace BPA_Tank_Racer_Game
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            menuScreen = new MenuScreen(Content, new EventHandler(MenuScreenEvent));
+
+            currentScreen = menuScreen;
         }
 
         /// <summary>
@@ -59,13 +76,14 @@ namespace BPA_Tank_Racer_Game
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
             // TODO: Add your update logic here
 
             base.Update(gameTime);
         }
+
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -78,6 +96,11 @@ namespace BPA_Tank_Racer_Game
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
+        }
+
+        private void MenuScreenEvent(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
