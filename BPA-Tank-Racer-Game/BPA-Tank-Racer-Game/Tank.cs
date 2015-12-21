@@ -31,9 +31,12 @@ namespace BPA_Tank_Racer_Game
     {
         TankBaseType baseType;
         TankGunType gunType;
+
+        private Texture2D bulletTexture;
+        private BulletHandler bulletHandler;
         
-        TankBase tankBase;
-        TankGun tankGun;
+        private TankBase tankBase;
+        private TankGun tankGun;
 
         public Vector2 position;
         public Vector2 velocity;
@@ -47,6 +50,9 @@ namespace BPA_Tank_Racer_Game
         {
             this.baseType = baseType;
             this.gunType = gunType;
+
+            bulletTexture = content.Load<Texture2D>("Bullet");
+            bulletHandler = new BulletHandler();
 
             //Assign base
             if (baseType == TankBaseType.basic)
@@ -63,13 +69,25 @@ namespace BPA_Tank_Racer_Game
 
         public virtual void Update()
         {
+            tankBase.position = position;
+            tankBase.rotation = rotation;
+            tankGun.position = position;
+            tankGun.rotation = gunRotation;
 
+            bulletHandler.Update();
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            bulletHandler.Draw(spriteBatch);
             tankBase.Draw(spriteBatch);
             tankGun.Draw(spriteBatch);
+        }
+
+        public void Shoot()
+        {
+            Vector2 bulletVelocity = new Vector2((float)Math.Sin(gunRotation) * 7, (float)Math.Cos(gunRotation) * -7);
+            bulletHandler.NewBullet(new Bullet(bulletTexture, bulletVelocity, position, gunRotation));
         }
     }
 }

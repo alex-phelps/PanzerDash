@@ -106,7 +106,7 @@ namespace BPA_Tank_Racer_Game
         {
             if (menuScreen.selectedButton == 0)
             {
-
+                currentScreen = new GameScreen(Content, new EventHandler(GameScreenEvent));
             }
             else if (menuScreen.selectedButton == 1)
             {
@@ -125,6 +125,11 @@ namespace BPA_Tank_Racer_Game
 
             }
             else Environment.Exit(0);
+        }
+
+        private void GameScreenEvent(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
