@@ -10,7 +10,6 @@ namespace BPA_Tank_Racer_Game
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    /// 
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -18,8 +17,8 @@ namespace BPA_Tank_Racer_Game
         Screen currentScreen;
         MenuScreen menuScreen;
 
-        public int WindowWidth = 800;
-        public int WindowHeight = 480;
+        public static int WindowWidth = 800;
+        public static int WindowHeight = 480;
 
         public Game1()
         {
@@ -41,7 +40,7 @@ namespace BPA_Tank_Racer_Game
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+
 
             base.Initialize();
         }
@@ -66,7 +65,6 @@ namespace BPA_Tank_Racer_Game
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
 
         /// <summary>
@@ -76,10 +74,8 @@ namespace BPA_Tank_Racer_Game
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            // TODO: Add your update logic here
+            //Update the current screen
+            currentScreen.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -91,16 +87,44 @@ namespace BPA_Tank_Racer_Game
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            //Temp background color
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            //Begin Spritebatch
+            spriteBatch.Begin();
+
+            //Draw the current screen
+            currentScreen.Draw(spriteBatch);
+
+            //End Spritebatch
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
 
         private void MenuScreenEvent(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            if (menuScreen.selectedButton == 0)
+            {
+
+            }
+            else if (menuScreen.selectedButton == 1)
+            {
+
+            }
+            else if (menuScreen.selectedButton == 2)
+            {
+
+            }
+            else if (menuScreen.selectedButton == 3)
+            {
+
+            }
+            else if (menuScreen.selectedButton == 4)
+            {
+
+            }
+            else Environment.Exit(0);
         }
     }
 }
