@@ -61,6 +61,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\basicTankBase.png" />
+    <Content Include="Content\basicTankGun.png" />
+    <Content Include="Content\Bullet.png" />
+    <Content Include="Content\CareerMode-Selected.png" />
+    <Content Include="Content\CareerMode.png" />
+    <Content Include="Content\FreeMode-Selected.png" />
+    <Content Include="Content\FreeMode.png" />
+    <Content Include="Content\Logo.png" />
+    <Content Include="Content\Options-Selected.png" />
+    <Content Include="Content\Options.png" />
+    <Content Include="Content\PlayNow-Selected.png" />
+    <Content Include="Content\PlayNow.png" />
+    <Content Include="Content\Quit-Selected.png" />
+    <Content Include="Content\Quit.png" />
+    <Content Include="Content\TempBackground.png" />
+    <Content Include="Content\Tutorial-Selected.png" />
+    <Content Include="Content\Tutorial.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
