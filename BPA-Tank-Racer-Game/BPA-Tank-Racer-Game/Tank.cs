@@ -38,6 +38,8 @@ namespace BPA_Tank_Racer_Game
         private TankBase tankBase;
         private TankGun tankGun;
 
+        private  TimeSpan oldTime;
+
         public Vector2 position;
         public Vector2 velocity;
         public float speed;
@@ -45,6 +47,9 @@ namespace BPA_Tank_Racer_Game
         public float maxSpeed;
         public float rotation;
         public float gunRotation;
+
+        public int baseCooldown;
+        public int currentCooldown;
 
         public Tank(ContentManager content, TankBaseType baseType, TankGunType gunType)
         {
@@ -55,24 +60,42 @@ namespace BPA_Tank_Racer_Game
             bulletHandler = new BulletHandler();
 
             //Assign base
-            if (baseType == TankBaseType.basic)
+            if (baseType == TankBaseType.basic) //Temp; Basic
+            {
+                tankBase = new TankBase(content.Load<Texture2D>("basicTankBase"));
+            }
+            else //Basic
             {
                 tankBase = new TankBase(content.Load<Texture2D>("basicTankBase"));
             }
 
             //Assign gun
-            if (gunType == TankGunType.basic)
+            if (gunType == TankGunType.basic) //Temp; Basic
             {
                 tankGun = new TankGun(content.Load<Texture2D>("basicTankGun"));
+
+                baseCooldown = 5;
+            }
+            else //Basic
+            {
+                tankGun = new TankGun(content.Load<Texture2D>("basicTankGun"));
+
+                baseCooldown = 5;
             }
         }
 
-        public virtual void Update()
+        public virtual void Update(GameTime gametime)
         {
             tankBase.position = position;
             tankBase.rotation = rotation;
             tankGun.position = position;
             tankGun.rotation = gunRotation;
+            
+            if (currentCooldown != 0 && gametime.TotalGameTime.TotalSeconds - 1 >= oldTime.TotalSeconds)
+            {
+                currentCooldown--;
+                oldTime = gametime.TotalGameTime;
+            }
 
             bulletHandler.Update();
         }
@@ -86,8 +109,13 @@ namespace BPA_Tank_Racer_Game
 
         public void Shoot()
         {
-            Vector2 bulletVelocity = new Vector2((float)Math.Sin(gunRotation) * 7, (float)Math.Cos(gunRotation) * -7);
-            bulletHandler.NewBullet(new Bullet(bulletTexture, bulletVelocity, position, gunRotation));
+            if (currentCooldown == 0)
+            {
+                Vector2 bulletVelocity = new Vector2((float)Math.Sin(gunRotation) * 7, (float)Math.Cos(gunRotation) * -7);
+                bulletHandler.NewBullet(new Bullet(bulletTexture, bulletVelocity, position, gunRotation));
+
+                currentCooldown = baseCooldown;
+            }
         }
     }
 }

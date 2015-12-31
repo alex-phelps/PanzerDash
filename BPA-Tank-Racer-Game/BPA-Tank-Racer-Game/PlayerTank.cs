@@ -21,7 +21,7 @@ namespace BPA_Tank_Racer_Game
             maxSpeed = 2;
         }
 
-        public override void Update()
+        public override void Update(GameTime gametime)
         {
 
             KeyboardState newState = Keyboard.GetState();
@@ -51,18 +51,18 @@ namespace BPA_Tank_Racer_Game
             }
             if (newState.IsKeyDown(Keys.Left))
             {
-                gunRotation -= 0.03f;
+                gunRotation -= 0.04f;
             }
             if (newState.IsKeyDown(Keys.Right))
             {
-                gunRotation += 0.03f;
+                gunRotation += 0.04f;
             }
             if (newState.IsKeyUp(Keys.W) && newState.IsKeyUp(Keys.S))
             {
-                if (speed < -0.02f) // Not 0 here to fix any rounding errors
-                    speed += 2 * 0.12f;
-                else if (speed > 0.02f) //Not 0 here to fix any rounding errors
-                    speed -= 2 * 0.12f;
+                if (speed < -0.025f) // Not 0 here to fix any rounding errors
+                    speed += 0.25f;
+                else if (speed > 0.025f) //Not 0 here to fix any rounding errors
+                    speed -= 0.25f;
                 else speed = 0;
             }
 
@@ -75,7 +75,8 @@ namespace BPA_Tank_Racer_Game
             velocity.Y = (float)Math.Cos(rotation) * -speed;
 
             oldState = newState;
-            base.Update();
+
+            base.Update(gametime);
         }
     }
 }

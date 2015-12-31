@@ -12,12 +12,6 @@ namespace BPA_Tank_Racer_Game
         public TankBase(Texture2D texture) 
             : base(texture)
         {
-
-        }
-
-        public override void Update()
-        {
-
         }
     }
 }

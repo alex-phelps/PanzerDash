@@ -66,6 +66,7 @@
     <Content Include="Content\Bullet.png" />
     <Content Include="Content\CareerMode-Selected.png" />
     <Content Include="Content\CareerMode.png" />
+    <Content Include="Content\CooldownBar.png" />
     <Content Include="Content\FreeMode-Selected.png" />
     <Content Include="Content\FreeMode.png" />
     <Content Include="Content\Logo.png" />

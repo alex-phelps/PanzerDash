@@ -90,10 +90,10 @@ namespace BPA_Tank_Racer_Game
         {
         }
 
-        public virtual void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spritebatch)
         {
             Rectangle source = new Rectangle(0, 0, Width, Height);
-            spriteBatch.Draw(texture, position, source, Color.White, rotation,
+            spritebatch.Draw(texture, position, source, Color.White, rotation,
                 new Vector2(Width / 2, Height / 2), scale, SpriteEffects.None, 1);
         }
     }
