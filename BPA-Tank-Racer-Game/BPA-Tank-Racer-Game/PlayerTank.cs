@@ -44,10 +44,12 @@ namespace BPA_Tank_Racer_Game
             if (newState.IsKeyDown(Keys.A))
             {
                 rotation -= 0.05f;
+                gunRotation -= 0.05f;
             }
             if (newState.IsKeyDown(Keys.D))
             {
                 rotation += 0.05f;
+                gunRotation += 0.05f;
             }
             if (newState.IsKeyDown(Keys.Left))
             {
