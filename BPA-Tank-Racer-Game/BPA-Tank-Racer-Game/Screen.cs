@@ -12,6 +12,7 @@ namespace BPA_Tank_Racer_Game
     /// </summary>
     public class Screen
     {
+
         protected EventHandler screenEvent;
 
         public Screen(EventHandler screenEvent)

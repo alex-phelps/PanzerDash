@@ -44,6 +44,8 @@ namespace BPA_Tank_Racer_Game
         public MenuScreen(ContentManager content, EventHandler screenEvent)
             : base(screenEvent)
         {
+            //Load all title text images
+
             logo = content.Load<Texture2D>("Logo");
 
             playNowButtonDefault = content.Load<Texture2D>("PlayNow");
@@ -67,6 +69,7 @@ namespace BPA_Tank_Racer_Game
             optionsButton = optionsButtonDefault;
             quitButton = quitButtonDefault;
 
+            //Default selected button
             selectedButton = 0;
         }
 
