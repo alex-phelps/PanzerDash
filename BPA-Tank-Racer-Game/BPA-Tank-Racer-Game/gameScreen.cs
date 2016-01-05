@@ -31,7 +31,15 @@ namespace BPA_Tank_Racer_Game
         public override void Update(GameTime gametime)
         {
             playerTank.Update(gametime);
-            background.position -= playerTank.velocity;
+
+            if (Game1.IntersectColor(playerTank, background, new Color(0, 0, 0)))
+            {
+                playerTank.speed = 0;
+            }
+            else
+            {
+                background.position -= playerTank.velocity;
+            }
 
             base.Update(gametime);
         }

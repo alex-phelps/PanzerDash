@@ -12,7 +12,7 @@ namespace BPA_Tank_Racer_Game
     /// </summary>
     public class GameObject
     {
-        public Texture2D texture { get; private set; }
+        public Texture2D texture { get; protected set; }
         public Vector2 position;
         public float rotation = 0;
         public float scale = 1;
@@ -77,7 +77,7 @@ namespace BPA_Tank_Racer_Game
         public GameObject(Texture2D texture)
         {
             this.texture = texture;
-
+            
             Width = texture.Width;
             Height = texture.Height;
             position = new Vector2(0, 0);
@@ -86,7 +86,7 @@ namespace BPA_Tank_Racer_Game
             texture.GetData(colorData);
         }
 
-        public virtual void Update()
+        public virtual void Update(GameTime gameTime)
         {
         }
 

@@ -19,7 +19,7 @@ namespace BPA_Tank_Racer_Game
             this.rotation = rotation;
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             position += velocity;
         }

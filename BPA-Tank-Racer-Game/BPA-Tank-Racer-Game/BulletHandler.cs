@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace BPA_Tank_Racer_Game
@@ -20,11 +21,11 @@ namespace BPA_Tank_Racer_Game
             bullets.Add(bullet);
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             foreach (Bullet bullet in bullets)
             {
-                bullet.Update();
+                bullet.Update(gameTime);
             }
         }
 

@@ -78,6 +78,8 @@
     <Content Include="Content\Quit.png" />
     <Content Include="Content\TempBackground.png" />
     <Content Include="Content\Tiles\grassTile.png" />
+    <Content Include="Content\Tiles\mountainCornerInTile.png" />
+    <Content Include="Content\Tiles\mountainCornerTile.png" />
     <Content Include="Content\Tiles\mountainEdgeTile.png" />
     <Content Include="Content\Tiles\mountainFlatTile.png" />
     <Content Include="Content\Tutorial-Selected.png" />

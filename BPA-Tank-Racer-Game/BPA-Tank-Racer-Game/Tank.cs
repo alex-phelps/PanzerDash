@@ -27,7 +27,7 @@ namespace BPA_Tank_Racer_Game
     /// <summary>
     /// Base class for a tank
     /// </summary>
-    public class Tank
+    public class Tank : GameObject
     {
         TankBaseType baseType;
         TankGunType gunType;
@@ -40,18 +40,17 @@ namespace BPA_Tank_Racer_Game
 
         private  TimeSpan oldTime;
 
-        public Vector2 position;
         public Vector2 velocity;
         public float speed;
         public float accel;
         public float maxSpeed;
-        public float rotation;
         public float gunRotation;
 
         public int baseCooldown;
         public int currentCooldown;
 
         public Tank(ContentManager content, TankBaseType baseType, TankGunType gunType)
+            : base(content.Load<Texture2D>("basicTankBase"))
         {
             this.baseType = baseType;
             this.gunType = gunType;
@@ -82,9 +81,11 @@ namespace BPA_Tank_Racer_Game
 
                 baseCooldown = 5;
             }
+
+            texture = tankBase.texture;
         }
 
-        public virtual void Update(GameTime gametime)
+        public override void Update(GameTime gametime)
         {
             tankBase.position = position;
             tankBase.rotation = rotation;
@@ -97,10 +98,10 @@ namespace BPA_Tank_Racer_Game
                 oldTime = gametime.TotalGameTime;
             }
 
-            bulletHandler.Update();
+            bulletHandler.Update(gametime);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             bulletHandler.Draw(spriteBatch);
             tankBase.Draw(spriteBatch);

@@ -132,5 +132,96 @@ namespace BPA_Tank_Racer_Game
             //TODO
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Checks if two game objects are colliding
+        /// </summary>
+        /// <param name="objA">An object to check collision for</param>
+        /// <param name="objB">An object to check collision against</param>
+        /// <returns></returns>
+        public static bool IntersectPixels(GameObject objA, GameObject objB)
+        {
+            // Calculate a matrix which transforms from A's local space into
+            // world space and then into B's local space
+            Matrix transformAToB = objA.transformMatrix * Matrix.Invert(objB.transformMatrix);
+
+            //For each row of pixel in A
+            for (int yA = 0; yA < objA.Height; yA++)
+            {
+                //For each pixel in that row
+                for (int xA = 0; xA < objA.Width; xA++)
+                {
+                    //Calculate this pixel's location in B
+                    Vector2 positionInB = Vector2.Transform(new Vector2(xA, yA), transformAToB);
+
+                    int xB = (int)Math.Round(positionInB.X);
+                    int yB = (int)Math.Round(positionInB.Y);
+
+                    if (xB >= 0 && xB < objB.Width &&
+                        yB >= 0 && yB < objB.Height)
+                    {
+                        //Get colors of the overlapping pixels
+                        Color colorA = objA.colorData[xA + yA * objA.Width];
+                        Color colorB = objB.colorData[xB + yB * objB.Width];
+
+                        //If both pixels are not completely transparent
+                        if (colorA.A * colorB.A != 0)
+                        {
+                            //Intersection found
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            //No intersection
+            return false;
+        }
+
+        /// <summary>
+        /// Checks if an object is colliding with a specific collor in another object
+        /// </summary>
+        /// <param name="objA">An object to check collision for</param>
+        /// <param name="objB">An object to check for collision of the color in</param>
+        /// <param name="color">The collor to check collision against</param>
+        /// <returns></returns>
+        public static bool IntersectColor(GameObject objA, GameObject objB, Color color)
+        {
+            // Calculate a matrix which transforms from A's local space into
+            // world space and then into B's local space
+            Matrix transformAToB = objA.transformMatrix * Matrix.Invert(objB.transformMatrix);
+
+            //For each row of pixel in A
+            for (int yA = 0; yA < objA.Height; yA++)
+            {
+                //For each pixel in that row
+                for (int xA = 0; xA < objA.Width; xA++)
+                {
+                    //Calculate this pixel's location in B
+                    Vector2 positionInB = Vector2.Transform(new Vector2(xA, yA), transformAToB);
+
+                    int xB = (int)Math.Round(positionInB.X);
+                    int yB = (int)Math.Round(positionInB.Y);
+
+                    if (xB >= 0 && xB < objB.Width &&
+                        yB >= 0 && yB < objB.Height)
+                    {
+                        //Get colors of the overlapping pixels
+                        Color colorA = objA.colorData[xA + yA * objA.Width];
+                        Color colorB = objB.colorData[xB + yB * objB.Width];
+
+                        //If color A is not transparent and color B is the desired color
+                        if (colorA.A != 0 && colorB == color)
+                        {
+                            //Intersection found
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            //No intersection
+            return false;
+        }
     }
 }
