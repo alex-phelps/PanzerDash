@@ -15,13 +15,15 @@ namespace BPA_Tank_Racer_Game
     {
         private PlayerTank playerTank;
         private Background background;
-
+        private BulletHandler bulletHandler;
         private Texture2D cooldownBar;
 
         public GameScreen(ContentManager content, EventHandler screenEvent)
             : base(screenEvent)
         {
-            playerTank = new PlayerTank(content, TankBaseType.basic, TankGunType.basic);
+            bulletHandler = new BulletHandler();
+
+            playerTank = new PlayerTank(content, bulletHandler, TankBaseType.basic, TankGunType.basic);
 
             background = new Background(content.Load<Texture2D>("TempBackground"));
 
@@ -31,14 +33,17 @@ namespace BPA_Tank_Racer_Game
         public override void Update(GameTime gametime)
         {
             playerTank.Update(gametime);
+            bulletHandler.Update(gametime);
 
-            if (Game1.IntersectColor(playerTank, background, new Color(0, 0, 0)))
+            //Move objects based on the player's tank's movement
+            background.position -= playerTank.velocity;
+            bulletHandler.MoveBullets(-playerTank.velocity);
+
+            //Check if player is colliding with the color black in the background
+            if (Game1.IntersectColor(playerTank, background, new Color(0, 0, 0))) 
             {
+                background.position += playerTank.velocity;
                 playerTank.speed = 0;
-            }
-            else
-            {
-                background.position -= playerTank.velocity;
             }
 
             base.Update(gametime);
@@ -47,6 +52,7 @@ namespace BPA_Tank_Racer_Game
         public override void Draw(SpriteBatch spritebatch)
         {
             background.Draw(spritebatch);
+            bulletHandler.Draw(spritebatch);
             playerTank.Draw(spritebatch);
 
             //Draw HUD

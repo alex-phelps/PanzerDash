@@ -49,23 +49,29 @@ namespace BPA_Tank_Racer_Game
         public int baseCooldown;
         public int currentCooldown;
 
-        public Tank(ContentManager content, TankBaseType baseType, TankGunType gunType)
+        public Tank(ContentManager content, BulletHandler bulletHandler, TankBaseType baseType, TankGunType gunType)
             : base(content.Load<Texture2D>("basicTankBase"))
         {
             this.baseType = baseType;
             this.gunType = gunType;
+            this.bulletHandler = bulletHandler;
 
             bulletTexture = content.Load<Texture2D>("Bullet");
-            bulletHandler = new BulletHandler();
 
             //Assign base
             if (baseType == TankBaseType.basic) //Temp; Basic
             {
                 tankBase = new TankBase(content.Load<Texture2D>("basicTankBase"));
+
+                accel = 0.1f;
+                maxSpeed = 2;
             }
             else //Basic
             {
                 tankBase = new TankBase(content.Load<Texture2D>("basicTankBase"));
+
+                accel = 0.1f;
+                maxSpeed = 2;
             }
 
             //Assign gun
@@ -97,13 +103,10 @@ namespace BPA_Tank_Racer_Game
                 currentCooldown--;
                 oldTime = gametime.TotalGameTime;
             }
-
-            bulletHandler.Update(gametime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            bulletHandler.Draw(spriteBatch);
             tankBase.Draw(spriteBatch);
             tankGun.Draw(spriteBatch);
         }

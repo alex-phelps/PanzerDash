@@ -13,12 +13,10 @@ namespace BPA_Tank_Racer_Game
     {
         private KeyboardState oldState = Keyboard.GetState();
 
-        public PlayerTank(ContentManager content, TankBaseType baseType, TankGunType gunType) 
-            : base(content, baseType, gunType)
+        public PlayerTank(ContentManager content, BulletHandler bulletHandler, TankBaseType baseType, TankGunType gunType) 
+            : base(content, bulletHandler, baseType, gunType)
         {
             position = new Vector2(Game1.WindowWidth / 2, Game1.WindowHeight / 2);
-            accel = 0.1f;
-            maxSpeed = 2;
         }
 
         public override void Update(GameTime gametime)
