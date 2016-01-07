@@ -80,6 +80,8 @@
     <Content Include="Content\PlayNow.png" />
     <Content Include="Content\Quit-Selected.png" />
     <Content Include="Content\Quit.png" />
+    <Content Include="Content\RainbowTankBase.png" />
+    <Content Include="Content\RainbowTankGun.png" />
     <Content Include="Content\RedTankBase.png" />
     <Content Include="Content\RedTankGun.png" />
     <Content Include="Content\SnowTankBase.png" />
