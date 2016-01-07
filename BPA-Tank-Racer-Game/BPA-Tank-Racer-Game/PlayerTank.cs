@@ -13,7 +13,7 @@ namespace BPA_Tank_Racer_Game
     {
         private KeyboardState oldState = Keyboard.GetState();
 
-        public PlayerTank(ContentManager content, BulletHandler bulletHandler, TankBaseType baseType, TankGunType gunType) 
+        public PlayerTank(ContentManager content, BulletHandler bulletHandler, TankPartType baseType, TankPartType gunType) 
             : base(content, bulletHandler, baseType, gunType)
         {
             position = new Vector2(Game1.WindowWidth / 2, Game1.WindowHeight / 2);

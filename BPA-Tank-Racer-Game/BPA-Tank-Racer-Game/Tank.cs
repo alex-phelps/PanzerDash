@@ -9,19 +9,12 @@ using Microsoft.Xna.Framework.Graphics;
 namespace BPA_Tank_Racer_Game
 {
     /// <summary>
-    /// Defines different types of tank bases
+    /// Defines different types of tank parts
     /// </summary>
-    public enum TankBaseType
+    public enum TankPartType
     {
-        basic
-    }
-
-    /// <summary>
-    /// Defines different types of tank guns
-    /// </summary>
-    public enum TankGunType
-    {
-        basic
+        basic,
+        red
     }
 
     /// <summary>
@@ -29,8 +22,8 @@ namespace BPA_Tank_Racer_Game
     /// </summary>
     public class Tank : GameObject
     {
-        TankBaseType baseType;
-        TankGunType gunType;
+        TankPartType baseType;
+        TankPartType gunType;
 
         private Texture2D bulletTexture;
         private BulletHandler bulletHandler;
@@ -45,11 +38,20 @@ namespace BPA_Tank_Racer_Game
         public float accel;
         public float maxSpeed;
         public float gunRotation;
+        public int gunDamage;
+        public int bulletSpeed;
 
         public int baseCooldown;
         public int currentCooldown;
 
-        public Tank(ContentManager content, BulletHandler bulletHandler, TankBaseType baseType, TankGunType gunType)
+        /// <summary>
+        /// Creates a new tank
+        /// </summary>
+        /// <param name="content">A content manager object</param>
+        /// <param name="bulletHandler">A BulletHandler to add bullets shot from this tank to</param>
+        /// <param name="baseType">Type of tank base</param>
+        /// <param name="gunType">Type of tank gun</param>
+        public Tank(ContentManager content, BulletHandler bulletHandler, TankPartType baseType, TankPartType gunType)
             : base(content.Load<Texture2D>("basicTankBase"))
         {
             this.baseType = baseType;
@@ -59,12 +61,12 @@ namespace BPA_Tank_Racer_Game
             bulletTexture = content.Load<Texture2D>("Bullet");
 
             //Assign base
-            if (baseType == TankBaseType.basic) //Temp; Basic
+            if (baseType == TankPartType.red) //Red
             {
-                tankBase = new TankBase(content.Load<Texture2D>("basicTankBase"));
+                tankBase = new TankBase(content.Load<Texture2D>("RedTankBase"));
 
-                accel = 0.1f;
-                maxSpeed = 2;
+                accel = 0.03f;
+                maxSpeed = 3;
             }
             else //Basic
             {
@@ -75,17 +77,21 @@ namespace BPA_Tank_Racer_Game
             }
 
             //Assign gun
-            if (gunType == TankGunType.basic) //Temp; Basic
+            if (gunType == TankPartType.red) //Red
             {
-                tankGun = new TankGun(content.Load<Texture2D>("basicTankGun"));
+                tankGun = new TankGun(content.Load<Texture2D>("RedTankGun"));
 
-                baseCooldown = 5;
+                baseCooldown = 2;
+                gunDamage = 2;
+                bulletSpeed = 12;
             }
             else //Basic
             {
                 tankGun = new TankGun(content.Load<Texture2D>("basicTankGun"));
 
                 baseCooldown = 5;
+                gunDamage = 5;
+                bulletSpeed = 7;
             }
 
             texture = tankBase.texture;
@@ -115,8 +121,8 @@ namespace BPA_Tank_Racer_Game
         {
             if (currentCooldown == 0)
             {
-                Vector2 bulletVelocity = new Vector2((float)Math.Sin(gunRotation) * 7, (float)Math.Cos(gunRotation) * -7);
-                bulletHandler.NewBullet(new Bullet(bulletTexture, bulletVelocity, position, gunRotation));
+                Vector2 bulletVelocity = new Vector2((float)Math.Sin(gunRotation), (float)Math.Cos(gunRotation));
+                bulletHandler.NewBullet(new Bullet(bulletTexture, bulletVelocity, position, gunRotation, gunDamage, bulletSpeed));
 
                 currentCooldown = baseCooldown;
             }

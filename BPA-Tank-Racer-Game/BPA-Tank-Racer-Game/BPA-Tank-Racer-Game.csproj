@@ -80,7 +80,6 @@
     <Content Include="Content\PlayNow.png" />
     <Content Include="Content\Quit-Selected.png" />
     <Content Include="Content\Quit.png" />
-    <Content Include="Content\RedTankBase.png" />
     <Content Include="Content\RedTankGun.png" />
     <Content Include="Content\SnowTankBase.png" />
     <Content Include="Content\SnowTankGun.png" />
@@ -90,7 +89,12 @@
     <Content Include="Content\Tiles\mountainCornerTile.png" />
     <Content Include="Content\Tiles\mountainEdgeTile.png" />
     <Content Include="Content\Tiles\mountainFlatTile.png" />
+    <Content Include="Content\Tiles\RiverCornerNorth.png" />
+    <Content Include="Content\Tiles\RiverCornerSouth.png" />
     <Content Include="Content\Tiles\RiverEdge.png" />
+    <Content Include="Content\Tiles\RiverEdgeSides.png" />
+    <Content Include="Content\Tiles\RiverEdgeSouth.png" />
+    <Content Include="Content\Tiles\RiverWater.png" />
     <Content Include="Content\Tutorial-Selected.png" />
     <Content Include="Content\Tutorial.png" />
     <Content Include="Content\UrbanTankBase.png" />

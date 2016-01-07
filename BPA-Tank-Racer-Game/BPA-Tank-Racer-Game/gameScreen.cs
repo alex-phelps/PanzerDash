@@ -23,7 +23,7 @@ namespace BPA_Tank_Racer_Game
         {
             bulletHandler = new BulletHandler();
 
-            playerTank = new PlayerTank(content, bulletHandler, TankBaseType.basic, TankGunType.basic);
+            playerTank = new PlayerTank(content, bulletHandler, TankPartType.red, TankPartType.red);
 
             background = new Background(content.Load<Texture2D>("TempBackground"));
 
