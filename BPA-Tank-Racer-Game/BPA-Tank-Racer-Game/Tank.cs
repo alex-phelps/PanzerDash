@@ -14,7 +14,12 @@ namespace BPA_Tank_Racer_Game
     public enum TankPartType
     {
         basic,
-        red
+        desert,
+        jungle,
+        urban,
+        snow,
+        red,
+        rainbow
     }
 
     /// <summary>
@@ -65,8 +70,43 @@ namespace BPA_Tank_Racer_Game
             {
                 tankBase = new TankBase(content.Load<Texture2D>("RedTankBase"));
 
+                accel = 0.04f;
+                maxSpeed = 3.3f;
+            }
+            else if (baseType == TankPartType.desert) //Desert
+            {
+                tankBase = new TankBase(content.Load<Texture2D>("desertTankBase"));
+
                 accel = 0.03f;
-                maxSpeed = 3;
+                maxSpeed = 2.5f;
+            }
+            else if (baseType == TankPartType.snow) //Snow
+            {
+                tankBase = new TankBase(content.Load<Texture2D>("SnowTankBase"));
+
+                accel = 0.06f;
+                maxSpeed = 2.2f;
+            }
+            else if (baseType == TankPartType.urban) //Urban
+            {
+                tankBase = new TankBase(content.Load<Texture2D>("UrbanTankBase"));
+
+                accel = 0.025f;
+                maxSpeed = 1.6f;
+            }
+            else if (baseType == TankPartType.jungle) //Jungle
+            {
+                tankBase = new TankBase(content.Load<Texture2D>("JungleTankBase"));
+
+                accel = 0.15f;
+                maxSpeed = 2.8f;
+            }
+            else if (baseType == TankPartType.rainbow) //RAINBOW
+            {
+                tankBase = new TankBase(content.Load<Texture2D>("RainbowTankBase"));
+
+                accel = 0.4f;
+                maxSpeed = 8;
             }
             else //Basic
             {
@@ -76,6 +116,7 @@ namespace BPA_Tank_Racer_Game
                 maxSpeed = 2;
             }
 
+
             //Assign gun
             if (gunType == TankPartType.red) //Red
             {
@@ -84,6 +125,46 @@ namespace BPA_Tank_Racer_Game
                 baseCooldown = 2;
                 gunDamage = 2;
                 bulletSpeed = 12;
+            } 
+            else if (gunType == TankPartType.desert) //Desert
+            {
+                tankGun = new TankGun(content.Load<Texture2D>("desertTankGun"));
+
+                baseCooldown = 6;
+                gunDamage = 7;
+                bulletSpeed = 6;
+            }
+            else if (gunType == TankPartType.snow) //Snow
+            {
+                tankGun = new TankGun(content.Load<Texture2D>("SnowTankGun"));
+
+                baseCooldown = 4;
+                gunDamage = 5;
+                bulletSpeed = 9;
+            }
+            else if (gunType == TankPartType.urban) //Urban
+            {
+                tankGun = new TankGun(content.Load<Texture2D>("UrbanTankGun"));
+
+                baseCooldown = 8;
+                gunDamage = 12;
+                bulletSpeed = 4;
+            }
+            else if (gunType == TankPartType.jungle) //Jungle
+            {
+                tankGun = new TankGun(content.Load<Texture2D>("JungleTankGun"));
+
+                baseCooldown = 3;
+                gunDamage = 4;
+                bulletSpeed = 15;
+            }
+            else if (gunType == TankPartType.rainbow) //RAINBOW
+            {
+                tankGun = new TankGun(content.Load<Texture2D>("RainbowTankGun"));
+
+                baseCooldown = 0;
+                gunDamage = 20;
+                bulletSpeed = 20;
             }
             else //Basic
             {
