@@ -26,6 +26,7 @@ namespace BPA_Tank_Racer_Game
             playerTank = new PlayerTank(content, bulletHandler, TankPartType.urban, TankPartType.urban);
 
             background = new Background(content.Load<Texture2D>("TempBackground"));
+            background.position = new Vector2(250, -250);
 
             cooldownBar = content.Load<Texture2D>("CooldownBar");
         }

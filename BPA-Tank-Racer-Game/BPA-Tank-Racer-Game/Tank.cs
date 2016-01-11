@@ -175,7 +175,11 @@ namespace BPA_Tank_Racer_Game
                 bulletSpeed = 7;
             }
 
+            //Set GameObject texture
             texture = tankBase.texture;
+
+
+            currentCooldown = baseCooldown;
         }
 
         public override void Update(GameTime gametime)
