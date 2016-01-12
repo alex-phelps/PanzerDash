@@ -106,7 +106,7 @@ namespace BPA_Tank_Racer_Game
         {
             if (menuScreen.selectedButton == 0)
             {
-                currentScreen = new GameScreen(Content, new EventHandler(GameScreenEvent));
+                currentScreen = new GameScreen(Content, new EventHandler(GameScreenEvent), 1);
             }
             else if (menuScreen.selectedButton == 1)
             {

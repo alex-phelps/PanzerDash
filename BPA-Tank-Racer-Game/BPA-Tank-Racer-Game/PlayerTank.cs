@@ -28,26 +28,18 @@ namespace BPA_Tank_Racer_Game
             if (newState.IsKeyDown(Keys.W))
             {
                 speed += accel;
-
-                if (speed > maxSpeed)
-                    speed = maxSpeed;
             }
             if (newState.IsKeyDown(Keys.S))
             {
                 speed -= accel;
-
-                if (speed < -maxSpeed)
-                    speed = -maxSpeed;
             }
             if (newState.IsKeyDown(Keys.A))
             {
-                rotation -= 0.05f;
-                gunRotation -= 0.05f;
+                rotSpeed -= rotAccel;
             }
             if (newState.IsKeyDown(Keys.D))
             {
-                rotation += 0.05f;
-                gunRotation += 0.05f;
+                rotSpeed += rotAccel;
             }
             if (newState.IsKeyDown(Keys.Left))
             {
@@ -59,11 +51,19 @@ namespace BPA_Tank_Racer_Game
             }
             if (newState.IsKeyUp(Keys.W) && newState.IsKeyUp(Keys.S))
             {
-                if (speed < -0.025f) // Not 0 here to fix any rounding errors
+                if (speed < -0.25f) // Not 0 here to fix any rounding errors
                     speed += 0.25f;
-                else if (speed > 0.025f) //Not 0 here to fix any rounding errors
+                else if (speed > 0.25f) //Not 0 here to fix any rounding errors
                     speed -= 0.25f;
                 else speed = 0;
+            }
+            if (newState.IsKeyUp(Keys.A) && newState.IsKeyUp(Keys.D))
+            {
+                if (rotSpeed < -0.05f) // Not 0 here to fix any rounding errors
+                    rotSpeed += 0.03f;
+                else if (rotSpeed > 0.05f) //Not 0 here to fix any rounding errors
+                    rotSpeed -= 0.03f;
+                else rotSpeed = 0;
             }
 
             if (newState.IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))

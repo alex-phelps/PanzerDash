@@ -32,6 +32,7 @@ namespace BPA_Tank_Racer_Game
 
         private Texture2D bulletTexture;
         private BulletHandler bulletHandler;
+        private Texture2D bulletExplosionTexture;
         
         private TankBase tankBase;
         private TankGun tankGun;
@@ -42,6 +43,9 @@ namespace BPA_Tank_Racer_Game
         public float speed;
         public float accel;
         public float maxSpeed;
+        public float rotSpeed;
+        public float maxRotSpeed;
+        public float rotAccel;
         public float gunRotation;
         public int gunDamage;
         public int bulletSpeed;
@@ -64,6 +68,7 @@ namespace BPA_Tank_Racer_Game
             this.bulletHandler = bulletHandler;
 
             bulletTexture = content.Load<Texture2D>("Bullet");
+            bulletExplosionTexture = content.Load<Texture2D>("BulletExplosion");
 
             //Assign base
             if (baseType == TankPartType.red) //Red
@@ -175,15 +180,31 @@ namespace BPA_Tank_Racer_Game
                 bulletSpeed = 7;
             }
 
+            //Temp
+            maxRotSpeed = 0.05f;
+            rotAccel = 0.0025f;
+
             //Set GameObject texture
             texture = tankBase.texture;
-
 
             currentCooldown = baseCooldown;
         }
 
         public override void Update(GameTime gametime)
         {
+            if (speed > maxSpeed)
+                speed = maxSpeed;
+            else if (speed < -maxSpeed)
+                speed = -maxSpeed;
+
+            if (rotSpeed > maxRotSpeed)
+                rotSpeed = maxRotSpeed;
+            else if (rotSpeed < -maxRotSpeed)
+                rotSpeed = -maxRotSpeed;
+
+            rotation += rotSpeed;
+            gunRotation += rotSpeed;
+
             tankBase.position = position;
             tankBase.rotation = rotation;
             tankGun.position = position;
@@ -207,7 +228,7 @@ namespace BPA_Tank_Racer_Game
             if (currentCooldown == 0)
             {
                 Vector2 bulletVelocity = new Vector2((float)Math.Sin(gunRotation), (float)Math.Cos(gunRotation));
-                bulletHandler.NewBullet(new Bullet(bulletTexture, bulletVelocity, position, gunRotation, gunDamage, bulletSpeed));
+                bulletHandler.NewBullet(new Bullet(bulletTexture, bulletExplosionTexture, bulletVelocity, position, gunRotation, gunDamage, bulletSpeed));
 
                 currentCooldown = baseCooldown;
             }

@@ -64,6 +64,7 @@
     <Content Include="Content\basicTankBase.png" />
     <Content Include="Content\basicTankGun.png" />
     <Content Include="Content\Bullet.png" />
+    <Content Include="Content\BulletExplosion.png" />
     <Content Include="Content\CareerMode-Selected.png" />
     <Content Include="Content\CareerMode.png" />
     <Content Include="Content\CooldownBar.png" />
@@ -73,6 +74,7 @@
     <Content Include="Content\FreeMode.png" />
     <Content Include="Content\JungleTankBase.png" />
     <Content Include="Content\JungleTankGun.png" />
+    <Content Include="Content\Level1.png" />
     <Content Include="Content\Logo.png" />
     <Content Include="Content\Options-Selected.png" />
     <Content Include="Content\Options.png" />
@@ -85,7 +87,6 @@
     <Content Include="Content\RedTankGun.png" />
     <Content Include="Content\SnowTankBase.png" />
     <Content Include="Content\SnowTankGun.png" />
-    <Content Include="Content\TempBackground.png" />
     <Content Include="Content\Tiles\grassTile.png" />
     <Content Include="Content\Tiles\mountainCornerInTile.png" />
     <Content Include="Content\Tiles\mountainCornerTile.png" />

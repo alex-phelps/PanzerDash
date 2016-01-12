@@ -18,17 +18,30 @@ namespace BPA_Tank_Racer_Game
         private BulletHandler bulletHandler;
         private Texture2D cooldownBar;
 
-        public GameScreen(ContentManager content, EventHandler screenEvent)
+        public GameScreen(ContentManager content, EventHandler screenEvent, int level)
             : base(screenEvent)
         {
             bulletHandler = new BulletHandler();
 
-            playerTank = new PlayerTank(content, bulletHandler, TankPartType.urban, TankPartType.urban);
-
-            background = new Background(content.Load<Texture2D>("TempBackground"));
-            background.position = new Vector2(250, -250);
+            playerTank = new PlayerTank(content, bulletHandler, TankPartType.basic, TankPartType.basic);
 
             cooldownBar = content.Load<Texture2D>("CooldownBar");
+
+            Vector2 levelSize = new Vector2(3200, 3200);
+            Vector2 startPosInImage;
+
+            if (level == 2) // Level 2
+            {
+                startPosInImage = new Vector2(0, 0); // Temp
+            }
+            else // Level 1
+            {
+                background = new Background(content.Load<Texture2D>("Level1"));
+                startPosInImage = new Vector2(654, 2478);
+            }
+
+            background.position.X = (levelSize.X / 2 - startPosInImage.X) + Game1.WindowWidth / 2;
+            background.position.Y = (levelSize.Y / 2 - startPosInImage.Y) + Game1.WindowHeight / 2;
         }
 
         public override void Update(GameTime gametime)
@@ -44,7 +57,17 @@ namespace BPA_Tank_Racer_Game
             if (Game1.IntersectColor(playerTank, background, new Color(0, 0, 0))) 
             {
                 background.position += playerTank.velocity;
+                playerTank.rotation -= playerTank.rotSpeed;
                 playerTank.speed = 0;
+                playerTank.rotSpeed = 0;
+            }
+
+            foreach (Bullet bullet in bulletHandler.bullets)
+            {
+                if (Game1.IntersectColor(bullet, background, new Color(0, 0, 0)))
+                {
+                    bulletHandler.Destroy(bullet);
+                }
             }
 
             base.Update(gametime);
@@ -53,8 +76,8 @@ namespace BPA_Tank_Racer_Game
         public override void Draw(SpriteBatch spritebatch)
         {
             background.Draw(spritebatch);
-            bulletHandler.Draw(spritebatch);
             playerTank.Draw(spritebatch);
+            bulletHandler.Draw(spritebatch);
 
             //Draw HUD
 
