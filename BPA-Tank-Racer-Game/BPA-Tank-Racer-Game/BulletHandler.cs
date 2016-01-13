@@ -28,21 +28,34 @@ namespace BPA_Tank_Racer_Game
 
         public void Update(GameTime gameTime)
         {
+            bulletsToDelete = new List<Bullet>();
+
             foreach (Bullet bullet in bullets)
             {
                 bullet.Update(gameTime);
             }
 
-            foreach (Bullet bullet in bulletsToDestroy)
+            if (gameTime.TotalGameTime.TotalSeconds - 1 >= oldTime.TotalSeconds)
             {
-                if (bullet.secToDestruction == 0)
+                foreach (Bullet bullet in bulletsToDestroy)
                 {
-                    bulletsToDelete.Add(bullet);
+                    if (bullet.secToDestruction == 0)
+                    {
+                        bulletsToDelete.Add(bullet);
+                    }
+                    else
+                    {
+                        bullet.secToDestruction--;
+                    }
                 }
-                else if (oldTime.TotalSeconds - 1 >= gameTime.TotalGameTime.TotalSeconds)
-                {
-                    bullet.secToDestruction--;
-                }
+
+                oldTime = gameTime.TotalGameTime;
+            }
+
+            foreach (Bullet bullet in bulletsToDelete)
+            {
+                bulletsToDestroy.Remove(bullet);
+                bullets.Remove(bullet);
             }
         }
 
@@ -66,6 +79,10 @@ namespace BPA_Tank_Racer_Game
             }
         }
 
+        /// <summary>
+        /// Sets a specified bullet to be destroyed
+        /// </summary>
+        /// <param name="bullet">Bullet to be destroyed</param>
         public void Destroy(Bullet bullet)
         {
             if (bullets.Contains(bullet))

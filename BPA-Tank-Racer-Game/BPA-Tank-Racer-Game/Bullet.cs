@@ -12,11 +12,14 @@ namespace BPA_Tank_Racer_Game
         public Vector2 velocity;
         public int damage { get; private set; }
         public int speed { get; private set; }
-        public int secToDestruction = 2;
+        public Tank ownerTank { get; private set; }
+
+        public int secToDestruction = 1;
 
         private Texture2D explosionTexture;
 
-        public Bullet(Texture2D texture, Texture2D explosionTexture, Vector2 velocity, Vector2 position, float rotation, int damage, int speed) 
+        public Bullet(Texture2D texture, Texture2D explosionTexture, Vector2 velocity, Vector2 position, 
+            float rotation, int damage, int speed, Tank ownerTank) 
             : base(texture)
         {
             this.velocity.X = velocity.X * speed;

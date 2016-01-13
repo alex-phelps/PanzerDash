@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace BPA_Tank_Racer_Game
 {
@@ -46,6 +47,10 @@ namespace BPA_Tank_Racer_Game
 
         public override void Update(GameTime gametime)
         {
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                screenEvent.Invoke(this, new EventArgs());
+
+
             playerTank.Update(gametime);
             bulletHandler.Update(gametime);
 
@@ -56,8 +61,14 @@ namespace BPA_Tank_Racer_Game
             //Check if player is colliding with the color black in the background
             if (Game1.IntersectColor(playerTank, background, new Color(0, 0, 0))) 
             {
+                //Undo tank movement
                 background.position += playerTank.velocity;
+                bulletHandler.MoveBullets(playerTank.velocity);
+
+                //Undo player's rotation
                 playerTank.rotation -= playerTank.rotSpeed;
+
+                //Set player's speed variables to 0;
                 playerTank.speed = 0;
                 playerTank.rotSpeed = 0;
             }

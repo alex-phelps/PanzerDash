@@ -69,6 +69,11 @@ namespace BPA_Tank_Racer_Game
 
             bulletTexture = content.Load<Texture2D>("Bullet");
             bulletExplosionTexture = content.Load<Texture2D>("BulletExplosion");
+            
+            //Temp
+            maxRotSpeed = 0.05f;
+            rotAccel = 0.0025f;
+
 
             //Assign base
             if (baseType == TankPartType.red) //Red
@@ -112,6 +117,9 @@ namespace BPA_Tank_Racer_Game
 
                 accel = 0.4f;
                 maxSpeed = 8;
+
+                maxRotSpeed = 0.25f;
+                rotAccel = 0.005f;
             }
             else //Basic
             {
@@ -119,6 +127,9 @@ namespace BPA_Tank_Racer_Game
 
                 accel = 0.1f;
                 maxSpeed = 2;
+
+                maxRotSpeed = 0.05f;
+                rotAccel = 0.0025f;
             }
 
 
@@ -180,9 +191,6 @@ namespace BPA_Tank_Racer_Game
                 bulletSpeed = 7;
             }
 
-            //Temp
-            maxRotSpeed = 0.05f;
-            rotAccel = 0.0025f;
 
             //Set GameObject texture
             texture = tankBase.texture;
@@ -228,7 +236,8 @@ namespace BPA_Tank_Racer_Game
             if (currentCooldown == 0)
             {
                 Vector2 bulletVelocity = new Vector2((float)Math.Sin(gunRotation), (float)Math.Cos(gunRotation));
-                bulletHandler.NewBullet(new Bullet(bulletTexture, bulletExplosionTexture, bulletVelocity, position, gunRotation, gunDamage, bulletSpeed));
+                bulletHandler.NewBullet(new Bullet(bulletTexture, bulletExplosionTexture,
+                    bulletVelocity, position, gunRotation, gunDamage, bulletSpeed, this));
 
                 currentCooldown = baseCooldown;
             }
