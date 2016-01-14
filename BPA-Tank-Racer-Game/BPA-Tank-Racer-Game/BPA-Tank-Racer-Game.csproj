@@ -68,6 +68,7 @@
     <Content Include="Content\CareerMode-Selected.png" />
     <Content Include="Content\CareerMode.png" />
     <Content Include="Content\CooldownBar.png" />
+    <Content Include="Content\DamageIncreasePowerUp.png" />
     <Content Include="Content\desertTankBase.png" />
     <Content Include="Content\desertTankGun.png" />
     <Content Include="Content\FreeMode-Selected.png" />
@@ -84,9 +85,12 @@
     <Content Include="Content\Quit.png" />
     <Content Include="Content\RainbowTankBase.png" />
     <Content Include="Content\RainbowTankGun.png" />
+    <Content Include="Content\RapidFirePowerUp.png" />
     <Content Include="Content\RedTankGun.png" />
+    <Content Include="Content\ShieldPowerUp.png" />
     <Content Include="Content\SnowTankBase.png" />
     <Content Include="Content\SnowTankGun.png" />
+    <Content Include="Content\SpeedPowerUp.png" />
     <Content Include="Content\Tiles\grassTile.png" />
     <Content Include="Content\Tiles\mountainCornerInTile.png" />
     <Content Include="Content\Tiles\mountainCornerTile.png" />
