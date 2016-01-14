@@ -38,6 +38,9 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AITank.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Background.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="BulletHandler.cs" />

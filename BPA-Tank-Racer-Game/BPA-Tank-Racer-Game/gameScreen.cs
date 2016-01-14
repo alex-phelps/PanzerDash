@@ -15,6 +15,7 @@ namespace BPA_Tank_Racer_Game
     public class GameScreen : Screen
     {
         private PlayerTank playerTank;
+        private AITank enemyTank;
         private Background background;
         private BulletHandler bulletHandler;
         private Texture2D cooldownBar;
@@ -22,14 +23,18 @@ namespace BPA_Tank_Racer_Game
         public GameScreen(ContentManager content, EventHandler screenEvent, int level)
             : base(screenEvent)
         {
-            bulletHandler = new BulletHandler();
-
-            playerTank = new PlayerTank(content, bulletHandler, TankPartType.basic, TankPartType.basic);
-
             cooldownBar = content.Load<Texture2D>("CooldownBar");
+            bulletHandler = new BulletHandler();
 
             Vector2 levelSize = new Vector2(3200, 3200);
             Vector2 startPosInImage;
+
+            //Create player
+            playerTank = new PlayerTank(content, bulletHandler, TankPartType.red, TankPartType.red);
+
+            //Create Enemy
+            enemyTank = new AITank(content, bulletHandler, TankPartType.basic,
+                TankPartType.basic, new Vector2(Game1.WindowWidth / 2 + 100, Game1.WindowHeight / 2));
 
             if (level == 2) // Level 2
             {
@@ -43,6 +48,7 @@ namespace BPA_Tank_Racer_Game
 
             background.position.X = (levelSize.X / 2 - startPosInImage.X) + Game1.WindowWidth / 2;
             background.position.Y = (levelSize.Y / 2 - startPosInImage.Y) + Game1.WindowHeight / 2;
+
         }
 
         public override void Update(GameTime gametime)
@@ -50,6 +56,16 @@ namespace BPA_Tank_Racer_Game
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 screenEvent.Invoke(this, new EventArgs());
 
+            //Update enemy AI tank
+            if (!enemyTank.SteerAi(background) && !enemyTank.SteerAi(playerTank))
+            {
+                if (enemyTank.rotSpeed < -0.05f) // Not 0 here to fix any rounding errors
+                    enemyTank.rotSpeed += 0.03f;
+                else if (enemyTank.rotSpeed > 0.05f) //Not 0 here to fix any rounding errors
+                    enemyTank.rotSpeed -= 0.03f;
+                else enemyTank.rotSpeed = 0;
+            }
+            enemyTank.Update(gametime);
 
             playerTank.Update(gametime);
             bulletHandler.Update(gametime);
@@ -57,6 +73,7 @@ namespace BPA_Tank_Racer_Game
             //Move objects based on the player's tank's movement
             background.position -= playerTank.velocity;
             bulletHandler.MoveBullets(-playerTank.velocity);
+            enemyTank.position -= playerTank.velocity;
 
             //Check if player is colliding with the color black in the background
             if (Game1.IntersectColor(playerTank, background, new Color(0, 0, 0))) 
@@ -64,6 +81,7 @@ namespace BPA_Tank_Racer_Game
                 //Undo tank movement
                 background.position += playerTank.velocity;
                 bulletHandler.MoveBullets(playerTank.velocity);
+                enemyTank.position += playerTank.velocity;
 
                 //Undo player's rotation
                 playerTank.rotation -= playerTank.rotSpeed;
@@ -87,6 +105,7 @@ namespace BPA_Tank_Racer_Game
         public override void Draw(SpriteBatch spritebatch)
         {
             background.Draw(spritebatch);
+            enemyTank.Draw(spritebatch);
             playerTank.Draw(spritebatch);
             bulletHandler.Draw(spritebatch);
 
@@ -99,6 +118,7 @@ namespace BPA_Tank_Racer_Game
             spritebatch.Draw(cooldownBar, new Vector2(30, (Game1.WindowHeight / 2) + (cooldownBar.Height / 2) +
                 cooldownBar.Height - (int)(cooldownBar.Height * ((float)playerTank.currentCooldown / (float)playerTank.baseCooldown))),
                 cooldownSource, Color.White, 0, new Vector2(cooldownBar.Width / 2, cooldownBar.Height / 2), 1, SpriteEffects.None, 1);
+
 
             base.Draw(spritebatch);
         }

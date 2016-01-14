@@ -191,7 +191,6 @@ namespace BPA_Tank_Racer_Game
                 bulletSpeed = 7;
             }
 
-
             //Set GameObject texture
             texture = tankBase.texture;
 
