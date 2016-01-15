@@ -57,7 +57,7 @@ namespace BPA_Tank_Racer_Game
                 screenEvent.Invoke(this, new EventArgs());
 
             //Update enemy AI tank
-            if (!enemyTank.SteerAi(background) && !enemyTank.SteerAi(playerTank))
+            if (!enemyTank.SteerAi(background))
             {
                 if (enemyTank.rotSpeed < -0.05f) // Not 0 here to fix any rounding errors
                     enemyTank.rotSpeed += 0.03f;
@@ -66,6 +66,7 @@ namespace BPA_Tank_Racer_Game
                 else enemyTank.rotSpeed = 0;
             }
             enemyTank.Update(gametime);
+            enemyTank.ShootAi(playerTank);
 
             playerTank.Update(gametime);
             bulletHandler.Update(gametime);

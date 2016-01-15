@@ -209,6 +209,10 @@ namespace BPA_Tank_Racer_Game
             else if (rotSpeed < -maxRotSpeed)
                 rotSpeed = -maxRotSpeed;
 
+            //If rot > 360 degrees, reset it
+            rotation %= (float)(Math.PI * 2);
+            gunRotation %= (float)(Math.PI * 2);
+
             rotation += rotSpeed;
             gunRotation += rotSpeed;
 

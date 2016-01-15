@@ -26,52 +26,7 @@ namespace BPA_Tank_Racer_Game
             
             base.Update(gametime);
 
-            position += velocity ;
-        }
-
-        public bool SteerAi(GameObject gameObject)
-        {
-            Matrix transformTankToLevel = transformMatrix * Matrix.Invert(gameObject.transformMatrix);
-
-            Vector2 positionInObjectL = Vector2.Transform(new Vector2(-20, -Height * 2), transformTankToLevel);
-            Vector2 positionInObjectR = Vector2.Transform(new Vector2(20, -Height * 2), transformTankToLevel);
-
-            int xL = (int)Math.Round(positionInObjectL.X);
-            int yL = (int)Math.Round(positionInObjectL.Y);
-            int xR = (int)Math.Round(positionInObjectR.X);
-            int yR = (int)Math.Round(positionInObjectR.Y);
-
-            bool lInObj = false;
-            bool rInObj = false;
-
-            //If point R is in gameObject's rectangle
-            if (((xL >= gameObject.boundingRectangle.X) &&
-                (xL <= gameObject.boundingRectangle.X + gameObject.boundingRectangle.Width)) &&
-                ((yL >= gameObject.boundingRectangle.Y) &&
-                (yL <= gameObject.boundingRectangle.Y + gameObject.boundingRectangle.Height)))
-
-                lInObj = true;
-
-            //If point L is in gameObject's rectangle
-            if (((xR >= gameObject.boundingRectangle.X) &&
-                (xR <= gameObject.boundingRectangle.X + gameObject.boundingRectangle.Width)) &&
-                ((yR >= gameObject.boundingRectangle.Y) &&
-                (yR <= gameObject.boundingRectangle.Y + gameObject.boundingRectangle.Height)))
-
-                rInObj = true;
-
-            //Steer around object
-            if ((lInObj && rInObj) || (!lInObj && rInObj))
-            {
-                rotSpeed -= rotAccel;
-                return true;
-            }
-            else if (lInObj && !rInObj)
-            {
-                rotSpeed += rotAccel;
-                return true;
-            }
-            else return false;
+            // position += velocity ;
         }
 
         public bool SteerAi(Background background)
@@ -115,6 +70,35 @@ namespace BPA_Tank_Racer_Game
             }
 
             return false;
+        }
+
+        public void ShootAi(Tank targetTank)
+        {
+            //Aim
+
+            //Find sub pi/2 angle
+            float angleToTarget = (float)Math.Atan((position.Y - targetTank.position.Y) / (targetTank.position.X - position.X));
+            angleToTarget = (float)Math.PI / 2 - angleToTarget;
+
+            //Find quadrent target is in and adjust angle acordingly
+            if (targetTank.position.X <= position.X)
+            {
+                angleToTarget += (float)Math.PI;
+            }
+
+            //Find angle from gun to target, prev was from strait up to target
+            angleToTarget -= gunRotation;
+
+            //Adjust angle to be the nearest one in either direction
+            if (angleToTarget > (float)Math.PI)
+                angleToTarget = (float)(Math.PI * 2 - angleToTarget);
+
+            if (angleToTarget > 0)
+                gunRotation -= 0.04f;
+            else gunRotation += 0.04f;
+
+
+
         }
     }
 }
