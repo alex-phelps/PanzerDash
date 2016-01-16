@@ -213,6 +213,7 @@ namespace BPA_Tank_Racer_Game
             rotation %= (float)(Math.PI * 2);
             gunRotation %= (float)(Math.PI * 2);
 
+
             rotation += rotSpeed;
             gunRotation += rotSpeed;
 

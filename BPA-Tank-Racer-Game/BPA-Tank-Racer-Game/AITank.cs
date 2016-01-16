@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+
+//Temp
+using Microsoft.Xna.Framework.Input;
 
 namespace BPA_Tank_Racer_Game
 {
@@ -77,21 +79,31 @@ namespace BPA_Tank_Racer_Game
             //Aim
 
             //Find sub pi/2 angle
-            float angleToTarget = (float)Math.Atan((position.Y - targetTank.position.Y) / (targetTank.position.X - position.X));
-            angleToTarget = (float)Math.PI / 2 - angleToTarget;
+            double angleToTarget = Math.Atan((position.Y - targetTank.position.Y) / (targetTank.position.X - position.X));
+            angleToTarget = Math.PI / 2 - angleToTarget;
 
             //Find quadrent target is in and adjust angle acordingly
-            if (targetTank.position.X <= position.X)
+            if (targetTank.position.X >= position.X)
             {
-                angleToTarget += (float)Math.PI;
+                angleToTarget += Math.PI;
             }
 
             //Find angle from gun to target, prev was from strait up to target
             angleToTarget -= gunRotation;
 
+            //Temp
+            if (Keyboard.GetState().IsKeyDown(Keys.R))
+            {
+                Console.WriteLine("B: " + angleToTarget);
+            }
+
+            angleToTarget %= Math.PI * 2;
+            
             //Adjust angle to be the nearest one in either direction
-            if (angleToTarget > (float)Math.PI)
-                angleToTarget = (float)(Math.PI * 2 - angleToTarget);
+            if (angleToTarget > Math.PI)
+                angleToTarget = -(Math.PI * 2 - angleToTarget);
+            else if (angleToTarget < -Math.PI)
+                angleToTarget = (Math.PI * 2 + angleToTarget);
 
             if (angleToTarget > 0)
                 gunRotation -= 0.04f;
@@ -99,6 +111,9 @@ namespace BPA_Tank_Racer_Game
 
 
 
+            //Fire
+            if (angleToTarget < 0.2f || angleToTarget > -0.2f)
+                Shoot();
         }
     }
 }
