@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-
-//Temp
-using Microsoft.Xna.Framework.Input;
 
 namespace BPA_Tank_Racer_Game
 {
@@ -28,7 +23,7 @@ namespace BPA_Tank_Racer_Game
             
             base.Update(gametime);
 
-            // position += velocity ;
+            position += velocity ;
         }
 
         public bool SteerAi(Background background)
@@ -91,12 +86,6 @@ namespace BPA_Tank_Racer_Game
             //Find angle from gun to target, prev was from strait up to target
             angleToTarget -= gunRotation;
 
-            //Temp
-            if (Keyboard.GetState().IsKeyDown(Keys.R))
-            {
-                Console.WriteLine("B: " + angleToTarget);
-            }
-
             angleToTarget %= Math.PI * 2;
             
             //Adjust angle to be the nearest one in either direction
@@ -108,8 +97,7 @@ namespace BPA_Tank_Racer_Game
             if (angleToTarget > 0)
                 gunRotation -= 0.04f;
             else gunRotation += 0.04f;
-
-
+            
 
             //Fire
             if (angleToTarget < 0.2f || angleToTarget > -0.2f)

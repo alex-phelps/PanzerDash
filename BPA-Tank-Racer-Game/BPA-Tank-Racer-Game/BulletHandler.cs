@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -76,6 +74,30 @@ namespace BPA_Tank_Racer_Game
             foreach (Bullet bullet in bullets) 
             {
                 bullet.position += shiftVar;
+            }
+        }
+
+        /// <summary>
+        /// Moves all the bullets in this bullet handler by a specified amount (on the X axis)
+        /// </summary>
+        /// <param name="shiftVar">Vector2 to move the bullets by</param>
+        public void MoveBulletsX(float shiftVar)
+        {
+            foreach (Bullet bullet in bullets)
+            {
+                bullet.position.X += shiftVar;
+            }
+        }
+
+        /// <summary>
+        /// Moves all the bullets in this bullet handler by a specified amount (on the Y axis)
+        /// </summary>
+        /// <param name="shiftVar">Vector2 to move the bullets by</param>
+        public void MoveBulletsY(float shiftVar)
+        {
+            foreach (Bullet bullet in bullets)
+            {
+                bullet.position.Y += shiftVar;
             }
         }
 
