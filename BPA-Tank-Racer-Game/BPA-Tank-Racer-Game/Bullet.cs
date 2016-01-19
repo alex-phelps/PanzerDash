@@ -6,16 +6,17 @@ namespace BPA_Tank_Racer_Game
     public class Bullet : GameObject
     {
         public Vector2 velocity;
-        public int damage { get; private set; }
+        public double damage { get; private set; }
         public int speed { get; private set; }
         public Tank ownerTank { get; private set; }
+        public bool active { get; private set; }
 
         public int secToDestruction = 1;
 
         private Texture2D explosionTexture;
 
         public Bullet(Texture2D texture, Texture2D explosionTexture, Vector2 velocity, Vector2 position, 
-            float rotation, int damage, int speed, Tank ownerTank) 
+            float rotation, double damage, int speed, Tank ownerTank) 
             : base(texture)
         {
             this.velocity.X = velocity.X * speed;
@@ -24,6 +25,9 @@ namespace BPA_Tank_Racer_Game
             this.rotation = rotation;
             this.damage = damage;
             this.explosionTexture = explosionTexture;
+            this.ownerTank = ownerTank;
+
+            active = true;
         }
 
         public override void Update(GameTime gameTime)
@@ -33,6 +37,7 @@ namespace BPA_Tank_Racer_Game
 
         public void Explode()
         {
+            active = false;
             texture = explosionTexture;
 
             velocity = Vector2.Zero;

@@ -34,7 +34,8 @@ namespace BPA_Tank_Racer_Game
         private TankBase tankBase;
         private TankGun tankGun;
 
-        private  TimeSpan oldTime;
+        private TimeSpan oldCooldownTime;
+        private TimeSpan oldStunTime;
 
         public Vector2 velocity;
         public float speed;
@@ -44,11 +45,14 @@ namespace BPA_Tank_Racer_Game
         public float maxRotSpeed;
         public float rotAccel;
         public float gunRotation;
-        public int gunDamage;
+        public double gunDamage;
         public int bulletSpeed;
 
-        public int baseCooldown;
-        public int currentCooldown;
+        public double baseCooldown;
+        public double currentCooldown;
+
+        public bool isStunned;
+        public double stunLength;
 
         /// <summary>
         /// Creates a new tank
@@ -77,42 +81,42 @@ namespace BPA_Tank_Racer_Game
             {
                 tankBase = new TankBase(content.Load<Texture2D>("RedTankBase"));
 
-                accel = 0.04f;
-                maxSpeed = 3.3f;
+                accel = 0.02f;
+                maxSpeed = 1.2f;
             }
             else if (baseType == TankPartType.desert) //Desert
             {
                 tankBase = new TankBase(content.Load<Texture2D>("desertTankBase"));
 
-                accel = 0.03f;
-                maxSpeed = 2.5f;
+                accel = 0.02f;
+                maxSpeed = 1.3f;
             }
             else if (baseType == TankPartType.snow) //Snow
             {
                 tankBase = new TankBase(content.Load<Texture2D>("SnowTankBase"));
 
-                accel = 0.06f;
-                maxSpeed = 2.2f;
+                accel = 0.03f;
+                maxSpeed = 1.1f;
             }
             else if (baseType == TankPartType.urban) //Urban
             {
                 tankBase = new TankBase(content.Load<Texture2D>("UrbanTankBase"));
 
-                accel = 0.025f;
-                maxSpeed = 1.6f;
+                accel = 0.015f;
+                maxSpeed = 0.8f;
             }
             else if (baseType == TankPartType.jungle) //Jungle
             {
                 tankBase = new TankBase(content.Load<Texture2D>("JungleTankBase"));
 
-                accel = 0.15f;
-                maxSpeed = 2.8f;
+                accel = 0.08f;
+                maxSpeed = 2.4f;
             }
             else if (baseType == TankPartType.rainbow) //RAINBOW
             {
                 tankBase = new TankBase(content.Load<Texture2D>("RainbowTankBase"));
 
-                accel = 0.4f;
+                accel = 0.3f;
                 maxSpeed = 8;
 
                 maxRotSpeed = 0.25f;
@@ -122,8 +126,8 @@ namespace BPA_Tank_Racer_Game
             {
                 tankBase = new TankBase(content.Load<Texture2D>("basicTankBase"));
 
-                accel = 0.1f;
-                maxSpeed = 2;
+                accel = 0.05f;
+                maxSpeed = 1;
 
                 maxRotSpeed = 0.05f;
                 rotAccel = 0.0025f;
@@ -136,7 +140,7 @@ namespace BPA_Tank_Racer_Game
                 tankGun = new TankGun(content.Load<Texture2D>("RedTankGun"));
 
                 baseCooldown = 2;
-                gunDamage = 2;
+                gunDamage = 0.4;
                 bulletSpeed = 12;
             } 
             else if (gunType == TankPartType.desert) //Desert
@@ -144,23 +148,23 @@ namespace BPA_Tank_Racer_Game
                 tankGun = new TankGun(content.Load<Texture2D>("desertTankGun"));
 
                 baseCooldown = 6;
-                gunDamage = 7;
-                bulletSpeed = 6;
+                gunDamage = 1.3;
+                bulletSpeed = 9;
             }
             else if (gunType == TankPartType.snow) //Snow
             {
                 tankGun = new TankGun(content.Load<Texture2D>("SnowTankGun"));
 
-                baseCooldown = 4;
-                gunDamage = 5;
-                bulletSpeed = 9;
+                baseCooldown = 5;
+                gunDamage = 2;
+                bulletSpeed = 7;
             }
             else if (gunType == TankPartType.urban) //Urban
             {
                 tankGun = new TankGun(content.Load<Texture2D>("UrbanTankGun"));
 
-                baseCooldown = 8;
-                gunDamage = 12;
+                baseCooldown = 9;
+                gunDamage = 5;
                 bulletSpeed = 4;
             }
             else if (gunType == TankPartType.jungle) //Jungle
@@ -168,7 +172,7 @@ namespace BPA_Tank_Racer_Game
                 tankGun = new TankGun(content.Load<Texture2D>("JungleTankGun"));
 
                 baseCooldown = 3;
-                gunDamage = 4;
+                gunDamage = 0.8;
                 bulletSpeed = 15;
             }
             else if (gunType == TankPartType.rainbow) //RAINBOW
@@ -184,8 +188,8 @@ namespace BPA_Tank_Racer_Game
                 tankGun = new TankGun(content.Load<Texture2D>("basicTankGun"));
 
                 baseCooldown = 5;
-                gunDamage = 5;
-                bulletSpeed = 7;
+                gunDamage = 2;
+                bulletSpeed = 8;
             }
 
             //Set GameObject texture
@@ -218,11 +222,36 @@ namespace BPA_Tank_Racer_Game
             tankBase.rotation = rotation;
             tankGun.position = position;
             tankGun.rotation = gunRotation;
-            
-            if (currentCooldown != 0 && gametime.TotalGameTime.TotalSeconds - 1 >= oldTime.TotalSeconds)
+
+            if (stunLength == 0)
+                if (isStunned)
+                    isStunned = false;
+                else { }
+            else if (!isStunned)
             {
-                currentCooldown--;
-                oldTime = gametime.TotalGameTime;
+                isStunned = true;
+                speed = 0;
+                rotSpeed = 0;
+                velocity = Vector2.Zero;
+
+                //Reset timer
+                oldStunTime = gametime.TotalGameTime;
+            }  
+
+            if (!isStunned)
+            {
+                if (currentCooldown != 0 && gametime.TotalGameTime.TotalSeconds - 0.2 >= oldCooldownTime.TotalSeconds)
+                {
+                    currentCooldown = Math.Round(currentCooldown - 0.2, 2);
+                    oldCooldownTime = gametime.TotalGameTime;
+                }
+            }
+
+            //Update stun
+            if (stunLength != 0 && gametime.TotalGameTime.TotalSeconds - 0.1 >= oldStunTime.TotalSeconds)
+            {
+                stunLength = Math.Round(stunLength - 0.1, 2);
+                oldStunTime = gametime.TotalGameTime;
             }
         }
 

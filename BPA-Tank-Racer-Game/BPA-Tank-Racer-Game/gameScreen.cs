@@ -56,10 +56,14 @@ namespace BPA_Tank_Racer_Game
             playerTank.Update(gametime);
             bulletHandler.Update(gametime);
 
-            //Move objects based on the player's tank's movement
-            background.position -= playerTank.velocity;
-            bulletHandler.MoveBullets(-playerTank.velocity);
-            enemyTank.position -= playerTank.velocity;
+            //If player is not stunned, allow it to move
+            if (!playerTank.isStunned)
+            {
+                //Move objects based on the player's tank's movement
+                background.position -= playerTank.velocity;
+                bulletHandler.MoveBullets(-playerTank.velocity);
+                enemyTank.position -= playerTank.velocity;
+            }
 
             //Check if player is colliding with the color black in the background
             if (Game1.IntersectColor(playerTank, background, new Color(0, 0, 0))) 
@@ -160,7 +164,7 @@ namespace BPA_Tank_Racer_Game
             }
 
             //Update enemy AI tank
-            if (!enemyTank.SteerAi(background))
+            if (!enemyTank.SteerAi(background) && !enemyTank.SteerAi(playerTank))
             {
                 if (enemyTank.rotSpeed < -0.05f) // Not 0 here to fix any rounding errors
                     enemyTank.rotSpeed += 0.03f;
@@ -169,7 +173,7 @@ namespace BPA_Tank_Racer_Game
                 else enemyTank.rotSpeed = 0;
             }
             enemyTank.Update(gametime);
-            enemyTank.ShootAi(playerTank);
+            //enemyTank.ShootAi(playerTank);
 
             //Check if player is colliding with the enemy tank
             //Since we have checked if the player has caused any collision (and dealt with it) we know the enemy is causing a collision here
@@ -235,8 +239,20 @@ namespace BPA_Tank_Racer_Game
 
             foreach (Bullet bullet in bulletHandler.bullets)
             {
-                if (Game1.IntersectColor(bullet, background, new Color(0, 0, 0)))
+                if (bullet.active && Game1.IntersectColor(bullet, background, new Color(0, 0, 0)))
                 {
+                    bulletHandler.Destroy(bullet);
+                }
+
+                if (bullet.active && bullet.ownerTank != playerTank && Game1.IntersectPixels(bullet, playerTank))
+                {
+                    playerTank.stunLength = bullet.damage;
+                    bulletHandler.Destroy(bullet);
+                }
+
+                if (bullet.active && bullet.ownerTank != enemyTank && Game1.IntersectPixels(bullet, enemyTank))
+                {
+                    enemyTank.stunLength = bullet.damage;
                     bulletHandler.Destroy(bullet);
                 }
             }
