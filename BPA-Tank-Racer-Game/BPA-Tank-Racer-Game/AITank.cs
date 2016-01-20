@@ -153,7 +153,7 @@ namespace BPA_Tank_Racer_Game
                 Matrix transformTankTofinishObj = transformMatrix * Matrix.Invert(finishObj.transformMatrix);
 
                 //Create points in fornt of this tank to check the position of the finish
-                Vector2 positionInFinish = Vector2.Transform(new Vector2(Width / 2, -Height), transformTankTofinishObj);
+                Vector2 positionInFinish = Vector2.Transform(new Vector2(Width / 2, -Height * 3), transformTankTofinishObj);
 
                 int xM = (int)Math.Round(positionInFinish.X);
                 int yM = (int)Math.Round(positionInFinish.Y);
