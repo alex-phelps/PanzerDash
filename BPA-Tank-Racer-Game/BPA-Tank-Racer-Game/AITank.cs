@@ -7,6 +7,8 @@ namespace BPA_Tank_Racer_Game
 {
     public class AITank : Tank
     {
+        private bool atFinish = false;
+
         public AITank(ContentManager content, BulletHandler bulletHandler, TankPartType baseType,
             TankPartType gunType, Vector2 startPos)
             : base(content, bulletHandler, baseType, gunType)
@@ -16,7 +18,7 @@ namespace BPA_Tank_Racer_Game
 
         public override void Update(GameTime gametime)
         {
-            if (!isStunned)
+            if (!isStunned && !atFinish)
             {
                 speed += accel;
 
@@ -26,7 +28,7 @@ namespace BPA_Tank_Racer_Game
             
             base.Update(gametime);
 
-            if (!isStunned)
+            if (!isStunned && !atFinish)
                 position += velocity;
         }
 
@@ -144,18 +146,42 @@ namespace BPA_Tank_Racer_Game
             return false;
         }
 
-        public void ShootAi(Tank targetTank)
+        public bool CheckForFinish(FinishObjective finishObj)
+        {
+            if (!atFinish)
+            {
+                Matrix transformTankTofinishObj = transformMatrix * Matrix.Invert(finishObj.transformMatrix);
+
+                //Create points in fornt of this tank to check the position of the finish
+                Vector2 positionInFinish = Vector2.Transform(new Vector2(Width / 2, -Height), transformTankTofinishObj);
+
+                int xM = (int)Math.Round(positionInFinish.X);
+                int yM = (int)Math.Round(positionInFinish.Y);
+
+                //See if the finish is in the point
+                if (xM >= 0 && xM <= finishObj.Width && yM >= 0 && yM <= finishObj.Height)
+                {
+                    atFinish = true;
+                    return true;
+                }
+
+                return false;
+            }
+            else return true;
+        }
+
+        public void ShootAi(GameObject target)
         {
             if (!isStunned)
             {
                 //Aim
 
                 //Find sub pi/2 angle
-                double angleToTarget = Math.Atan((position.Y - targetTank.position.Y) / (targetTank.position.X - position.X));
+                double angleToTarget = Math.Atan((position.Y - target.position.Y) / (target.position.X - position.X));
                 angleToTarget = Math.PI / 2 - angleToTarget;
 
                 //Find quadrent target is in and adjust angle acordingly
-                if (targetTank.position.X >= position.X)
+                if (target.position.X >= position.X)
                 {
                     angleToTarget += Math.PI;
                 }

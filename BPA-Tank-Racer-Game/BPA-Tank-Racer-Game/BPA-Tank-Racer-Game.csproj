@@ -44,6 +44,7 @@
     <Compile Include="Background.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="BulletHandler.cs" />
+    <Compile Include="FinishObjective.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="GameScreen.cs" />
@@ -74,6 +75,7 @@
     <Content Include="Content\DamageIncreasePowerUp.png" />
     <Content Include="Content\desertTankBase.png" />
     <Content Include="Content\desertTankGun.png" />
+    <Content Include="Content\FinishHealthBar.png" />
     <Content Include="Content\FreeMode-Selected.png" />
     <Content Include="Content\FreeMode.png" />
     <Content Include="Content\JungleTankBase.png" />
@@ -94,6 +96,7 @@
     <Content Include="Content\SnowTankBase.png" />
     <Content Include="Content\SnowTankGun.png" />
     <Content Include="Content\SpeedPowerUp.png" />
+    <Content Include="Content\TempThing.png" />
     <Content Include="Content\Tiles\grassTile.png" />
     <Content Include="Content\Tiles\mountainCornerInTile.png" />
     <Content Include="Content\Tiles\mountainCornerTile.png" />
@@ -113,6 +116,9 @@
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\CountdownFont.spritefont" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

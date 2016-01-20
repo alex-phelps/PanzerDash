@@ -140,7 +140,7 @@ namespace BPA_Tank_Racer_Game
                 tankGun = new TankGun(content.Load<Texture2D>("RedTankGun"));
 
                 baseCooldown = 2;
-                gunDamage = 0.4;
+                gunDamage = 0.5;
                 bulletSpeed = 12;
             } 
             else if (gunType == TankPartType.desert) //Desert
@@ -164,8 +164,8 @@ namespace BPA_Tank_Racer_Game
                 tankGun = new TankGun(content.Load<Texture2D>("UrbanTankGun"));
 
                 baseCooldown = 9;
-                gunDamage = 5;
-                bulletSpeed = 4;
+                gunDamage = 4.5;
+                bulletSpeed = 5;
             }
             else if (gunType == TankPartType.jungle) //Jungle
             {
@@ -188,7 +188,7 @@ namespace BPA_Tank_Racer_Game
                 tankGun = new TankGun(content.Load<Texture2D>("basicTankGun"));
 
                 baseCooldown = 5;
-                gunDamage = 2;
+                gunDamage = 1.7;
                 bulletSpeed = 8;
             }
 
