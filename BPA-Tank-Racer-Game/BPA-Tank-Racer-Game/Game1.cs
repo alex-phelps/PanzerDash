@@ -13,6 +13,7 @@ namespace BPA_Tank_Racer_Game
         SpriteBatch spriteBatch;
         Screen currentScreen;
         MenuScreen menuScreen;
+        FreeModeScreen freeModeScreen;
 
         public static int WindowWidth = 800;
         public static int WindowHeight = 480;
@@ -52,9 +53,12 @@ namespace BPA_Tank_Racer_Game
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             menuScreen = new MenuScreen(Content, new EventHandler(MenuScreenEvent));
+            freeModeScreen = new FreeModeScreen(Content,
+                new EventHandler(FreeModeScreenEvent));
 
             currentScreen = menuScreen;
         }
+
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -122,6 +126,11 @@ namespace BPA_Tank_Racer_Game
 
             }
             else Environment.Exit(0);
+        }
+
+        private void FreeModeScreenEvent(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void GameScreenEvent(object sender, EventArgs e)

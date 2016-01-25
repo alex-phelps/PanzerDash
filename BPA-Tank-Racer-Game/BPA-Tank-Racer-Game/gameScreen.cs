@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,10 +17,22 @@ namespace BPA_Tank_Racer_Game
         private Background background;
         private BulletHandler bulletHandler;
         private Texture2D cooldownBar;
+        private Texture2D powerupBar;
         private FinishObjective finishObjective;
+        private Random random;
+
+        private List<Vector2> powerupSpawns;
+        private List<Powerup> powerups;
+        private List<Powerup> powerupsToRemove;
 
         private bool gameActive = false;
         private bool firstUpdate = true;
+        private bool gameWon = false;
+
+        private string winText;
+        private Color winTextColor;
+        private SpriteFont winTextFont;
+        private SpriteFont winSubFont;
 
         private SpriteFont countdownFont;
         private TimeSpan countdownOldTime;
@@ -30,18 +43,25 @@ namespace BPA_Tank_Racer_Game
         {
             cooldownBar = content.Load<Texture2D>("CooldownBar");
             countdownFont = content.Load<SpriteFont>("CountdownFont");
+            powerupBar = content.Load<Texture2D>("PowerupBar");
+            winTextFont = content.Load<SpriteFont>("WinTextFont");
+            winSubFont = content.Load<SpriteFont>("WinSubFont");
             bulletHandler = new BulletHandler();
+            powerupSpawns = new List<Vector2>();
+            powerups = new List<Powerup>();
+            powerupsToRemove = new List<Powerup>();
+            random = new Random();
 
             Vector2 levelSize = new Vector2(3200, 3200);
             Vector2 startPosInImage;
             Vector2 finishPosInImage;
 
             //Create player
-            playerTank = new PlayerTank(content, bulletHandler, TankPartType.rainbow, TankPartType.snow);
+            playerTank = new PlayerTank(content, bulletHandler, TankPartType.red, TankPartType.red);
 
             //Create Enemy
             enemyTank = new AITank(content, bulletHandler, TankPartType.red,
-                TankPartType.urban, new Vector2(Game1.WindowWidth / 2 + 100, Game1.WindowHeight / 2));
+                TankPartType.desert, new Vector2(Game1.WindowWidth / 2 + 100, Game1.WindowHeight / 2));
 
             if (level == 2) // Level 2
             {
@@ -53,6 +73,12 @@ namespace BPA_Tank_Racer_Game
                 background = new Background(content.Load<Texture2D>("Level1"));
                 startPosInImage = new Vector2(654, 2478);
                 finishPosInImage = new Vector2(2143, 1855);
+
+                //Powerup spawn locations in the image
+                powerupSpawns.Add(new Vector2(704, 2582));
+                powerupSpawns.Add(new Vector2(1400, 1485));
+                powerupSpawns.Add(new Vector2(1285, 1024));
+                powerupSpawns.Add(new Vector2(1448, 2324));
             }
 
             background.position.X = (levelSize.X / 2 - startPosInImage.X) + Game1.WindowWidth / 2;
@@ -61,15 +87,33 @@ namespace BPA_Tank_Racer_Game
             finishObjective = new FinishObjective(content, new Vector2(
                 ((finishPosInImage.X - levelSize.X / 2) + background.position.X),
                 ((finishPosInImage.Y - levelSize.Y / 2) + background.position.Y)));
+
+            foreach (Vector2 loc in powerupSpawns)
+            {
+                PowerUpType type;
+                int typeInInt = random.Next(4);
+
+                if (typeInInt == 0) 
+                    type = PowerUpType.speed;
+                else if (typeInInt == 1)
+                    type = PowerUpType.shield;
+                else if (typeInInt == 2)
+                    type = PowerUpType.rapid;
+                else type = PowerUpType.damage;
+
+                powerups.Add(new Powerup(content, new Vector2(
+                    ((loc.X - levelSize.X / 2) + background.position.X),
+                    ((loc.Y - levelSize.Y / 2) + background.position.Y)), type));
+            }
         }
 
         public override void Update(GameTime gametime)
         {
-            if (gameActive || firstUpdate)
-            {
-                if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-                    screenEvent.Invoke(this, new EventArgs());
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                screenEvent.Invoke(this, new EventArgs());
 
+            if ((gameActive || firstUpdate) && !gameWon)
+            {
                 playerTank.Update(gametime);
                 bulletHandler.Update(gametime);
 
@@ -261,7 +305,8 @@ namespace BPA_Tank_Racer_Game
                     {
                         if (Game1.IntersectPixels(bullet, playerTank))
                         {
-                            playerTank.stunLength = bullet.damage;
+                            if (playerTank.currentPowerupType != PowerUpType.shield)
+                                playerTank.stunLength = bullet.damage;
                             bulletHandler.Destroy(bullet);
                         }
                         else if (Game1.IntersectPixels(bullet, finishObjective))
@@ -277,7 +322,8 @@ namespace BPA_Tank_Racer_Game
                     {
                         if (Game1.IntersectPixels(bullet, enemyTank))
                         {
-                            enemyTank.stunLength = bullet.damage;
+                            if (enemyTank.currentPowerupType != PowerUpType.shield)
+                                enemyTank.stunLength = bullet.damage;
                             bulletHandler.Destroy(bullet);
                         }
                         else if (Game1.IntersectPixels(bullet, finishObjective))
@@ -288,17 +334,51 @@ namespace BPA_Tank_Racer_Game
                     }
                 }
 
+                //Check for powerup collection
+                foreach (Powerup powerup in powerups)
+                {
+                    if (Game1.IntersectPixels(playerTank, powerup))
+                    {
+                        playerTank.CollectPowerUp(powerup);
+                        powerupsToRemove.Add(powerup);
+                    }
+                    else if (Game1.IntersectPixels(enemyTank, powerup))
+                    {
+                        enemyTank.CollectPowerUp(powerup);
+                        powerupsToRemove.Add(powerup);
+                    }
+                }
+
+                //Remove used powerups
+                foreach (Powerup powerup in powerupsToRemove)
+                {
+                    powerups.Remove(powerup);
+                }
+
+
                 if (finishObjective.playerHealth <= 0)
                 {
-
+                    gameWon = true;
+                    winText = "Congratulations!\nYou won!";
+                    winTextColor = Color.Lime;
                 }
                 else if (finishObjective.enemyHealth <= 0)
                 {
-
+                    gameWon = true;
+                    winText = "You lost!\nToo bad";
+                    winTextColor = Color.Red;
                 }
 
                 if (firstUpdate)
                     firstUpdate = false;
+            }
+            else if (gameWon)
+            {
+                //After game, before screen change
+                if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                {
+                    screenEvent.Invoke(this, new EventArgs());
+                }
             }
             else
             {
@@ -317,22 +397,34 @@ namespace BPA_Tank_Racer_Game
 
         public override void Draw(SpriteBatch spritebatch)
         {
+            //Draw Sprites
             background.Draw(spritebatch);
             finishObjective.Draw(spritebatch);
+            foreach (Powerup powerup in powerups)
+            {
+                powerup.Draw(spritebatch);
+            }
             enemyTank.Draw(spritebatch);
             playerTank.Draw(spritebatch);
             bulletHandler.Draw(spritebatch);
             finishObjective.DrawHUD(spritebatch);
 
+
             //Draw HUD
 
-            //Create a rectangle representing how much of the bar should be shown
+            //Create a rectangle representing how much of the bars should be shown
             Rectangle cooldownSource = new Rectangle(0, 0, cooldownBar.Width,
                 (int)(cooldownBar.Height * ((float)playerTank.currentCooldown / (float)playerTank.baseCooldown)));
+            Rectangle powerupSource = new Rectangle(0, 0, powerupBar.Width,
+                (int)(powerupBar.Height * ((float)playerTank.powerupTime / (float)playerTank.basePowerupTime)));
             //Draw cooldownBar
             spritebatch.Draw(cooldownBar, new Vector2(30, (Game1.WindowHeight / 2) + (cooldownBar.Height / 2) +
                 cooldownBar.Height - (int)(cooldownBar.Height * ((float)playerTank.currentCooldown / (float)playerTank.baseCooldown))),
                 cooldownSource, Color.White, 0, new Vector2(cooldownBar.Width / 2, cooldownBar.Height / 2), 1, SpriteEffects.None, 1);
+            //Draw Powerup cooldown bar
+            spritebatch.Draw(powerupBar, new Vector2(Game1.WindowWidth - 30, (Game1.WindowHeight / 2) + (powerupBar.Height / 2) +
+                powerupBar.Height - (int)(powerupBar.Height * ((float)playerTank.powerupTime / (float)playerTank.basePowerupTime))),
+                powerupSource, Color.White, 0, new Vector2(powerupBar.Width / 2, powerupBar.Height / 2), 1, SpriteEffects.None, 1);
 
 
             //Draw countdown
@@ -351,6 +443,19 @@ namespace BPA_Tank_Racer_Game
                     countdownColor, 0, new Vector2(0, 0), 1, SpriteEffects.None, 1);
             }
 
+            //Draw win text
+            if (gameWon)
+            {
+                spritebatch.DrawString(winTextFont, winText, new Vector2(
+                    Game1.WindowWidth / 2 - winTextFont.MeasureString(winText).X / 2, Game1.WindowHeight / 3
+                    - winTextFont.MeasureString(winText).Y / 2), winTextColor, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+
+                spritebatch.DrawString(winSubFont, "> Press Enter to Continue <", new Vector2(
+                    Game1.WindowWidth / 2 - winSubFont.MeasureString("> Press Enter to Continue <").X / 2,
+                    (2 * Game1.WindowHeight) / 3 - winSubFont.MeasureString("> Press Enter to Continue <").Y / 2),
+                    Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+            }
+
             base.Draw(spritebatch);
         }
 
@@ -360,6 +465,11 @@ namespace BPA_Tank_Racer_Game
             bulletHandler.MoveBullets(vector);
             enemyTank.position += vector;
             finishObjective.position += vector;
+
+            foreach (Powerup powerup in powerups)
+            {
+                powerup.position += vector;
+            }
         }
 
         private void MoveBoard(float x, float y)
@@ -373,6 +483,12 @@ namespace BPA_Tank_Racer_Game
             bulletHandler.MoveBulletsY(y);
             enemyTank.position.Y += y;
             finishObjective.position.Y += y;
+
+            foreach (Powerup powerup in powerups)
+            {
+                powerup.position.X += x;
+                powerup.position.Y += y;
+            }
         }
     }
 }

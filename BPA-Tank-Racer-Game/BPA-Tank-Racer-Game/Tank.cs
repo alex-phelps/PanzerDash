@@ -24,18 +24,27 @@ namespace BPA_Tank_Racer_Game
     /// </summary>
     public class Tank : GameObject
     {
-        TankPartType baseType;
-        TankPartType gunType;
+        private TankPartType baseType;
+        private TankPartType gunType;
 
         private Texture2D bulletTexture;
         private BulletHandler bulletHandler;
         private Texture2D bulletExplosionTexture;
+        private Texture2D shieldTexture;
         
         private TankBase tankBase;
         private TankGun tankGun;
 
         private TimeSpan oldCooldownTime;
         private TimeSpan oldStunTime;
+        private TimeSpan powerupOldTime;
+
+        public PowerUpType currentPowerupType { get; private set; }
+        private float damageMod;
+        private float speedMod;
+        private float rapidCooldown;
+        public double powerupTime;
+        public double basePowerupTime;
 
         public Vector2 velocity;
         public float speed;
@@ -70,6 +79,7 @@ namespace BPA_Tank_Racer_Game
 
             bulletTexture = content.Load<Texture2D>("Bullet");
             bulletExplosionTexture = content.Load<Texture2D>("BulletExplosion");
+            shieldTexture = content.Load<Texture2D>("Shield");
             
             //Temp
             maxRotSpeed = 0.05f;
@@ -156,7 +166,7 @@ namespace BPA_Tank_Racer_Game
                 tankGun = new TankGun(content.Load<Texture2D>("SnowTankGun"));
 
                 baseCooldown = 5;
-                gunDamage = 2;
+                gunDamage = 2.8;
                 bulletSpeed = 7;
             }
             else if (gunType == TankPartType.urban) //Urban
@@ -164,7 +174,7 @@ namespace BPA_Tank_Racer_Game
                 tankGun = new TankGun(content.Load<Texture2D>("UrbanTankGun"));
 
                 baseCooldown = 9;
-                gunDamage = 4.5;
+                gunDamage = 5.2;
                 bulletSpeed = 5;
             }
             else if (gunType == TankPartType.jungle) //Jungle
@@ -200,10 +210,10 @@ namespace BPA_Tank_Racer_Game
 
         public override void Update(GameTime gametime)
         {
-            if (speed > maxSpeed)
-                speed = maxSpeed;
-            else if (speed < -maxSpeed)
-                speed = -maxSpeed;
+            if (speed > maxSpeed + speedMod)
+                speed = maxSpeed + speedMod;
+            else if (speed < -(maxSpeed + speedMod))
+                speed = -(maxSpeed + speedMod);
 
             if (rotSpeed > maxRotSpeed)
                 rotSpeed = maxRotSpeed;
@@ -253,12 +263,34 @@ namespace BPA_Tank_Racer_Game
                 stunLength = Math.Round(stunLength - 0.1, 2);
                 oldStunTime = gametime.TotalGameTime;
             }
+
+            //Update powerup timer
+            if (powerupTime <= 0)
+            {
+                //Reset powerup
+                currentPowerupType = PowerUpType.none;
+                damageMod = 0;
+                speedMod = 0;
+                rapidCooldown = 0;
+            }
+            else if (gametime.TotalGameTime.TotalSeconds - 0.1 >= powerupOldTime.TotalSeconds)
+            {
+                powerupTime = Math.Round(powerupTime - 0.1, 2);
+                powerupOldTime = gametime.TotalGameTime;
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             tankBase.Draw(spriteBatch);
             tankGun.Draw(spriteBatch);
+
+            if (currentPowerupType == PowerUpType.shield)
+            {
+                Rectangle source = new Rectangle(0, 0, shieldTexture.Width, shieldTexture.Height);
+                spriteBatch.Draw(shieldTexture, position, source, Color.White, 0,
+                    new Vector2(shieldTexture.Width / 2, shieldTexture.Height / 2), scale, SpriteEffects.None, 1);
+            }
         }
 
         public void Shoot()
@@ -267,10 +299,42 @@ namespace BPA_Tank_Racer_Game
             {
                 Vector2 bulletVelocity = new Vector2((float)Math.Sin(gunRotation), (float)Math.Cos(gunRotation));
                 bulletHandler.NewBullet(new Bullet(bulletTexture, bulletExplosionTexture,
-                    bulletVelocity, position, gunRotation, gunDamage, bulletSpeed, this));
+                    bulletVelocity, position, gunRotation, gunDamage + damageMod, bulletSpeed, this));
 
-                currentCooldown = baseCooldown;
+                if (currentPowerupType != PowerUpType.rapid)
+                    currentCooldown = baseCooldown;
+                else currentCooldown = rapidCooldown;
             }
+        }
+
+        public void CollectPowerUp(Powerup powerup)
+        {
+            currentPowerupType = powerup.type;
+
+            if (powerup.type == PowerUpType.speed)
+            {
+                speedMod = powerup.effectPower;
+                powerupTime = 3;
+            }
+            else if (powerup.type == PowerUpType.shield)
+            {
+                powerupTime = 10;
+            }
+            else if (powerup.type == PowerUpType.rapid)
+            {
+                powerupTime = 4;
+                rapidCooldown = powerup.effectPower;
+
+                if (currentCooldown > rapidCooldown)
+                    currentCooldown = rapidCooldown;
+            }
+            else if (powerup.type == PowerUpType.damage)
+            {
+                damageMod = powerup.effectPower;
+                powerupTime = 7;
+            }
+
+            basePowerupTime = powerupTime;
         }
     }
 }
