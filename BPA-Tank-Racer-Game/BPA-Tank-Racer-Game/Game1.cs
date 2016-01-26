@@ -13,7 +13,6 @@ namespace BPA_Tank_Racer_Game
         SpriteBatch spriteBatch;
         Screen currentScreen;
         MenuScreen menuScreen;
-        FreeModeScreen freeModeScreen;
 
         public static int WindowWidth = 800;
         public static int WindowHeight = 480;
@@ -53,8 +52,6 @@ namespace BPA_Tank_Racer_Game
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             menuScreen = new MenuScreen(Content, new EventHandler(MenuScreenEvent));
-            freeModeScreen = new FreeModeScreen(Content,
-                new EventHandler(FreeModeScreenEvent));
 
             currentScreen = menuScreen;
         }
@@ -105,32 +102,34 @@ namespace BPA_Tank_Racer_Game
 
         private void MenuScreenEvent(object sender, EventArgs e)
         {
-            if (menuScreen.selectedButton == 0)
+            if (menuScreen.selectedButton == 0) // Play Now
             {
                 currentScreen = new GameScreen(Content, new EventHandler(GameScreenEvent), 1);
             }
-            else if (menuScreen.selectedButton == 1)
+            else if (menuScreen.selectedButton == 1) // Tutorial
             {
 
             }
-            else if (menuScreen.selectedButton == 2)
+            else if (menuScreen.selectedButton == 2) // Career
             {
 
             }
-            else if (menuScreen.selectedButton == 3)
+            else if (menuScreen.selectedButton == 3) // Free Mode
+            {
+                //New freemode screen
+                currentScreen = new FreeModeScreen(Content, new EventHandler(FreeModeScreenEvent));
+            }
+            else if (menuScreen.selectedButton == 4) // Options
             {
 
             }
-            else if (menuScreen.selectedButton == 4)
-            {
-
-            }
-            else Environment.Exit(0);
+            else Environment.Exit(0); // Quit
         }
 
         private void FreeModeScreenEvent(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            if (((FreeModeScreen)currentScreen).gameReady) { }
+            else currentScreen = menuScreen;
         }
 
         private void GameScreenEvent(object sender, EventArgs e)

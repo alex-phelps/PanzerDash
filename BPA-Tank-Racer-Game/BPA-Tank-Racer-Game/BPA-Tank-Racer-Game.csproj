@@ -68,16 +68,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Back-Selected.png" />
+    <Content Include="Content\Back.png" />
     <Content Include="Content\basicTankBase.png" />
     <Content Include="Content\basicTankGun.png" />
+    <Content Include="Content\BigTankParts\BasicBase.png" />
+    <Content Include="Content\BigTankParts\BasicGun.png" />
+    <Content Include="Content\BigTankParts\DesertBase.png" />
+    <Content Include="Content\BigTankParts\DesertGun.png" />
+    <Content Include="Content\BigTankParts\JungleBase.png" />
+    <Content Include="Content\BigTankParts\JungleGun.png" />
+    <Content Include="Content\BigTankParts\RainbowBase.png" />
+    <Content Include="Content\BigTankParts\RainbowGun.png" />
+    <Content Include="Content\BigTankParts\RedBase.png" />
+    <Content Include="Content\BigTankParts\RedGun.png" />
+    <Content Include="Content\BigTankParts\SnowBase.png" />
+    <Content Include="Content\BigTankParts\SnowGun.png" />
+    <Content Include="Content\BigTankParts\UrbanBase.png" />
+    <Content Include="Content\BigTankParts\UrbanGun.png" />
+    <Content Include="Content\Border-Selected.png" />
+    <Content Include="Content\Border.png" />
     <Content Include="Content\Bullet.png" />
     <Content Include="Content\BulletExplosion.png" />
     <Content Include="Content\CareerMode-Selected.png" />
     <Content Include="Content\CareerMode.png" />
+    <Content Include="Content\Confirm-Selected.png" />
+    <Content Include="Content\Confirm.png" />
     <Content Include="Content\CooldownBar.png" />
     <Content Include="Content\DamageIncreasePowerUp.png" />
     <Content Include="Content\desertTankBase.png" />
     <Content Include="Content\desertTankGun.png" />
+    <Content Include="Content\DownArrow.png" />
     <Content Include="Content\FinishHealthBar.png" />
     <Content Include="Content\FreeMode-Selected.png" />
     <Content Include="Content\FreeMode.png" />
@@ -115,6 +136,7 @@
     <Content Include="Content\Tiles\RiverWater.png" />
     <Content Include="Content\Tutorial-Selected.png" />
     <Content Include="Content\Tutorial.png" />
+    <Content Include="Content\UpArrow.png" />
     <Content Include="Content\UrbanTankBase.png" />
     <Content Include="Content\UrbanTankGun.png" />
     <Content Include="Icon.ico" />

@@ -11,30 +11,16 @@ namespace BPA_Tank_Racer_Game
     /// </summary>
     public class MenuScreen : Screen
     {
-        Texture2D logo;
+        private Texture2D logo;
 
-        Texture2D playNowButton;
-        Texture2D careerModeButton;
-        Texture2D freeModeButton;
-        Texture2D optionsButton;
-        Texture2D quitButton;
-        Texture2D tutorialButton;
+        private Texture2D playNowButton, playNowButtonDefault, playNowButtonSelected;
+        private Texture2D careerModeButton, careerModeButtonDefault, careerModeButtonSelected;
+        private Texture2D freeModeButton, freeModeButtonDefault, freeModeButtonSelected;
+        private Texture2D optionsButton, optionsButtonDefault, optionsButtonSelected;
+        private Texture2D quitButton, quitButtonDefault, quitButtonSelected;
+        private Texture2D tutorialButton, tutorialButtonDefault, tutorialButtonSelected;
 
-        Texture2D playNowButtonDefault;
-        Texture2D careerModeButtonDefault;
-        Texture2D freeModeButtonDefault;
-        Texture2D optionsButtonDefault;
-        Texture2D quitButtonDefault;
-        Texture2D tutorialButtonDefault;
-
-        Texture2D playNowButtonSelected;
-        Texture2D careerModeButtonSelected;
-        Texture2D freeModeButtonSelected;
-        Texture2D optionsButtonSelected;
-        Texture2D quitButtonSelected;
-        Texture2D tutorialButtonSelected;
-
-        KeyboardState oldState = Keyboard.GetState();
+        private KeyboardState oldState = Keyboard.GetState();
 
         public int selectedButton { get; private set; }
 

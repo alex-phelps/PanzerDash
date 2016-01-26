@@ -29,6 +29,7 @@ namespace BPA_Tank_Racer_Game
         public Vector2 position;
         public float rotation = 0;
         public float scale = 1;
+        public bool visible = true;
 
         private Texture2D Texture;
 
@@ -102,9 +103,12 @@ namespace BPA_Tank_Racer_Game
 
         public virtual void Draw(SpriteBatch spritebatch)
         {
-            Rectangle source = new Rectangle(0, 0, Width, Height);
-            spritebatch.Draw(texture, position, source, Color.White, rotation,
-                new Vector2(Width / 2, Height / 2), scale, SpriteEffects.None, 1);
+            if (visible)
+            {
+                Rectangle source = new Rectangle(0, 0, Width, Height);
+                spritebatch.Draw(texture, position, source, Color.White, rotation,
+                    new Vector2(Width / 2, Height / 2), scale, SpriteEffects.None, 1);
+            }
         }
     }
 }
