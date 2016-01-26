@@ -68,86 +68,237 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Back-Selected.png" />
-    <Content Include="Content\Back.png" />
-    <Content Include="Content\basicTankBase.png" />
-    <Content Include="Content\basicTankGun.png" />
-    <Content Include="Content\BigTankParts\BasicBase.png" />
-    <Content Include="Content\BigTankParts\BasicGun.png" />
-    <Content Include="Content\BigTankParts\DesertBase.png" />
-    <Content Include="Content\BigTankParts\DesertGun.png" />
-    <Content Include="Content\BigTankParts\JungleBase.png" />
-    <Content Include="Content\BigTankParts\JungleGun.png" />
-    <Content Include="Content\BigTankParts\RainbowBase.png" />
-    <Content Include="Content\BigTankParts\RainbowGun.png" />
-    <Content Include="Content\BigTankParts\RedBase.png" />
-    <Content Include="Content\BigTankParts\RedGun.png" />
-    <Content Include="Content\BigTankParts\SnowBase.png" />
-    <Content Include="Content\BigTankParts\SnowGun.png" />
-    <Content Include="Content\BigTankParts\UrbanBase.png" />
-    <Content Include="Content\BigTankParts\UrbanGun.png" />
-    <Content Include="Content\Border-Selected.png" />
-    <Content Include="Content\Border.png" />
-    <Content Include="Content\Bullet.png" />
-    <Content Include="Content\BulletExplosion.png" />
-    <Content Include="Content\CareerMode-Selected.png" />
-    <Content Include="Content\CareerMode.png" />
-    <Content Include="Content\Confirm-Selected.png" />
-    <Content Include="Content\Confirm.png" />
-    <Content Include="Content\CooldownBar.png" />
-    <Content Include="Content\DamageIncreasePowerUp.png" />
-    <Content Include="Content\desertTankBase.png" />
-    <Content Include="Content\desertTankGun.png" />
-    <Content Include="Content\DownArrow.png" />
-    <Content Include="Content\FinishHealthBar.png" />
-    <Content Include="Content\FreeMode-Selected.png" />
-    <Content Include="Content\FreeMode.png" />
-    <Content Include="Content\JungleTankBase.png" />
-    <Content Include="Content\JungleTankGun.png" />
-    <Content Include="Content\Level1.png" />
-    <Content Include="Content\Logo.png" />
-    <Content Include="Content\Options-Selected.png" />
-    <Content Include="Content\Options.png" />
-    <Content Include="Content\PlayNow-Selected.png" />
-    <Content Include="Content\PlayNow.png" />
-    <Content Include="Content\PowerupBar.png" />
-    <Content Include="Content\Quit-Selected.png" />
-    <Content Include="Content\Quit.png" />
-    <Content Include="Content\RainbowTankBase.png" />
-    <Content Include="Content\RainbowTankGun.png" />
-    <Content Include="Content\RapidFirePowerUp.png" />
-    <Content Include="Content\RedTankGun.png" />
-    <Content Include="Content\Shield.png" />
-    <Content Include="Content\ShieldPowerUp.png" />
-    <Content Include="Content\SnowTankBase.png" />
-    <Content Include="Content\SnowTankGun.png" />
-    <Content Include="Content\SpeedPowerUp.png" />
-    <Content Include="Content\TempThing.png" />
-    <Content Include="Content\Tiles\grassTile.png" />
-    <Content Include="Content\Tiles\mountainCornerInTile.png" />
-    <Content Include="Content\Tiles\mountainCornerTile.png" />
-    <Content Include="Content\Tiles\mountainEdgeTile.png" />
-    <Content Include="Content\Tiles\mountainFlatTile.png" />
-    <Content Include="Content\Tiles\RiverCornerNorth.png" />
-    <Content Include="Content\Tiles\RiverCornerSouth.png" />
-    <Content Include="Content\Tiles\RiverEdge.png" />
-    <Content Include="Content\Tiles\RiverEdgeSides.png" />
-    <Content Include="Content\Tiles\RiverEdgeSouth.png" />
-    <Content Include="Content\Tiles\RiverWater.png" />
-    <Content Include="Content\Tutorial-Selected.png" />
-    <Content Include="Content\Tutorial.png" />
-    <Content Include="Content\UpArrow.png" />
-    <Content Include="Content\UrbanTankBase.png" />
-    <Content Include="Content\UrbanTankGun.png" />
+    <Content Include="Content\Back-Selected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Back.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\basicTankBase.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\basicTankGun.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\BigTankParts\BasicBase.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\BigTankParts\BasicGun.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\BigTankParts\DesertBase.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\BigTankParts\DesertGun.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\BigTankParts\JungleBase.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\BigTankParts\JungleGun.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\BigTankParts\RainbowBase.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\BigTankParts\RainbowGun.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\BigTankParts\RedBase.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\BigTankParts\RedGun.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\BigTankParts\SnowBase.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\BigTankParts\SnowGun.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\BigTankParts\UrbanBase.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\BigTankParts\UrbanGun.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Border-Selected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Border.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Bullet.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\BulletExplosion.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\CareerMode-Selected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\CareerMode.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Confirm-Selected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Confirm.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\CooldownBar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\DamageIncreasePowerUp.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\desertTankBase.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\desertTankGun.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\DownArrow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\FinishHealthBar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\FreeMode-Selected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\FreeMode.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\JungleTankBase.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\JungleTankGun.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Level1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Options-Selected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Options.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\PlayNow-Selected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\PlayNow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\PowerupBar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Quit-Selected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Quit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\RainbowTankBase.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\RainbowTankGun.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\RapidFirePowerUp.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\RedTankGun.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Shield.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ShieldPowerUp.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\SnowTankBase.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\SnowTankGun.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\SpeedPowerUp.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\TempThing.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\grassTile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\mountainCornerInTile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\mountainCornerTile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\mountainEdgeTile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\mountainFlatTile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\RiverCornerNorth.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\RiverCornerSouth.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\RiverEdge.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\RiverEdgeSides.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\RiverEdgeSouth.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\RiverWater.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tutorial-Selected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tutorial.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UpArrow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UrbanTankBase.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UrbanTankGun.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <MonoGameContentReference Include="Content\Content.mgcb" />
+    <MonoGameContentReference Include="Content\Content.mgcb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </MonoGameContentReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\CountdownFont.spritefont" />
-    <None Include="Content\WinSubFont.spritefont" />
-    <None Include="Content\WinTextFont.spritefont" />
+    <None Include="Content\CountdownFont.spritefont">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Content\WinSubFont.spritefont">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\WinTextFont.spritefont">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
