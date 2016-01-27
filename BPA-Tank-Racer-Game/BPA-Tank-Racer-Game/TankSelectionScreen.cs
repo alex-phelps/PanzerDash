@@ -9,24 +9,24 @@ namespace BPA_Tank_Racer_Game
 {
     public class TankSelectionScreen : Screen
     {
-        private Texture2D backButton, backButtonDefault, backButtonSelected;
-        private Texture2D confirmButton, confirmButtonDefault, confirmButtonSelected;
-        private Texture2D border, borderSelected;
-        private Texture2D borderBase, borderGun;
+        protected Texture2D backButton, backButtonDefault, backButtonSelected;
+        protected Texture2D confirmButton, confirmButtonDefault, confirmButtonSelected;
+        protected Texture2D border, borderSelected;
+        protected Texture2D borderBase, borderGun;
 
-        private Texture2D basicBase, basicGun, desertBase, desertGun, jungleBase, jungleGun,
+        protected Texture2D basicBase, basicGun, desertBase, desertGun, jungleBase, jungleGun,
             rainbowBase, rainbowGun, redBase, redGun, snowBase, snowGun, urbanBase, urbanGun;
 
-        private KeyboardState oldState;
+        protected KeyboardState oldState;
 
-        public int selectedButton { get; private set; }
-        private int selectedBaseInt = 0;
-        private int selectedGunInt = 0;
+        public int selectedButton { get; protected set; }
+        protected int selectedBaseInt = 0;
+        protected int selectedGunInt = 0;
 
-        private List<Texture2D> bases = new List<Texture2D>();
-        private List<Texture2D> guns = new List<Texture2D>();
+        protected List<Texture2D> bases = new List<Texture2D>();
+        protected List<Texture2D> guns = new List<Texture2D>();
 
-        private GameObject leftDownArrow, leftUpArrow, rightDownArrow, rightUpArrow;
+        protected GameObject leftDownArrow, leftUpArrow, rightDownArrow, rightUpArrow;
 
         public TankPartType selectedTankBase
         {

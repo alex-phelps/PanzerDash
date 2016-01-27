@@ -13,6 +13,10 @@ namespace BPA_Tank_Racer_Game
             : base(content, screenEvent)
         {
             logo = content.Load<Texture2D>("EnemyTankSelectionLogo");
+
+            //Remove rainbow options from enemy selection
+            bases.Remove(rainbowBase);
+            guns.Remove(rainbowGun);
         }
 
         public override void Draw(SpriteBatch spritebatch)

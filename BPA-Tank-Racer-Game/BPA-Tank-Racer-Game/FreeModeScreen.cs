@@ -62,7 +62,7 @@ namespace BPA_Tank_Racer_Game
 
         private void StartGame()
         {
-            level = 1; //Temp
+            level = 2; //Temp
             bulletHandler = new BulletHandler();
             playerTank = new PlayerTank(content, bulletHandler, playerSelectionScreen.selectedTankBase, playerSelectionScreen.selectedTankGun);
             enemyTank = new AITank(content, bulletHandler, enemyTankSelectionScreen.selectedTankBase, enemyTankSelectionScreen.selectedTankGun,

@@ -440,8 +440,15 @@ namespace BPA_Tank_Racer_Game
 
             if (level == 2) // Level 2
             {
-                startPosInImage = new Vector2(0, 0); // Temp
-                finishPosInImage = new Vector2(0, 0); // Temp
+                background = new Background(content.Load<Texture2D>("Level2"));
+                startPosInImage = new Vector2(2475, 2415); // Temp
+                finishPosInImage = new Vector2(518, 1222); // Temp
+
+                //Powerup spawn locations in the image
+                powerupSpawns.Add(new Vector2(2600, 1570));
+                powerupSpawns.Add(new Vector2(1616, 1425));
+                powerupSpawns.Add(new Vector2(1422, 1833));
+                powerupSpawns.Add(new Vector2(815, 1744));
             }
             else // Level 1
             {

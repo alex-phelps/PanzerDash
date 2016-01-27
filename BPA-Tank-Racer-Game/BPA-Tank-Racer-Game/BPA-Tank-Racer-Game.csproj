@@ -182,6 +182,7 @@
     <Content Include="Content\Level1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Level2.png" />
     <Content Include="Content\Logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -237,6 +238,11 @@
     <Content Include="Content\TempThing.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Tiles\desertMountainCornerInTile.png" />
+    <Content Include="Content\Tiles\desertMountainCornerTile.png" />
+    <Content Include="Content\Tiles\desertMountainEdgeTile.png" />
+    <Content Include="Content\Tiles\desertMountainFlatTile.png" />
+    <Content Include="Content\Tiles\desertTile.png" />
     <Content Include="Content\Tiles\grassTile.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

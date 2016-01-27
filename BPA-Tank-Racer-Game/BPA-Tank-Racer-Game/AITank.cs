@@ -15,8 +15,8 @@ namespace BPA_Tank_Racer_Game
         {
             position = startPos;
 
-            //To handicap the AI a bit
-            baseCooldown += 0.8;
+            //To nerf AI a bit
+            bulletSpeed--;
         }
 
         public override void Update(GameTime gametime)

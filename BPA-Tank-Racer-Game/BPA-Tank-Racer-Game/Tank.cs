@@ -138,9 +138,6 @@ namespace BPA_Tank_Racer_Game
 
                 accel = 0.05f;
                 maxSpeed = 1;
-
-                maxRotSpeed = 0.05f;
-                rotAccel = 0.0025f;
             }
 
 
@@ -151,7 +148,7 @@ namespace BPA_Tank_Racer_Game
 
                 baseCooldown = 2;
                 gunDamage = 0.5;
-                bulletSpeed = 12;
+                bulletSpeed = 11;
             } 
             else if (gunType == TankPartType.desert) //Desert
             {
@@ -174,7 +171,7 @@ namespace BPA_Tank_Racer_Game
                 tankGun = new TankGun(content.Load<Texture2D>("UrbanTankGun"));
 
                 baseCooldown = 9;
-                gunDamage = 5.2;
+                gunDamage = 5;
                 bulletSpeed = 5;
             }
             else if (gunType == TankPartType.jungle) //Jungle
@@ -182,7 +179,7 @@ namespace BPA_Tank_Racer_Game
                 tankGun = new TankGun(content.Load<Texture2D>("JungleTankGun"));
 
                 baseCooldown = 3;
-                gunDamage = 0.6;
+                gunDamage = 1;
                 bulletSpeed = 10;
             }
             else if (gunType == TankPartType.rainbow) //RAINBOW
@@ -314,11 +311,11 @@ namespace BPA_Tank_Racer_Game
             if (powerup.type == PowerUpType.speed)
             {
                 speedMod = powerup.effectPower;
-                powerupTime = 3;
+                powerupTime = 1.6f;
             }
             else if (powerup.type == PowerUpType.shield)
             {
-                powerupTime = 10;
+                powerupTime = 6;
             }
             else if (powerup.type == PowerUpType.rapid)
             {
