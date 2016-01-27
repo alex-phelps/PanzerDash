@@ -14,6 +14,9 @@ namespace BPA_Tank_Racer_Game
             : base(content, bulletHandler, baseType, gunType)
         {
             position = startPos;
+
+            //To handicap the AI a bit
+            baseCooldown += 0.8;
         }
 
         public override void Update(GameTime gametime)
@@ -206,6 +209,7 @@ namespace BPA_Tank_Racer_Game
                 if (angleToTarget < 0.2f || angleToTarget > -0.2f)
                     Shoot();
             }
+            
         }
     }
 }

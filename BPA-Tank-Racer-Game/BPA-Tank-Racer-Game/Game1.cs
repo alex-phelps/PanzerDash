@@ -104,7 +104,7 @@ namespace BPA_Tank_Racer_Game
         {
             if (menuScreen.selectedButton == 0) // Play Now
             {
-                currentScreen = new GameScreen(Content, new EventHandler(GameScreenEvent), 1);
+                currentScreen = new GameScreen(Content, new EventHandler(GameScreenEvent));
             }
             else if (menuScreen.selectedButton == 1) // Tutorial
             {
@@ -128,7 +128,13 @@ namespace BPA_Tank_Racer_Game
 
         private void FreeModeScreenEvent(object sender, EventArgs e)
         {
-            if (((FreeModeScreen)currentScreen).gameReady) { }
+            FreeModeScreen freeModeScreen = (FreeModeScreen)currentScreen;
+
+            if ((freeModeScreen).gameReady)
+            {
+                currentScreen = new GameScreen(Content, new EventHandler(GameScreenEvent), freeModeScreen.level,
+                    freeModeScreen.bulletHandler, freeModeScreen.playerTank, freeModeScreen.enemyTank);
+            }
             else currentScreen = menuScreen;
         }
 

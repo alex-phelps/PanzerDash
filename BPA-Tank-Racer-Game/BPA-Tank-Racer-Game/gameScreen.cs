@@ -12,6 +12,8 @@ namespace BPA_Tank_Racer_Game
     /// </summary>
     public class GameScreen : Screen
     {
+        private const int levelCount = 1;
+
         private PlayerTank playerTank;
         private AITank enemyTank;
         private Background background;
@@ -38,73 +40,33 @@ namespace BPA_Tank_Racer_Game
         private TimeSpan countdownOldTime;
         private int countdown = 6;
 
-        public GameScreen(ContentManager content, EventHandler screenEvent, int level)
+        public GameScreen(ContentManager content, EventHandler screenEvent)
             : base(screenEvent)
         {
-            cooldownBar = content.Load<Texture2D>("CooldownBar");
-            countdownFont = content.Load<SpriteFont>("CountdownFont");
-            powerupBar = content.Load<Texture2D>("PowerupBar");
-            winTextFont = content.Load<SpriteFont>("WinTextFont");
-            winSubFont = content.Load<SpriteFont>("WinSubFont");
             bulletHandler = new BulletHandler();
-            powerupSpawns = new List<Vector2>();
-            powerups = new List<Powerup>();
-            powerupsToRemove = new List<Powerup>();
             random = new Random();
 
-            Vector2 levelSize = new Vector2(3200, 3200);
-            Vector2 startPosInImage;
-            Vector2 finishPosInImage;
+            //Random tanks
+            playerTank = new PlayerTank(content, bulletHandler, RandomTankPart(), RandomTankPart());
+            enemyTank = new AITank(content, bulletHandler, RandomTankPart(), RandomTankPart(),
+                new Vector2(playerTank.position.X + 100, playerTank.position.Y));
 
-            //Create player
-            playerTank = new PlayerTank(content, bulletHandler, TankPartType.red, TankPartType.red);
+            //Random Level
+            int level = random.Next(1, levelCount + 1);
+            Setup(content, level);
+        }
 
-            //Create Enemy
-            enemyTank = new AITank(content, bulletHandler, TankPartType.red,
-                TankPartType.desert, new Vector2(Game1.WindowWidth / 2 + 100, Game1.WindowHeight / 2));
+        public GameScreen(ContentManager content, EventHandler screenEvent, int level,
+            BulletHandler bulletHandler, PlayerTank playerTank, AITank enemyTank) 
+            : base(screenEvent)
+        {
+            this.bulletHandler = bulletHandler;
+            this.playerTank = playerTank;
+            this.enemyTank = enemyTank;
 
-            if (level == 2) // Level 2
-            {
-                startPosInImage = new Vector2(0, 0); // Temp
-                finishPosInImage = new Vector2(0, 0); // Temp
-            }
-            else // Level 1
-            {
-                background = new Background(content.Load<Texture2D>("Level1"));
-                startPosInImage = new Vector2(654, 2478);
-                finishPosInImage = new Vector2(2143, 1855);
+            random = new Random();
 
-                //Powerup spawn locations in the image
-                powerupSpawns.Add(new Vector2(704, 2582));
-                powerupSpawns.Add(new Vector2(1400, 1485));
-                powerupSpawns.Add(new Vector2(1285, 1024));
-                powerupSpawns.Add(new Vector2(1448, 2324));
-            }
-
-            background.position.X = (levelSize.X / 2 - startPosInImage.X) + Game1.WindowWidth / 2;
-            background.position.Y = (levelSize.Y / 2 - startPosInImage.Y) + Game1.WindowHeight / 2;
-            
-            finishObjective = new FinishObjective(content, new Vector2(
-                ((finishPosInImage.X - levelSize.X / 2) + background.position.X),
-                ((finishPosInImage.Y - levelSize.Y / 2) + background.position.Y)));
-
-            foreach (Vector2 loc in powerupSpawns)
-            {
-                PowerUpType type;
-                int typeInInt = random.Next(4);
-
-                if (typeInInt == 0) 
-                    type = PowerUpType.speed;
-                else if (typeInInt == 1)
-                    type = PowerUpType.shield;
-                else if (typeInInt == 2)
-                    type = PowerUpType.rapid;
-                else type = PowerUpType.damage;
-
-                powerups.Add(new Powerup(content, new Vector2(
-                    ((loc.X - levelSize.X / 2) + background.position.X),
-                    ((loc.Y - levelSize.Y / 2) + background.position.Y)), type));
-            }
+            Setup(content, level);
         }
 
         public override void Update(GameTime gametime)
@@ -459,6 +421,67 @@ namespace BPA_Tank_Racer_Game
             base.Draw(spritebatch);
         }
 
+        private void Setup(ContentManager content, int level)
+        {
+            //Main Setup
+
+            cooldownBar = content.Load<Texture2D>("CooldownBar");
+            countdownFont = content.Load<SpriteFont>("CountdownFont");
+            powerupBar = content.Load<Texture2D>("PowerupBar");
+            winTextFont = content.Load<SpriteFont>("WinTextFont");
+            winSubFont = content.Load<SpriteFont>("WinSubFont");
+            powerupSpawns = new List<Vector2>();
+            powerups = new List<Powerup>();
+            powerupsToRemove = new List<Powerup>();
+
+            Vector2 levelSize = new Vector2(3200, 3200);
+            Vector2 startPosInImage;
+            Vector2 finishPosInImage;
+
+            if (level == 2) // Level 2
+            {
+                startPosInImage = new Vector2(0, 0); // Temp
+                finishPosInImage = new Vector2(0, 0); // Temp
+            }
+            else // Level 1
+            {
+                background = new Background(content.Load<Texture2D>("Level1"));
+                startPosInImage = new Vector2(654, 2478);
+                finishPosInImage = new Vector2(2143, 1855);
+
+                //Powerup spawn locations in the image
+                powerupSpawns.Add(new Vector2(704, 2582));
+                powerupSpawns.Add(new Vector2(1400, 1485));
+                powerupSpawns.Add(new Vector2(1285, 1024));
+                powerupSpawns.Add(new Vector2(1448, 2324));
+            }
+
+            background.position.X = (levelSize.X / 2 - startPosInImage.X) + Game1.WindowWidth / 2;
+            background.position.Y = (levelSize.Y / 2 - startPosInImage.Y) + Game1.WindowHeight / 2;
+
+            finishObjective = new FinishObjective(content, new Vector2(
+                ((finishPosInImage.X - levelSize.X / 2) + background.position.X),
+                ((finishPosInImage.Y - levelSize.Y / 2) + background.position.Y)));
+
+            foreach (Vector2 loc in powerupSpawns)
+            {
+                PowerUpType type;
+                int typeInInt = random.Next(4);
+
+                if (typeInInt == 0)
+                    type = PowerUpType.speed;
+                else if (typeInInt == 1)
+                    type = PowerUpType.shield;
+                else if (typeInInt == 2)
+                    type = PowerUpType.rapid;
+                else type = PowerUpType.damage;
+
+                powerups.Add(new Powerup(content, new Vector2(
+                    ((loc.X - levelSize.X / 2) + background.position.X),
+                    ((loc.Y - levelSize.Y / 2) + background.position.Y)), type));
+            }
+        }
+
         private void MoveBoard(Vector2 vector)
         {
             background.position += vector;
@@ -489,6 +512,24 @@ namespace BPA_Tank_Racer_Game
                 powerup.position.X += x;
                 powerup.position.Y += y;
             }
+        }
+
+        private TankPartType RandomTankPart()
+        {
+            int number = random.Next(1, 7);
+
+            //No Rainbow Allowed Here
+            if (number == 2)
+                return TankPartType.desert;
+            else if (number == 3)
+                return TankPartType.jungle;
+            else if (number == 4)
+                return TankPartType.red;
+            else if (number == 5)
+                return TankPartType.snow;
+            else if (number == 6)
+                return TankPartType.urban;
+            else return TankPartType.basic;
         }
     }
 }

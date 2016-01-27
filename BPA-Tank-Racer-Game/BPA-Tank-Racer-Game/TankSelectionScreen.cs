@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
@@ -9,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BPA_Tank_Racer_Game
 {
-    public class PlayerSelectionScreen : Screen
+    public class TankSelectionScreen : Screen
     {
         private Texture2D backButton, backButtonDefault, backButtonSelected;
         private Texture2D confirmButton, confirmButtonDefault, confirmButtonSelected;
@@ -22,15 +20,55 @@ namespace BPA_Tank_Racer_Game
         private KeyboardState oldState;
 
         public int selectedButton { get; private set; }
-        private int selectedBase = 0;
-        private int selectedGun = 0;
+        private int selectedBaseInt = 0;
+        private int selectedGunInt = 0;
 
         private List<Texture2D> bases = new List<Texture2D>();
         private List<Texture2D> guns = new List<Texture2D>();
 
         private GameObject leftDownArrow, leftUpArrow, rightDownArrow, rightUpArrow;
 
-        public PlayerSelectionScreen(ContentManager content, EventHandler screenEvent)
+        public TankPartType selectedTankBase
+        {
+            get
+            {
+                if (bases[selectedBaseInt] == desertBase)
+                    return TankPartType.desert;
+                else if (bases[selectedBaseInt] == jungleBase)
+                    return TankPartType.jungle;
+                else if (bases[selectedBaseInt] == redBase)
+                    return TankPartType.red;
+                else if (bases[selectedBaseInt] == snowBase)
+                    return TankPartType.snow;
+                else if (bases[selectedBaseInt] == urbanBase)
+                    return TankPartType.urban;
+                else if (bases[selectedBaseInt] == rainbowBase)
+                    return TankPartType.rainbow;
+                else return TankPartType.basic;
+            }
+        }
+
+        public TankPartType selectedTankGun
+        {
+            get
+            {
+                if (guns[selectedGunInt] == desertGun)
+                    return TankPartType.desert;
+                else if (guns[selectedGunInt] == jungleGun)
+                    return TankPartType.jungle;
+                else if (guns[selectedGunInt] == redGun)
+                    return TankPartType.red;
+                else if (guns[selectedGunInt] == snowGun)
+                    return TankPartType.snow;
+                else if (guns[selectedGunInt] == urbanGun)
+                    return TankPartType.urban;
+                else if (guns[selectedGunInt] == rainbowGun)
+                    return TankPartType.rainbow;
+                else return TankPartType.basic;
+            }
+        }
+
+        public TankSelectionScreen(ContentManager content, EventHandler screenEvent)
             : base(screenEvent)
         {
             selectedButton = 1;
@@ -99,6 +137,12 @@ namespace BPA_Tank_Racer_Game
         {
             KeyboardState newState = Keyboard.GetState();
 
+            if (newState.IsKeyDown(Keys.Escape))
+            {
+                selectedButton = 0;
+                screenEvent.Invoke(this, new EventArgs());
+            }
+
             if (newState.IsKeyDown(Keys.Left) && oldState.IsKeyUp(Keys.Left))
             {
                 //Set old button to not selected icon
@@ -155,13 +199,13 @@ namespace BPA_Tank_Racer_Game
 
                 if (selectedButton == 1)
                 {
-                    selectedBase++;
-                    selectedBase %= bases.Count;
+                    selectedBaseInt++;
+                    selectedBaseInt %= bases.Count;
                 }
                 else if (selectedButton == 2)
                 {
-                    selectedGun++;
-                    selectedGun %= guns.Count;
+                    selectedGunInt++;
+                    selectedGunInt %= guns.Count;
                 }
             }
             else
@@ -177,15 +221,15 @@ namespace BPA_Tank_Racer_Game
 
                 if (selectedButton == 1)
                 {
-                    selectedBase--;
-                    if (selectedBase < 0)
-                        selectedBase = bases.Count - 1;
+                    selectedBaseInt--;
+                    if (selectedBaseInt < 0)
+                        selectedBaseInt = bases.Count - 1;
                 }
                 else if (selectedButton == 2)
                 {
-                    selectedGun--;
-                    if (selectedGun < 0)
-                        selectedGun = guns.Count - 1;
+                    selectedGunInt--;
+                    if (selectedGunInt < 0)
+                        selectedGunInt = guns.Count - 1;
                 }
             }
             else
@@ -193,6 +237,10 @@ namespace BPA_Tank_Racer_Game
                 leftDownArrow.scale = 1;
                 rightDownArrow.scale = 1;
             }
+
+            if (newState.IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.Enter))
+                screenEvent.Invoke(this, new EventArgs());
+
 
             if (selectedButton == 1)
             {
@@ -238,11 +286,11 @@ namespace BPA_Tank_Racer_Game
                  1, SpriteEffects.None, 1f);
 
             //Draw selected base and gun
-            spritebatch.Draw(bases[selectedBase], new Vector2(Game1.WindowWidth / 3, Game1.WindowHeight / 2 - 30), new Rectangle(0, 0,
-                 bases[selectedBase].Width, bases[selectedBase].Height), Color.White, 0, new Vector2(bases[selectedBase].Width / 2, bases[selectedBase].Height / 2),
+            spritebatch.Draw(bases[selectedBaseInt], new Vector2(Game1.WindowWidth / 3, Game1.WindowHeight / 2 - 30), new Rectangle(0, 0,
+                 bases[selectedBaseInt].Width, bases[selectedBaseInt].Height), Color.White, 0, new Vector2(bases[selectedBaseInt].Width / 2, bases[selectedBaseInt].Height / 2),
                  1, SpriteEffects.None, 1f);
-            spritebatch.Draw(guns[selectedGun], new Vector2(Game1.WindowWidth * 2 / 3, Game1.WindowHeight / 2 - 30), new Rectangle(0, 0,
-                 guns[selectedGun].Width, guns[selectedGun].Height), Color.White, 0, new Vector2(guns[selectedGun].Width / 2, guns[selectedGun].Height / 2),
+            spritebatch.Draw(guns[selectedGunInt], new Vector2(Game1.WindowWidth * 2 / 3, Game1.WindowHeight / 2 - 30), new Rectangle(0, 0,
+                 guns[selectedGunInt].Width, guns[selectedGunInt].Height), Color.White, 0, new Vector2(guns[selectedGunInt].Width / 2, guns[selectedGunInt].Height / 2),
                  1, SpriteEffects.None, 1f);
 
             //Draw arrows

@@ -112,15 +112,15 @@ namespace BPA_Tank_Racer_Game
             {
                 tankBase = new TankBase(content.Load<Texture2D>("UrbanTankBase"));
 
-                accel = 0.015f;
-                maxSpeed = 0.8f;
+                accel = 0.02f;
+                maxSpeed = 0.9f;
             }
             else if (baseType == TankPartType.jungle) //Jungle
             {
                 tankBase = new TankBase(content.Load<Texture2D>("JungleTankBase"));
 
-                accel = 0.08f;
-                maxSpeed = 2.4f;
+                accel = 0.01f;
+                maxSpeed = 1.4f;
             }
             else if (baseType == TankPartType.rainbow) //RAINBOW
             {
@@ -182,8 +182,8 @@ namespace BPA_Tank_Racer_Game
                 tankGun = new TankGun(content.Load<Texture2D>("JungleTankGun"));
 
                 baseCooldown = 3;
-                gunDamage = 0.8;
-                bulletSpeed = 15;
+                gunDamage = 0.6;
+                bulletSpeed = 10;
             }
             else if (gunType == TankPartType.rainbow) //RAINBOW
             {

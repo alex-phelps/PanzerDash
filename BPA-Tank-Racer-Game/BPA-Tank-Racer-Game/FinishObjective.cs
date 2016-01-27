@@ -6,7 +6,7 @@ namespace BPA_Tank_Racer_Game
 {
     public class FinishObjective : GameObject
     {
-        public double baseHealth = 10;
+        public double baseHealth = 7;
         public double playerHealth;
         public double enemyHealth;
         private Texture2D healthBar;
