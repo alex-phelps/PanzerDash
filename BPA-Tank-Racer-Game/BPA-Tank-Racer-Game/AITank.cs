@@ -41,8 +41,8 @@ namespace BPA_Tank_Racer_Game
             {
                 Matrix transformTankToLevel = transformMatrix * Matrix.Invert(background.transformMatrix);
 
-                Vector2 positionInLevelL = Vector2.Transform(new Vector2(-50, -Height * 4), transformTankToLevel);
-                Vector2 positionInLevelR = Vector2.Transform(new Vector2(50, -Height * 4), transformTankToLevel);
+                Vector2 positionInLevelL = Vector2.Transform(new Vector2(-40, -Height * 3), transformTankToLevel);
+                Vector2 positionInLevelR = Vector2.Transform(new Vector2(40, -Height * 3), transformTankToLevel);
 
                 int xL = (int)Math.Round(positionInLevelL.X);
                 int yL = (int)Math.Round(positionInLevelL.Y);
@@ -60,6 +60,11 @@ namespace BPA_Tank_Racer_Game
                 colors.Add(new Color(95, 54, 14)); //Medium Brown
                 colors.Add(new Color(112, 70, 28)); //Light Brown
                 colors.Add(new Color(126, 76, 28)); //Lightest Brown
+                colors.Add(new Color(106, 80, 43)); //Darkest Tan
+                colors.Add(new Color(121, 92, 52)); //Darker Tan
+                colors.Add(new Color(136, 104, 59)); //Medium Tan
+                colors.Add(new Color(148, 115, 67)); //Light Tan
+                colors.Add(new Color(147, 107, 50)); //Mustard Tan
 
                 //Steer away from border
                 foreach (Color color in colors)

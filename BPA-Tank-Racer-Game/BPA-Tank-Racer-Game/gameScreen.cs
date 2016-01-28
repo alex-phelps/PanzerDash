@@ -442,7 +442,7 @@ namespace BPA_Tank_Racer_Game
             {
                 background = new Background(content.Load<Texture2D>("Level2"));
                 startPosInImage = new Vector2(2475, 2415); // Temp
-                finishPosInImage = new Vector2(518, 1222); // Temp
+                finishPosInImage = new Vector2(545, 1168); // Temp
 
                 //Powerup spawn locations in the image
                 powerupSpawns.Add(new Vector2(2600, 1570));

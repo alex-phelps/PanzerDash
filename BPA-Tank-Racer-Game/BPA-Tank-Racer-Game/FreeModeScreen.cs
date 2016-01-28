@@ -10,6 +10,7 @@ namespace BPA_Tank_Racer_Game
         private Screen currentScreen;
         private PlayerTankSelectionScreen playerSelectionScreen;
         private EnemyTankSelectionScreen enemyTankSelectionScreen;
+        private LevelSelectionScreen levelSelectionScreen;
 
         private ContentManager content;
 
@@ -27,6 +28,7 @@ namespace BPA_Tank_Racer_Game
 
             playerSelectionScreen = new PlayerTankSelectionScreen(content, new EventHandler(PlayerSelectionScreenEvent));
             enemyTankSelectionScreen = new EnemyTankSelectionScreen(content, new EventHandler(EnemyTankSelectionScreenEvent));
+            levelSelectionScreen = new LevelSelectionScreen(content, new EventHandler(LevelSelectionScreenEvent));
 
             currentScreen = playerSelectionScreen;
         }
@@ -54,15 +56,19 @@ namespace BPA_Tank_Racer_Game
             if (enemyTankSelectionScreen.selectedButton == 0) //Back
                 currentScreen = playerSelectionScreen;
             else if (enemyTankSelectionScreen.selectedButton == 3) // Confirm
-            {
-                //Temp
+                currentScreen = levelSelectionScreen;
+        }
+        private void LevelSelectionScreenEvent(object sender, EventArgs e)
+        {
+            if (levelSelectionScreen.selectedButton == 0) //Back
+                currentScreen = enemyTankSelectionScreen;
+            else if (levelSelectionScreen.selectedButton == 2) //Confirm
                 StartGame();
-            }
         }
 
         private void StartGame()
         {
-            level = 2; //Temp
+            level = levelSelectionScreen.selectedLevel + 1; // +1 because selectedLevel by default starts at 0
             bulletHandler = new BulletHandler();
             playerTank = new PlayerTank(content, bulletHandler, playerSelectionScreen.selectedTankBase, playerSelectionScreen.selectedTankGun);
             enemyTank = new AITank(content, bulletHandler, enemyTankSelectionScreen.selectedTankBase, enemyTankSelectionScreen.selectedTankGun,
