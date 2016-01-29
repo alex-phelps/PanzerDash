@@ -44,6 +44,8 @@
     <Compile Include="Background.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="BulletHandler.cs" />
+    <Compile Include="CareerEnemySelectionScreen.cs" />
+    <Compile Include="CareerModeScreen.cs" />
     <Compile Include="EnemyTankSelectionScreen.cs" />
     <Compile Include="FinishObjective.cs" />
     <Compile Include="FreeModeScreen.cs" />
@@ -187,6 +189,7 @@
     <Content Include="Content\Level2.png" />
     <Content Include="Content\Level2Icon.png" />
     <Content Include="Content\LevelSelection.png" />
+    <Content Include="Content\LockScreen.png" />
     <Content Include="Content\Logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

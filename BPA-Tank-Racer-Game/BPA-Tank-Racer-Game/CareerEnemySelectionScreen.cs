@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BPA_Tank_Racer_Game
 {
-    public class LevelSelectionScreen : Screen
+    public class CareerEnemySelectionScreen : Screen
     {
         private Texture2D backButton, backButtonDefault, backButtonSelected;
         private Texture2D confirmButton, confirmButtonDefault, confirmButtonSelected;
@@ -17,22 +17,89 @@ namespace BPA_Tank_Racer_Game
         private Texture2D logo;
         private Texture2D lockScreen;
 
+        private Texture2D basicBase, basicGun, desertBase, desertGun, jungleBase, jungleGun,
+            redBase, redGun, snowBase, snowGun, urbanBase, urbanGun;
+
         private KeyboardState oldState;
 
-        private GameObject downArrow, upArrow;
-
-        private List<Texture2D> levels;
-
         public int selectedButton { get; private set; }
-        public int selectedLevel { get; private set; }
-        private bool selectedLevelUnlocked;
+        public int selectedEnemy { get; private set; }
+        private bool selectedEnemyUnlocked;
 
-        public LevelSelectionScreen(ContentManager content, EventHandler screenEvent)
+        private List<Texture2D> bases, guns;
+
+        private GameObject upArrow, downArrow;
+
+        public TankPartType selectedTankPart
+        {
+            get
+            {
+                if (bases[selectedEnemy] == desertBase)
+                    return TankPartType.desert;
+                else if (bases[selectedEnemy] == jungleBase)
+                    return TankPartType.jungle;
+                else if (bases[selectedEnemy] == redBase)
+                    return TankPartType.red;
+                else if (bases[selectedEnemy] == snowBase)
+                    return TankPartType.snow;
+                else if (bases[selectedEnemy] == urbanBase)
+                    return TankPartType.urban;
+                else return TankPartType.basic;
+            }
+        }
+
+        public bool unlockContent
+        {
+            get
+            {
+                if (bases[selectedEnemy] == desertBase)
+                {
+                    if (Game1.levelsUnlocked > 1)
+                        return false;
+                    else return true;
+                }
+                else if (bases[selectedEnemy] == snowBase)
+                {
+                    if (Game1.levelsUnlocked > 2)
+                        return false;
+                    else return true;
+                }
+                else if (bases[selectedEnemy] == urbanBase)
+                {
+                    if (Game1.levelsUnlocked > 2)
+                        return false;
+                    else return true;
+                }
+                else if (bases[selectedEnemy] == redBase)
+                {
+                    if (Game1.levelsUnlocked > 2)
+                        return false;
+                    else return true;
+                }
+                else if (bases[selectedEnemy] == jungleBase)
+                {
+                    if (Game1.levelsUnlocked > 2)
+                        return false;
+                    else return true;
+                }
+                else // basic
+                {
+                    if (Game1.levelsUnlocked > 0)
+                        return false;
+                    else return true;
+                }
+            }
+        }
+
+        public CareerEnemySelectionScreen(ContentManager content, EventHandler screenEvent)
             : base(screenEvent)
         {
             selectedButton = 1;
 
-            logo = content.Load<Texture2D>("LevelSelection");
+            bases = new List<Texture2D>();
+            guns = new List<Texture2D>();
+
+            logo = content.Load<Texture2D>("EnemyTankSelectionLogo");
             lockScreen = content.Load<Texture2D>("LockScreen");
 
             backButtonDefault = content.Load<Texture2D>("Back");
@@ -49,15 +116,39 @@ namespace BPA_Tank_Racer_Game
 
             border = borderSelected;
 
+            //Define tank textures
+            basicBase = content.Load<Texture2D>("BigTankParts//BasicBase");
+            basicGun = content.Load<Texture2D>("BigTankParts//BasicGun");
+            desertBase = content.Load<Texture2D>("BigTankParts//DesertBase");
+            desertGun = content.Load<Texture2D>("BigTankParts//DesertGun");
+            jungleBase = content.Load<Texture2D>("BigTankParts//JungleBase");
+            jungleGun = content.Load<Texture2D>("BigTankParts//JungleGun");
+            redBase = content.Load<Texture2D>("BigTankParts//RedBase");
+            redGun = content.Load<Texture2D>("BigTankParts//RedGun");
+            snowBase = content.Load<Texture2D>("BigTankParts//SnowBase");
+            snowGun = content.Load<Texture2D>("BigTankParts//SnowGun");
+            urbanBase = content.Load<Texture2D>("BigTankParts//UrbanBase");
+            urbanGun = content.Load<Texture2D>("BigTankParts//UrbanGun");
+
+            //Add textures to Lists
+            bases.Add(basicBase);
+            guns.Add(basicGun);
+            bases.Add(desertBase);
+            guns.Add(desertGun);
+            bases.Add(snowBase);
+            guns.Add(snowGun);
+            bases.Add(urbanBase);
+            guns.Add(urbanGun);
+            bases.Add(redBase);
+            guns.Add(redGun);
+            bases.Add(jungleBase);
+            guns.Add(jungleGun);
+
             downArrow = new GameObject(content.Load<Texture2D>("DownArrow"));
             upArrow = new GameObject(content.Load<Texture2D>("UpArrow"));
 
             downArrow.position = new Vector2(Game1.WindowWidth / 2, (Game1.WindowHeight / 2 - 30) + 110);
             upArrow.position = new Vector2(Game1.WindowWidth / 2, (Game1.WindowHeight / 2 - 30) - 110);
-
-            levels = new List<Texture2D>();
-            levels.Add(content.Load<Texture2D>("Level1Icon"));
-            levels.Add(content.Load<Texture2D>("Level2Icon"));
         }
 
         public override void Update(GameTime gametime)
@@ -111,8 +202,8 @@ namespace BPA_Tank_Racer_Game
 
                 if (selectedButton == 1)
                 {
-                    selectedLevel++;
-                    selectedLevel %= levels.Count;
+                    selectedEnemy++;
+                    selectedEnemy %= bases.Count;
                 }
             }
             else upArrow.scale = 1;
@@ -123,23 +214,24 @@ namespace BPA_Tank_Racer_Game
 
                 if (selectedButton == 1)
                 {
-                    selectedLevel--;
-                    if (selectedLevel < 0)
-                        selectedLevel = levels.Count - 1;
+                    selectedEnemy--;
+                    if (selectedEnemy < 0)
+                        selectedEnemy = bases.Count - 1;
                 }
             }
             else downArrow.scale = 1;
 
-            //check if level is unlocked
-            if (Game1.levelsUnlocked > selectedLevel)
-                selectedLevelUnlocked = true;
-            else selectedLevelUnlocked = false;
+            //Check if enemy is unlocked
+            if (Game1.levelsUnlocked >= selectedEnemy)
+                selectedEnemyUnlocked = true;
+            else selectedEnemyUnlocked = false;
+
 
             if (newState.IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.Enter))
             {
                 if (selectedButton == 2) //Confirm Button
                 {
-                    if (selectedLevelUnlocked)
+                    if (selectedEnemyUnlocked)
                         screenEvent.Invoke(this, new EventArgs());
                 }
                 else screenEvent.Invoke(this, new EventArgs());
@@ -163,8 +255,8 @@ namespace BPA_Tank_Racer_Game
         {
             //Draw logo
             spritebatch.Draw(logo, new Vector2(Game1.WindowWidth / 2, 25), new Rectangle(0, 0,
-                logo.Width, logo.Height), Color.White, 0, new Vector2(logo.Width / 2, logo.Height / 2),
-                1, SpriteEffects.None, 1f);
+               logo.Width, logo.Height), Color.White, 0, new Vector2(logo.Width / 2, logo.Height / 2),
+               1, SpriteEffects.None, 1f);
 
             //Draw text buttons
             spritebatch.Draw(backButton, new Vector2(120, Game1.WindowHeight - 40), new Rectangle(0, 0,
@@ -174,12 +266,15 @@ namespace BPA_Tank_Racer_Game
                  confirmButton.Width, confirmButton.Height), Color.White, 0, new Vector2(confirmButton.Width / 2, confirmButton.Height / 2),
                  1, SpriteEffects.None, 1f);
 
-            //Draw level icons
-            spritebatch.Draw(levels[selectedLevel], new Vector2(Game1.WindowWidth / 2, Game1.WindowHeight / 2 - 30), new Rectangle(0, 0,
-                 levels[selectedLevel].Width, levels[selectedLevel].Height), Color.White, 0, new Vector2(levels[selectedLevel].Width / 2, levels[selectedLevel].Height / 2),
+            //Draw enemy tank
+            spritebatch.Draw(bases[selectedEnemy], new Vector2(Game1.WindowWidth / 2, Game1.WindowHeight / 2 - 30), new Rectangle(0, 0,
+                 bases[selectedEnemy].Width, bases[selectedEnemy].Height), Color.White, 0, new Vector2(bases[selectedEnemy].Width / 2, bases[selectedEnemy].Height / 2),
+                 1, SpriteEffects.None, 1f);
+            spritebatch.Draw(guns[selectedEnemy], new Vector2(Game1.WindowWidth / 2, Game1.WindowHeight / 2 - 30), new Rectangle(0, 0,
+                 guns[selectedEnemy].Width, guns[selectedEnemy].Height), Color.White, 0, new Vector2(guns[selectedEnemy].Width / 2, guns[selectedEnemy].Height / 2),
                  1, SpriteEffects.None, 1f);
 
-            if (!selectedLevelUnlocked)
+            if (!selectedEnemyUnlocked)
             {
                 //Draw lock screen
                 spritebatch.Draw(lockScreen, new Vector2(Game1.WindowWidth / 2, Game1.WindowHeight / 2 - 30), new Rectangle(0, 0,

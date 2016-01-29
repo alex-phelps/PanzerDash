@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 
 namespace BPA_Tank_Racer_Game
 {
@@ -17,6 +18,11 @@ namespace BPA_Tank_Racer_Game
         public static int WindowWidth = 800;
         public static int WindowHeight = 480;
 
+        //Save Data
+        public static int levelsUnlocked;
+        public static bool hasRainbowBase;
+        public static bool hasRainbowGun;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -27,6 +33,8 @@ namespace BPA_Tank_Racer_Game
             graphics.PreferredBackBufferHeight = WindowHeight;
 
             graphics.ApplyChanges();
+
+            LoadSaveData();
         }
 
         /// <summary>
@@ -37,8 +45,6 @@ namespace BPA_Tank_Racer_Game
         /// </summary>
         protected override void Initialize()
         {
-
-
             base.Initialize();
         }
 
@@ -112,7 +118,7 @@ namespace BPA_Tank_Racer_Game
             }
             else if (menuScreen.selectedButton == 2) // Career
             {
-
+                currentScreen = new CareerModeScreen(Content, new EventHandler(CareerModeScreenEvent));
             }
             else if (menuScreen.selectedButton == 3) // Free Mode
             {
@@ -130,10 +136,22 @@ namespace BPA_Tank_Racer_Game
         {
             FreeModeScreen freeModeScreen = (FreeModeScreen)currentScreen;
 
-            if ((freeModeScreen).gameReady)
+            if (freeModeScreen.gameReady)
             {
                 currentScreen = new GameScreen(Content, new EventHandler(GameScreenEvent), freeModeScreen.level,
-                    freeModeScreen.bulletHandler, freeModeScreen.playerTank, freeModeScreen.enemyTank);
+                    freeModeScreen.bulletHandler, freeModeScreen.playerTank, freeModeScreen.enemyTank, false);
+            }
+            else currentScreen = menuScreen;
+        }
+        private void CareerModeScreenEvent(object sender, EventArgs e)
+        {
+            CareerModeScreen careerModeScreen = (CareerModeScreen)currentScreen;
+
+            if (careerModeScreen.gameReady)
+            {
+                currentScreen = new GameScreen(Content, new EventHandler(GameScreenEvent), careerModeScreen.level,
+                    careerModeScreen.bulletHandler, careerModeScreen.playerTank, careerModeScreen.enemyTank,
+                    careerModeScreen.unlockContent);
             }
             else currentScreen = menuScreen;
         }
@@ -232,6 +250,40 @@ namespace BPA_Tank_Racer_Game
 
             //No intersection
             return false;
+        }
+
+        public static void LoadSaveData()
+        {
+            if (File.Exists("SaveData.txt"))
+            {
+                StreamReader inFile = File.OpenText("SaveData.txt");
+
+                while (!inFile.EndOfStream)
+                {
+                    string text = inFile.ReadLine();
+                    string[] subTexts = text.Split(new string[] { ":" }, StringSplitOptions.None);
+
+                    if (subTexts[0] == "LevelsUnlocked")
+                        levelsUnlocked = Convert.ToInt32(subTexts[1]);
+                    else if (subTexts[0] == "HasRainbowBase")
+                        hasRainbowBase = Convert.ToBoolean(subTexts[1]);
+                    else if (subTexts[0] == "HasRainbowGun")
+                        hasRainbowGun = Convert.ToBoolean(subTexts[1]);
+                }
+
+                inFile.Close();
+            }
+        }
+
+        public static void Save() 
+        {
+            StreamWriter outFile = File.CreateText("SaveData.txt");
+
+            outFile.WriteLine("LevelsUnlocked:" + levelsUnlocked);
+            outFile.WriteLine("HasRainbowBase:" + hasRainbowBase);
+            outFile.WriteLine("HasRainbowGun:" + hasRainbowGun);
+
+            outFile.Close();
         }
     }
 }

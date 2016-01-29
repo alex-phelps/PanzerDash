@@ -16,7 +16,8 @@ namespace BPA_Tank_Racer_Game
         urban,
         snow,
         red,
-        rainbow
+        rainbow,
+        none //Mostly usable for unlockables
     }
 
     /// <summary>
@@ -92,21 +93,21 @@ namespace BPA_Tank_Racer_Game
                 tankBase = new TankBase(content.Load<Texture2D>("RedTankBase"));
 
                 accel = 0.02f;
-                maxSpeed = 1.2f;
+                maxSpeed = 1.3f;
             }
             else if (baseType == TankPartType.desert) //Desert
             {
                 tankBase = new TankBase(content.Load<Texture2D>("desertTankBase"));
 
                 accel = 0.02f;
-                maxSpeed = 1.3f;
+                maxSpeed = 1.2f;
             }
             else if (baseType == TankPartType.snow) //Snow
             {
                 tankBase = new TankBase(content.Load<Texture2D>("SnowTankBase"));
 
                 accel = 0.03f;
-                maxSpeed = 1.1f;
+                maxSpeed = 1.2f;
             }
             else if (baseType == TankPartType.urban) //Urban
             {
@@ -155,7 +156,7 @@ namespace BPA_Tank_Racer_Game
                 tankGun = new TankGun(content.Load<Texture2D>("desertTankGun"));
 
                 baseCooldown = 6;
-                gunDamage = 1.3;
+                gunDamage = 2.2;
                 bulletSpeed = 9;
             }
             else if (gunType == TankPartType.snow) //Snow
@@ -172,7 +173,7 @@ namespace BPA_Tank_Racer_Game
 
                 baseCooldown = 9;
                 gunDamage = 5;
-                bulletSpeed = 5;
+                bulletSpeed = 12;
             }
             else if (gunType == TankPartType.jungle) //Jungle
             {

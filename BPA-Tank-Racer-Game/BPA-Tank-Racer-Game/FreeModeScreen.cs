@@ -17,8 +17,8 @@ namespace BPA_Tank_Racer_Game
         public bool gameReady { get; private set; }
         public PlayerTank playerTank { get; private set; }
         public AITank enemyTank { get; private set; }
-        public int level { get; private set; }
         public BulletHandler bulletHandler { get; private set; }
+        public int level { get; private set; }
 
         public FreeModeScreen(ContentManager content, EventHandler screenEvent)
             : base(screenEvent)
@@ -58,6 +58,7 @@ namespace BPA_Tank_Racer_Game
             else if (enemyTankSelectionScreen.selectedButton == 3) // Confirm
                 currentScreen = levelSelectionScreen;
         }
+
         private void LevelSelectionScreenEvent(object sender, EventArgs e)
         {
             if (levelSelectionScreen.selectedButton == 0) //Back

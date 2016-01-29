@@ -40,11 +40,14 @@ namespace BPA_Tank_Racer_Game
         private TimeSpan countdownOldTime;
         private int countdown = 6;
 
+        private bool unlockContent;
+
         public GameScreen(ContentManager content, EventHandler screenEvent)
             : base(screenEvent)
         {
             bulletHandler = new BulletHandler();
             random = new Random();
+            unlockContent = false;
 
             //Random tanks
             playerTank = new PlayerTank(content, bulletHandler, RandomTankPart(), RandomTankPart());
@@ -57,12 +60,13 @@ namespace BPA_Tank_Racer_Game
         }
 
         public GameScreen(ContentManager content, EventHandler screenEvent, int level,
-            BulletHandler bulletHandler, PlayerTank playerTank, AITank enemyTank) 
+            BulletHandler bulletHandler, PlayerTank playerTank, AITank enemyTank, bool unlockContent) 
             : base(screenEvent)
         {
             this.bulletHandler = bulletHandler;
             this.playerTank = playerTank;
             this.enemyTank = enemyTank;
+            this.unlockContent = unlockContent;
 
             random = new Random();
 
@@ -339,6 +343,11 @@ namespace BPA_Tank_Racer_Game
                 //After game, before screen change
                 if (Keyboard.GetState().IsKeyDown(Keys.Enter))
                 {
+                    if (unlockContent)
+                    {
+                        Game1.levelsUnlocked++;
+                        Game1.Save();
+                    }
                     screenEvent.Invoke(this, new EventArgs());
                 }
             }

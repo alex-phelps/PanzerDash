@@ -13,6 +13,7 @@ namespace BPA_Tank_Racer_Game
         protected Texture2D confirmButton, confirmButtonDefault, confirmButtonSelected;
         protected Texture2D border, borderSelected;
         protected Texture2D borderBase, borderGun;
+        protected Texture2D lockScreen;
 
         protected Texture2D basicBase, basicGun, desertBase, desertGun, jungleBase, jungleGun,
             rainbowBase, rainbowGun, redBase, redGun, snowBase, snowGun, urbanBase, urbanGun;
@@ -22,6 +23,8 @@ namespace BPA_Tank_Racer_Game
         public int selectedButton { get; protected set; }
         protected int selectedBaseInt = 0;
         protected int selectedGunInt = 0;
+        protected bool selectedBaseUnlocked;
+        protected bool selectedGunUnlocked;
 
         protected List<Texture2D> bases = new List<Texture2D>();
         protected List<Texture2D> guns = new List<Texture2D>();
@@ -75,6 +78,7 @@ namespace BPA_Tank_Racer_Game
 
             backButtonDefault = content.Load<Texture2D>("Back");
             confirmButtonDefault = content.Load<Texture2D>("Confirm");
+            lockScreen = content.Load<Texture2D>("LockScreen");
 
             backButtonSelected = content.Load<Texture2D>("Back-Selected");
             confirmButtonSelected = content.Load<Texture2D>("Confirm-Selected");
@@ -104,19 +108,20 @@ namespace BPA_Tank_Racer_Game
             rainbowBase = content.Load<Texture2D>("BigTankParts//RainbowBase");
             rainbowGun = content.Load<Texture2D>("BigTankParts//RainbowGun");
 
+            //Add textures to Lists
             bases.Add(basicBase);
             bases.Add(desertBase);
-            bases.Add(jungleBase);
-            bases.Add(redBase);
             bases.Add(snowBase);
             bases.Add(urbanBase);
+            bases.Add(redBase);
+            bases.Add(jungleBase);
             bases.Add(rainbowBase);
             guns.Add(basicGun);
             guns.Add(desertGun);
-            guns.Add(jungleGun);
-            guns.Add(redGun);
             guns.Add(snowGun);
             guns.Add(urbanGun);
+            guns.Add(redGun);
+            guns.Add(jungleGun);
             guns.Add(rainbowGun);
 
             Texture2D downArrow = content.Load<Texture2D>("DownArrow");
@@ -238,8 +243,29 @@ namespace BPA_Tank_Racer_Game
                 rightDownArrow.scale = 1;
             }
 
+            //Check if base is unlocked
+            if (Game1.levelsUnlocked > selectedBaseInt)
+                selectedBaseUnlocked = true;
+            else if (bases[selectedBaseInt] == rainbowBase && Game1.hasRainbowBase)
+                selectedBaseUnlocked = true;
+            else selectedBaseUnlocked = false;
+
+            //check if gun is unlocked
+            if (Game1.levelsUnlocked > selectedGunInt)
+                selectedGunUnlocked = true;
+            else if (guns[selectedGunInt] == rainbowGun && Game1.hasRainbowGun)
+                selectedGunUnlocked = true;
+            else selectedGunUnlocked = false;
+
             if (newState.IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.Enter))
-                screenEvent.Invoke(this, new EventArgs());
+            {
+                if (selectedButton == 3) //Confirm
+                {
+                    if (selectedBaseUnlocked && selectedGunUnlocked)
+                        screenEvent.Invoke(this, new EventArgs());
+                }
+                else screenEvent.Invoke(this, new EventArgs());
+            }
 
 
             if (selectedButton == 1)
@@ -277,20 +303,34 @@ namespace BPA_Tank_Racer_Game
                  confirmButton.Width, confirmButton.Height), Color.White, 0, new Vector2(confirmButton.Width / 2, confirmButton.Height / 2),
                  1, SpriteEffects.None, 1f);
 
-            //Draw borders
-            spritebatch.Draw(borderBase, new Vector2(Game1.WindowWidth / 3, Game1.WindowHeight / 2 - 30), new Rectangle(0, 0,
-                 borderBase.Width, borderBase.Height), Color.White, 0, new Vector2(borderBase.Width / 2, borderBase.Height / 2),
-                 1, SpriteEffects.None, 1f);
-            spritebatch.Draw(borderGun, new Vector2(Game1.WindowWidth * 2 / 3, Game1.WindowHeight / 2 - 30), new Rectangle(0, 0,
-                 borderGun.Width, borderGun.Height), Color.White, 0, new Vector2(borderGun.Width / 2, borderGun.Height / 2),
-                 1, SpriteEffects.None, 1f);
-
             //Draw selected base and gun
             spritebatch.Draw(bases[selectedBaseInt], new Vector2(Game1.WindowWidth / 3, Game1.WindowHeight / 2 - 30), new Rectangle(0, 0,
                  bases[selectedBaseInt].Width, bases[selectedBaseInt].Height), Color.White, 0, new Vector2(bases[selectedBaseInt].Width / 2, bases[selectedBaseInt].Height / 2),
                  1, SpriteEffects.None, 1f);
             spritebatch.Draw(guns[selectedGunInt], new Vector2(Game1.WindowWidth * 2 / 3, Game1.WindowHeight / 2 - 30), new Rectangle(0, 0,
                  guns[selectedGunInt].Width, guns[selectedGunInt].Height), Color.White, 0, new Vector2(guns[selectedGunInt].Width / 2, guns[selectedGunInt].Height / 2),
+                 1, SpriteEffects.None, 1f);
+
+            //Draw lock screen(s)
+            if (!selectedBaseUnlocked)
+            {
+                spritebatch.Draw(lockScreen, new Vector2(Game1.WindowWidth / 3, Game1.WindowHeight / 2 - 30), new Rectangle(0, 0,
+                     lockScreen.Width, lockScreen.Height), Color.White, 0, new Vector2(lockScreen.Width / 2, lockScreen.Height / 2),
+                     1, SpriteEffects.None, 1f);
+            }
+            if (!selectedGunUnlocked)
+            {
+                spritebatch.Draw(lockScreen, new Vector2(Game1.WindowWidth * 2 / 3, Game1.WindowHeight / 2 - 30), new Rectangle(0, 0,
+                     lockScreen.Width, lockScreen.Height), Color.White, 0, new Vector2(lockScreen.Width / 2, lockScreen.Height / 2),
+                     1, SpriteEffects.None, 1f);
+            }
+
+            //Draw borders
+            spritebatch.Draw(borderBase, new Vector2(Game1.WindowWidth / 3, Game1.WindowHeight / 2 - 30), new Rectangle(0, 0,
+                 borderBase.Width, borderBase.Height), Color.White, 0, new Vector2(borderBase.Width / 2, borderBase.Height / 2),
+                 1, SpriteEffects.None, 1f);
+            spritebatch.Draw(borderGun, new Vector2(Game1.WindowWidth * 2 / 3, Game1.WindowHeight / 2 - 30), new Rectangle(0, 0,
+                 borderGun.Width, borderGun.Height), Color.White, 0, new Vector2(borderGun.Width / 2, borderGun.Height / 2),
                  1, SpriteEffects.None, 1f);
 
             //Draw arrows
