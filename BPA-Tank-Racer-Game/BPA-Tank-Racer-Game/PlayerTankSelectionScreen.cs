@@ -9,8 +9,8 @@ namespace BPA_Tank_Racer_Game
     {
         Texture2D logo;
 
-        public PlayerTankSelectionScreen(ContentManager content, EventHandler screenEvent) 
-            : base(content, screenEvent)
+        public PlayerTankSelectionScreen(ContentManager content, EventHandler screenEvent, bool isCareerMode) 
+            : base(content, screenEvent, isCareerMode)
         {
             logo = content.Load<Texture2D>("PlayerTankSelectionLogo");
         }

@@ -29,6 +29,7 @@ namespace BPA_Tank_Racer_Game
 
         private bool gameActive = false;
         private bool firstUpdate = true;
+        private bool gameOver = false;
         private bool gameWon = false;
 
         private string winText;
@@ -324,13 +325,15 @@ namespace BPA_Tank_Racer_Game
 
                 if (finishObjective.playerHealth <= 0)
                 {
+                    gameOver = true;
                     gameWon = true;
                     winText = "Congratulations!\nYou won!";
                     winTextColor = Color.Lime;
                 }
                 else if (finishObjective.enemyHealth <= 0)
                 {
-                    gameWon = true;
+                    gameOver = true;
+                    gameWon = false;
                     winText = "You lost!\nToo bad";
                     winTextColor = Color.Red;
                 }
@@ -338,12 +341,12 @@ namespace BPA_Tank_Racer_Game
                 if (firstUpdate)
                     firstUpdate = false;
             }
-            else if (gameWon)
+            else if (gameOver)
             {
                 //After game, before screen change
                 if (Keyboard.GetState().IsKeyDown(Keys.Enter))
                 {
-                    if (unlockContent)
+                    if (unlockContent && gameWon)
                     {
                         Game1.levelsUnlocked++;
                         Game1.Save();

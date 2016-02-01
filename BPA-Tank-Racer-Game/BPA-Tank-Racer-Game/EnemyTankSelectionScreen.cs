@@ -10,7 +10,7 @@ namespace BPA_Tank_Racer_Game
         Texture2D logo;
 
         public EnemyTankSelectionScreen(ContentManager content, EventHandler screenEvent)
-            : base(content, screenEvent)
+            : base(content, screenEvent, false)
         {
             logo = content.Load<Texture2D>("EnemyTankSelectionLogo");
 

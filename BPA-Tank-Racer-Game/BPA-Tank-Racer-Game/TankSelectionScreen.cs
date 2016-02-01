@@ -31,6 +31,8 @@ namespace BPA_Tank_Racer_Game
 
         protected GameObject leftDownArrow, leftUpArrow, rightDownArrow, rightUpArrow;
 
+        protected bool isCareerMode;
+
         public TankPartType selectedTankBase
         {
             get
@@ -71,9 +73,11 @@ namespace BPA_Tank_Racer_Game
             }
         }
 
-        public TankSelectionScreen(ContentManager content, EventHandler screenEvent)
+        public TankSelectionScreen(ContentManager content, EventHandler screenEvent, bool isCareerMode)
             : base(screenEvent)
         {
+            this.isCareerMode = isCareerMode;
+
             selectedButton = 1;
 
             backButtonDefault = content.Load<Texture2D>("Back");
@@ -244,16 +248,24 @@ namespace BPA_Tank_Racer_Game
             }
 
             //Check if base is unlocked
-            if (Game1.levelsUnlocked > selectedBaseInt)
-                selectedBaseUnlocked = true;
-            else if (bases[selectedBaseInt] == rainbowBase && Game1.hasRainbowBase)
+            if (bases[selectedBaseInt] == rainbowBase)
+            {
+                if (Game1.hasRainbowBase)
+                    selectedBaseUnlocked = true;
+                else selectedBaseUnlocked = false;
+            }
+            else if (Game1.levelsUnlocked > selectedBaseInt || (isCareerMode && selectedBaseInt == 0))
                 selectedBaseUnlocked = true;
             else selectedBaseUnlocked = false;
 
-            //check if gun is unlocked
-            if (Game1.levelsUnlocked > selectedGunInt)
-                selectedGunUnlocked = true;
-            else if (guns[selectedGunInt] == rainbowGun && Game1.hasRainbowGun)
+            //Check if gun is unlocked
+            if (guns[selectedGunInt] == rainbowGun)
+            {
+                if (Game1.hasRainbowGun)
+                    selectedGunUnlocked = true;
+                else selectedGunUnlocked = false;
+            }
+            else if (Game1.levelsUnlocked > selectedGunInt || (isCareerMode && selectedGunInt == 0))
                 selectedGunUnlocked = true;
             else selectedGunUnlocked = false;
 

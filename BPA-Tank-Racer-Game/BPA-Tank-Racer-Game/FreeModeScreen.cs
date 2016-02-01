@@ -26,7 +26,7 @@ namespace BPA_Tank_Racer_Game
             gameReady = false;
             this.content = content;
 
-            playerSelectionScreen = new PlayerTankSelectionScreen(content, new EventHandler(PlayerSelectionScreenEvent));
+            playerSelectionScreen = new PlayerTankSelectionScreen(content, new EventHandler(PlayerSelectionScreenEvent), false);
             enemyTankSelectionScreen = new EnemyTankSelectionScreen(content, new EventHandler(EnemyTankSelectionScreenEvent));
             levelSelectionScreen = new LevelSelectionScreen(content, new EventHandler(LevelSelectionScreenEvent));
 
