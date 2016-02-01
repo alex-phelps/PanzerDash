@@ -189,6 +189,7 @@
     <Content Include="Content\Level1Icon.png" />
     <Content Include="Content\Level2.png" />
     <Content Include="Content\Level2Icon.png" />
+    <Content Include="Content\Level3.png" />
     <Content Include="Content\LevelSelection.png" />
     <Content Include="Content\LockScreen.png" />
     <Content Include="Content\Logo.png">
@@ -284,6 +285,7 @@
     <Content Include="Content\Tiles\RiverWater.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Tiles\snowTile.png" />
     <Content Include="Content\Tutorial-Selected.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
