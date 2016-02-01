@@ -14,7 +14,10 @@ namespace BPA_Tank_Racer_Game
         SpriteBatch spriteBatch;
         Screen currentScreen;
         MenuScreen menuScreen;
+        OptionsScreen optionsScreen;
+        ColorScreen colorScreen;
 
+        public static Color backGroundColor = Color.CornflowerBlue;
         public static int WindowWidth = 800;
         public static int WindowHeight = 480;
 
@@ -58,10 +61,11 @@ namespace BPA_Tank_Racer_Game
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             menuScreen = new MenuScreen(Content, new EventHandler(MenuScreenEvent));
+            optionsScreen = new OptionsScreen(Content, new EventHandler(OptionsScreenEvent));
+            colorScreen = new ColorScreen(Content, new EventHandler(ColorScreenEvent), backGroundColor);
 
             currentScreen = menuScreen;
         }
-
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -92,7 +96,7 @@ namespace BPA_Tank_Racer_Game
         protected override void Draw(GameTime gameTime)
         {
             //Temp background color
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(backGroundColor);
 
             //Begin Spritebatch
             spriteBatch.Begin();
@@ -127,7 +131,9 @@ namespace BPA_Tank_Racer_Game
             }
             else if (menuScreen.selectedButton == 4) // Options
             {
-
+                //New Options Screen
+                optionsScreen = new OptionsScreen(Content, new EventHandler(OptionsScreenEvent));
+                currentScreen = optionsScreen;
             }
             else Environment.Exit(0); // Quit
         }
@@ -143,6 +149,7 @@ namespace BPA_Tank_Racer_Game
             }
             else currentScreen = menuScreen;
         }
+
         private void CareerModeScreenEvent(object sender, EventArgs e)
         {
             CareerModeScreen careerModeScreen = (CareerModeScreen)currentScreen;
@@ -154,6 +161,31 @@ namespace BPA_Tank_Racer_Game
                     careerModeScreen.unlockContent);
             }
             else currentScreen = menuScreen;
+        }
+
+        private void OptionsScreenEvent(object sender, EventArgs e)
+        {
+            if (optionsScreen.selectedButton == 0) // Sound
+            {
+            }
+            else if (optionsScreen.selectedButton == 1) // Color
+            {
+                currentScreen = colorScreen;
+            }
+            else if (optionsScreen.selectedButton == 2) // Credits
+            {
+
+            }
+            else if (optionsScreen.selectedButton == 3) // Back
+            {
+                currentScreen = menuScreen;
+            }
+        }
+
+        private void ColorScreenEvent(object sender, EventArgs e)
+        {
+            Save();
+            currentScreen = optionsScreen;
         }
 
         private void GameScreenEvent(object sender, EventArgs e)
@@ -269,6 +301,12 @@ namespace BPA_Tank_Racer_Game
                         hasRainbowBase = Convert.ToBoolean(subTexts[1]);
                     else if (subTexts[0] == "HasRainbowGun")
                         hasRainbowGun = Convert.ToBoolean(subTexts[1]);
+                    else if (subTexts[0] == "ColorR")
+                        backGroundColor.R = Convert.ToByte(subTexts[1]);
+                    else if (subTexts[0] == "ColorG")
+                        backGroundColor.G = Convert.ToByte(subTexts[1]);
+                    else if (subTexts[0] == "ColorB")
+                        backGroundColor.B = Convert.ToByte(subTexts[1]);
                 }
 
                 inFile.Close();
@@ -282,6 +320,9 @@ namespace BPA_Tank_Racer_Game
             outFile.WriteLine("LevelsUnlocked:" + levelsUnlocked);
             outFile.WriteLine("HasRainbowBase:" + hasRainbowBase);
             outFile.WriteLine("HasRainbowGun:" + hasRainbowGun);
+            outFile.WriteLine("ColorR:" + backGroundColor.R);
+            outFile.WriteLine("ColorG:" + backGroundColor.G);
+            outFile.WriteLine("ColorB:" + backGroundColor.B);
 
             outFile.Close();
         }

@@ -130,7 +130,8 @@ namespace BPA_Tank_Racer_Game
                 else if (selectedButton == 5)
                     quitButton = quitButtonSelected;
             }
-            else if (newState.IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.Enter))
+            
+            if (newState.IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.Enter))
             {
                 if (selectedButton == 5)
                 {
@@ -140,7 +141,6 @@ namespace BPA_Tank_Racer_Game
             }
 
             oldState = newState;
-            base.Update(gametime);
         }
 
         public override void Draw(SpriteBatch spritebatch)
@@ -162,8 +162,6 @@ namespace BPA_Tank_Racer_Game
                 Color.White, 0, new Vector2(optionsButton.Width / 2, optionsButton.Height / 2), 1, SpriteEffects.None, 1f);
             spritebatch.Draw(quitButton, new Vector2(Game1.WindowWidth / 2, 400), new Rectangle(0, 0, quitButton.Width, quitButton.Height),
                 Color.White, 0, new Vector2(quitButton.Width / 2, quitButton.Height / 2), 1, SpriteEffects.None, 1f);
-
-            base.Draw(spritebatch);
         }
     }
 }

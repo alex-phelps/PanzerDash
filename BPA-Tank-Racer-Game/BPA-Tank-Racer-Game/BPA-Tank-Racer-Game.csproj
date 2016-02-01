@@ -46,6 +46,9 @@
     <Compile Include="BulletHandler.cs" />
     <Compile Include="CareerEnemySelectionScreen.cs" />
     <Compile Include="CareerModeScreen.cs" />
+    <Compile Include="ColorScreen.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="EnemyTankSelectionScreen.cs" />
     <Compile Include="FinishObjective.cs" />
     <Compile Include="FreeModeScreen.cs" />
@@ -146,6 +149,14 @@
     <Content Include="Content\CareerMode.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Color-Selected.png" />
+    <Content Include="Content\Color.png" />
+    <Content Include="Content\ColorBar-Selected.png" />
+    <Content Include="Content\ColorBar.png" />
+    <Content Include="Content\ColorBarBlue.png" />
+    <Content Include="Content\ColorBarGreen.png" />
+    <Content Include="Content\ColorBarRed.png" />
+    <Content Include="Content\ColorPicker.png" />
     <Content Include="Content\Confirm-Selected.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -155,6 +166,8 @@
     <Content Include="Content\CooldownBar.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Credits-Selected.png" />
+    <Content Include="Content\Credits.png" />
     <Content Include="Content\DamageIncreasePowerUp.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -241,6 +254,8 @@
     <Content Include="Content\SnowTankGun.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Sound-Selected.png" />
+    <Content Include="Content\Sound.png" />
     <Content Include="Content\SpeedPowerUp.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
