@@ -132,13 +132,7 @@ namespace BPA_Tank_Racer_Game
             }
             
             if (newState.IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.Enter))
-            {
-                if (selectedButton == 5)
-                {
-                    Environment.Exit(0);
-                }
-                else screenEvent.Invoke(this, new EventArgs());
-            }
+                screenEvent.Invoke(this, new EventArgs());
 
             oldState = newState;
         }

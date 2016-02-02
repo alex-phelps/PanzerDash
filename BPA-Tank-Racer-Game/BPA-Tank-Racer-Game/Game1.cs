@@ -176,7 +176,11 @@ namespace BPA_Tank_Racer_Game
             {
 
             }
-            else if (optionsScreen.selectedButton == 3) // Back
+            else if (optionsScreen.selectedButton == 3) //Reset
+            {
+                currentScreen = new ResetScreen(Content, new EventHandler(ResetScreenEvent));
+            }
+            else if (optionsScreen.selectedButton == 4) // Back
             {
                 currentScreen = menuScreen;
             }
@@ -191,6 +195,24 @@ namespace BPA_Tank_Racer_Game
         private void GameScreenEvent(object sender, EventArgs e)
         {
             currentScreen = menuScreen;
+        }
+        private void ResetScreenEvent(object sender, EventArgs e)
+        {
+            ResetScreen resetScreen = (ResetScreen)currentScreen;
+
+            if (resetScreen.selectedButton == 0)
+                currentScreen = optionsScreen;
+            else if (resetScreen.selectedButton == 1)
+            {
+                backGroundColor = Color.CornflowerBlue;
+                levelsUnlocked = 0;
+                hasRainbowBase = false;
+                hasRainbowGun = false;
+
+                Save();
+
+                currentScreen = menuScreen;
+            }
         }
 
         /// <summary>

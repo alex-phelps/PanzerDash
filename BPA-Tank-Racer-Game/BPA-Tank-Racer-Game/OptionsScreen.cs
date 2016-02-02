@@ -17,6 +17,7 @@ namespace BPA_Tank_Racer_Game
         private Texture2D soundButton, soundButtonDefault, soundButtonSelected;
         private Texture2D creditsButton, creditsButtonDefault, creditsButtonSelected;
         private Texture2D colorButton, colorButtonDefault, colorButtonSelected;
+        private Texture2D resetButton, resetButtonDefault, resetButtonSelected;
 
         private Texture2D logo;
 
@@ -37,11 +38,14 @@ namespace BPA_Tank_Racer_Game
             creditsButtonSelected = content.Load<Texture2D>("Credits-Selected");
             backButtonDefault = content.Load<Texture2D>("Back");
             backButtonSelected = content.Load<Texture2D>("Back-Selected");
+            resetButtonDefault = content.Load<Texture2D>("Reset");
+            resetButtonSelected = content.Load<Texture2D>("Reset-Selected");
 
             soundButton = soundButtonSelected;
             colorButton = colorButtonDefault;
             creditsButton = creditsButtonDefault;
             backButton = backButtonDefault;
+            resetButton = resetButtonDefault;
         }
 
         public override void Update(GameTime gametime)
@@ -60,10 +64,13 @@ namespace BPA_Tank_Racer_Game
                 else if (selectedButton == 2)
                     creditsButton = creditsButtonDefault;
                 else if (selectedButton == 3)
+                    resetButton = resetButtonDefault;
+                else if (selectedButton == 4)
                     backButton = backButtonDefault;
 
+
                 selectedButton++;
-                selectedButton %= 4;
+                selectedButton %= 5;
 
                 if (selectedButton == 0)
                     soundButton = soundButtonSelected;
@@ -72,6 +79,8 @@ namespace BPA_Tank_Racer_Game
                 else if (selectedButton == 2)
                     creditsButton = creditsButtonSelected;
                 else if (selectedButton == 3)
+                    resetButton = resetButtonSelected;
+                else if (selectedButton == 4)
                     backButton = backButtonSelected;
             }
             else if (newState.IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up))
@@ -85,11 +94,13 @@ namespace BPA_Tank_Racer_Game
                 else if (selectedButton == 2)
                     creditsButton = creditsButtonDefault;
                 else if (selectedButton == 3)
+                    resetButton = resetButtonDefault;
+                else if (selectedButton == 4)
                     backButton = backButtonDefault;
 
                 selectedButton--;
                 if (selectedButton < 0)
-                    selectedButton = 3;
+                    selectedButton = 4;
 
                 if (selectedButton == 0)
                     soundButton = soundButtonSelected;
@@ -98,6 +109,8 @@ namespace BPA_Tank_Racer_Game
                 else if (selectedButton == 2)
                     creditsButton = creditsButtonSelected;
                 else if (selectedButton == 3)
+                    resetButton = resetButtonSelected;
+                else if (selectedButton == 4)
                     backButton = backButtonSelected;
             }
 
@@ -120,7 +133,9 @@ namespace BPA_Tank_Racer_Game
                 Color.White, 0, new Vector2(colorButton.Width / 2, colorButton.Height / 2), 1, SpriteEffects.None, 1f);
             spritebatch.Draw(creditsButton, new Vector2(Game1.WindowWidth / 2, 250), new Rectangle(0, 0, creditsButton.Width, creditsButton.Height),
                 Color.White, 0, new Vector2(creditsButton.Width / 2, creditsButton.Height / 2), 1, SpriteEffects.None, 1f);
-            spritebatch.Draw(backButton, new Vector2(Game1.WindowWidth / 2, 300), new Rectangle(0, 0, backButton.Width, backButton.Height),
+            spritebatch.Draw(resetButton, new Vector2(Game1.WindowWidth / 2, 300), new Rectangle(0, 0, resetButton.Width, resetButton.Height),
+                Color.White, 0, new Vector2(resetButton.Width / 2, resetButton.Height / 2), 1, SpriteEffects.None, 1f);
+            spritebatch.Draw(backButton, new Vector2(Game1.WindowWidth / 2, 350), new Rectangle(0, 0, backButton.Width, backButton.Height),
                 Color.White, 0, new Vector2(backButton.Width / 2, backButton.Height / 2), 1, SpriteEffects.None, 1f);
         }
     }

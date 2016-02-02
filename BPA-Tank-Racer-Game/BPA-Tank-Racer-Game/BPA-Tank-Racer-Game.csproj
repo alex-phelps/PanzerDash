@@ -59,6 +59,7 @@
     <Compile Include="MenuScreen.cs" />
     <Compile Include="OptionsScreen.cs" />
     <Compile Include="PlayerTankSelectionScreen.cs" />
+    <Compile Include="ResetScreen.cs" />
     <Compile Include="TankSelectionScreen.cs" />
     <Compile Include="PlayerTank.cs" />
     <Compile Include="Powerup.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="TankGun.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MSBuildProgramFiles32)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
@@ -208,6 +210,8 @@
     <Content Include="Content\Logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\No-Selected.png" />
+    <Content Include="Content\No.png" />
     <Content Include="Content\Options-Selected.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -242,6 +246,9 @@
     <Content Include="Content\RedTankGun.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Reset-Selected.png" />
+    <Content Include="Content\Reset.png" />
+    <Content Include="Content\ResetQuestion.png" />
     <Content Include="Content\Shield.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -316,6 +323,8 @@
     <Content Include="Content\UrbanTankGun.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Yes-Selected.png" />
+    <Content Include="Content\Yes.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
