@@ -12,7 +12,7 @@ namespace BPA_Tank_Racer_Game
     /// </summary>
     public class GameScreen : Screen
     {
-        private const int levelCount = 1;
+        private const int levelCount = 2;
 
         private PlayerTank playerTank;
         private AITank enemyTank;
