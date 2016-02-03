@@ -277,6 +277,10 @@
     <Content Include="Content\Tiles\grassTile.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Tiles\iceMountainCornerInTile.png" />
+    <Content Include="Content\Tiles\iceMountainCornerTile.png" />
+    <Content Include="Content\Tiles\iceMountainEdgeTile.png" />
+    <Content Include="Content\Tiles\iceMountainFlatTile.png" />
     <Content Include="Content\Tiles\mountainCornerInTile.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

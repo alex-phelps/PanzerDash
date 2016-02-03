@@ -65,6 +65,11 @@ namespace BPA_Tank_Racer_Game
                 colors.Add(new Color(136, 104, 59)); //Medium Tan
                 colors.Add(new Color(148, 115, 67)); //Light Tan
                 colors.Add(new Color(147, 107, 50)); //Mustard Tan
+                colors.Add(new Color(86, 99, 100)); //Darkest Gray
+                colors.Add(new Color(104, 123, 124)); //Gray/Blue
+                colors.Add(new Color(145, 156, 157)); //Light Gray
+                colors.Add(new Color(208, 247, 249)); //Whiteish Blue
+                colors.Add(new Color(173, 229, 232)); //Ice Blue
 
                 //Steer away from border
                 foreach (Color color in colors)
