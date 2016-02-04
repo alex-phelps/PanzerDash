@@ -268,7 +268,7 @@ namespace BPA_Tank_Racer_Game
                     }
 
                     //Check for enemy bullets
-                    if (bullet.active && bullet.ownerTank != playerTank)
+                    if (bullet.active && bullet.ownerTank == enemyTank)
                     {
                         if (Game1.IntersectPixels(bullet, playerTank))
                         {
@@ -278,14 +278,14 @@ namespace BPA_Tank_Racer_Game
                         }
                         else if (Game1.IntersectPixels(bullet, finishObjective))
                         {
-                            finishObjective.enemyHealth -= bullet.damage;
+                            finishObjective.enemyHealth -= bullet.damage + 0.8f; // To buff the AI a bit
                             bulletHandler.Destroy(bullet);
                         }
 
                     }
 
                     //Check for player bullets
-                    if (bullet.active && bullet.ownerTank != enemyTank)
+                    if (bullet.active && bullet.ownerTank == playerTank)
                     {
                         if (Game1.IntersectPixels(bullet, enemyTank))
                         {
@@ -468,6 +468,10 @@ namespace BPA_Tank_Racer_Game
                 startPosInImage = new Vector2(576, 942);
                 finishPosInImage = new Vector2(2120, 1015);
 
+                //Powerup spawn locations in the image
+                powerupSpawns.Add(new Vector2(1414, 1025));
+                powerupSpawns.Add(new Vector2(1456, 2002));
+                powerupSpawns.Add(new Vector2(1938, 1809));
             }
             else // Level 1
             {

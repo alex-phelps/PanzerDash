@@ -205,6 +205,8 @@
     <Content Include="Content\Level2.png" />
     <Content Include="Content\Level2Icon.png" />
     <Content Include="Content\Level3.png" />
+    <Content Include="Content\Level3Icon.png" />
+    <Content Include="Content\Level4.png" />
     <Content Include="Content\LevelSelection.png" />
     <Content Include="Content\LockScreen.png" />
     <Content Include="Content\Logo.png">
@@ -269,6 +271,14 @@
     <Content Include="Content\TempThing.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Tiles\Building1.png" />
+    <Content Include="Content\Tiles\Building1Upper.png" />
+    <Content Include="Content\Tiles\Building2.png" />
+    <Content Include="Content\Tiles\Building3.png" />
+    <Content Include="Content\Tiles\Building3Upper.png" />
+    <Content Include="Content\Tiles\Crosswalk.png" />
+    <Content Include="Content\Tiles\Crosswalk1Way.png" />
+    <Content Include="Content\Tiles\Crosswalk1WayUp.png" />
     <Content Include="Content\Tiles\desertMountainCornerInTile.png" />
     <Content Include="Content\Tiles\desertMountainCornerTile.png" />
     <Content Include="Content\Tiles\desertMountainEdgeTile.png" />
@@ -293,6 +303,9 @@
     <Content Include="Content\Tiles\mountainFlatTile.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Tiles\PRKLotBack.png" />
+    <Content Include="Content\Tiles\PRKLotEnter.png" />
+    <Content Include="Content\Tiles\PRKLotMid.png" />
     <Content Include="Content\Tiles\RiverCornerNorth.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -311,6 +324,11 @@
     <Content Include="Content\Tiles\RiverWater.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Tiles\Road.png" />
+    <Content Include="Content\Tiles\RoadDeadEnd.png" />
+    <Content Include="Content\Tiles\RoadEntrance.png" />
+    <Content Include="Content\Tiles\RoadEntranceUp.png" />
+    <Content Include="Content\Tiles\Roof.png" />
     <Content Include="Content\Tiles\snowTile.png" />
     <Content Include="Content\Tutorial-Selected.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

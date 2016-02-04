@@ -82,7 +82,6 @@ namespace BPA_Tank_Racer_Game
             bulletExplosionTexture = content.Load<Texture2D>("BulletExplosion");
             shieldTexture = content.Load<Texture2D>("Shield");
             
-            //Temp
             maxRotSpeed = 0.05f;
             rotAccel = 0.0025f;
 
@@ -172,8 +171,8 @@ namespace BPA_Tank_Racer_Game
                 tankGun = new TankGun(content.Load<Texture2D>("UrbanTankGun"));
 
                 baseCooldown = 9;
-                gunDamage = 5;
-                bulletSpeed = 12;
+                gunDamage = 4.2f;
+                bulletSpeed = 10;
             }
             else if (gunType == TankPartType.jungle) //Jungle
             {
