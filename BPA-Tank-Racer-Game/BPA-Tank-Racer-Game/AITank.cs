@@ -55,21 +55,37 @@ namespace BPA_Tank_Racer_Game
                 //Define collision colors
                 List<Color> colors = new List<Color>();
                 colors.Add(new Color(0, 0, 0)); //Black
+                colors.Add(new Color(255, 0, 0));
+                //Mountain colors
                 colors.Add(new Color(61, 32, 4)); //Darkest Brown
                 colors.Add(new Color(87, 46, 6)); //Darker Brown
                 colors.Add(new Color(95, 54, 14)); //Medium Brown
                 colors.Add(new Color(112, 70, 28)); //Light Brown
                 colors.Add(new Color(126, 76, 28)); //Lightest Brown
+                //Desert colors
                 colors.Add(new Color(106, 80, 43)); //Darkest Tan
                 colors.Add(new Color(121, 92, 52)); //Darker Tan
                 colors.Add(new Color(136, 104, 59)); //Medium Tan
                 colors.Add(new Color(148, 115, 67)); //Light Tan
                 colors.Add(new Color(147, 107, 50)); //Mustard Tan
+                //Ice colors
                 colors.Add(new Color(86, 99, 100)); //Darkest Gray
                 colors.Add(new Color(104, 123, 124)); //Gray/Blue
                 colors.Add(new Color(145, 156, 157)); //Light Gray
                 colors.Add(new Color(208, 247, 249)); //Whiteish Blue
                 colors.Add(new Color(173, 229, 232)); //Ice Blue
+                //City Colors
+                colors.Add(new Color(87, 87, 87));
+                colors.Add(new Color(162, 162, 162));
+                colors.Add(new Color(138, 138, 138));
+                colors.Add(new Color(75, 69, 66));
+                colors.Add(new Color(59, 69, 77));
+                colors.Add(new Color(58, 37, 28));
+                colors.Add(new Color(111, 66, 54));
+                colors.Add(new Color(116, 31, 9));
+                colors.Add(new Color(154, 123, 93));
+
+                colors.Add(new Color(43, 48, 53));
 
                 //Steer away from border
                 foreach (Color color in colors)
@@ -216,8 +232,8 @@ namespace BPA_Tank_Racer_Game
 
 
                 //Fire
-                if (angleToTarget < 0.2f || angleToTarget > -0.2f)
-                    Shoot();
+                //if (angleToTarget < 0.2f || angleToTarget > -0.2f)
+                    //Shoot();
             }
             
         }

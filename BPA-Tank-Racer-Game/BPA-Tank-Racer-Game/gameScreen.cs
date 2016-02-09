@@ -12,7 +12,7 @@ namespace BPA_Tank_Racer_Game
     /// </summary>
     public class GameScreen : Screen
     {
-        private const int levelCount = 3;
+        private const int levelCount = 4;
 
         private PlayerTank playerTank;
         private AITank enemyTank;
@@ -42,6 +42,7 @@ namespace BPA_Tank_Racer_Game
         private int countdown = 6;
 
         private bool unlockContent;
+        private int level;
 
         public GameScreen(ContentManager content, EventHandler screenEvent)
             : base(screenEvent)
@@ -68,6 +69,7 @@ namespace BPA_Tank_Racer_Game
             this.playerTank = playerTank;
             this.enemyTank = enemyTank;
             this.unlockContent = unlockContent;
+            this.level = level;
 
             random = new Random();
 
@@ -472,6 +474,17 @@ namespace BPA_Tank_Racer_Game
                 powerupSpawns.Add(new Vector2(1414, 1025));
                 powerupSpawns.Add(new Vector2(1456, 2002));
                 powerupSpawns.Add(new Vector2(1938, 1809));
+            }
+            else if (level == 4)
+            {
+                levelSize = new Vector2(6400, 6400);
+
+                background = new Background(content.Load<Texture2D>("Level4"));
+                startPosInImage = new Vector2(2140, 3440);
+                finishPosInImage = new Vector2(3263, 4286);
+
+                //Powerup spawn locations in the image
+
             }
             else // Level 1
             {
