@@ -58,6 +58,7 @@ namespace BPA_Tank_Racer_Game
 
             //Random Level
             int level = random.Next(1, levelCount + 1);
+            this.level = level;
             Setup(content, level);
         }
 
@@ -94,7 +95,36 @@ namespace BPA_Tank_Racer_Game
                 }
 
                 //Check if player is colliding with the color black in the background
-                if (Game1.IntersectColor(playerTank, background, new Color(0, 0, 0)))
+                if (level == 4)
+                {
+                    //City Specific collision colors
+                    if (Game1.IntersectColor(playerTank, background, new List<Color>
+                        {
+                            new Color(0, 0, 0),
+                            new Color(87, 87, 87),
+                            new Color(162, 162, 162),
+                            new Color(138, 138, 138),
+                            new Color(75, 69, 66),
+                            new Color(59, 69, 77),
+                            new Color(58, 37, 28),
+                            new Color(111, 66, 54),
+                            new Color(116, 31, 9),
+                            new Color(154, 123, 93)
+                        }))
+                    {
+                        //Undo tank movement
+                        MoveBoard(playerTank.velocity);
+
+                        //Undo player's rotation
+                        playerTank.rotation -= playerTank.rotSpeed;
+
+                        //Set player's speed variables to 0;
+                        playerTank.speed = 0;
+                        playerTank.rotSpeed = 0;
+                    }
+
+                }
+                else if (Game1.IntersectColor(playerTank, background, new Color(0, 0, 0)))
                 {
                     //Undo tank movement
                     MoveBoard(playerTank.velocity);
@@ -477,13 +507,18 @@ namespace BPA_Tank_Racer_Game
             }
             else if (level == 4)
             {
-                levelSize = new Vector2(6400, 6400);
+                levelSize = new Vector2(3904, 3904);
 
                 background = new Background(content.Load<Texture2D>("Level4"));
-                startPosInImage = new Vector2(2140, 3440);
-                finishPosInImage = new Vector2(3263, 4286);
+                startPosInImage = new Vector2(735, 2054);
+                finishPosInImage = new Vector2(1850, 2870);
 
                 //Powerup spawn locations in the image
+                powerupSpawns.Add(new Vector2(1215, 1300));
+                powerupSpawns.Add(new Vector2(1915, 950));
+                powerupSpawns.Add(new Vector2(2810, 1983));
+                powerupSpawns.Add(new Vector2(2434, 2544));
+                powerupSpawns.Add(new Vector2(2560, 3280));
 
             }
             else // Level 1

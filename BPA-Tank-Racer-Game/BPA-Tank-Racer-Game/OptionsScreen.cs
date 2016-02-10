@@ -27,6 +27,7 @@ namespace BPA_Tank_Racer_Game
             : base(screenEvent)
         {
             selectedButton = 0;
+            oldState = Keyboard.GetState();
 
             logo = content.Load<Texture2D>("Options");
 

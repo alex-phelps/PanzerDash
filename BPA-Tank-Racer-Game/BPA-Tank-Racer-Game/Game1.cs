@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
@@ -16,6 +17,7 @@ namespace BPA_Tank_Racer_Game
         MenuScreen menuScreen;
         OptionsScreen optionsScreen;
         ColorScreen colorScreen;
+        GameScreen gameScreen;
 
         public static Color backGroundColor = Color.CornflowerBlue;
         public static int WindowWidth = 800;
@@ -194,8 +196,54 @@ namespace BPA_Tank_Racer_Game
 
         private void GameScreenEvent(object sender, EventArgs e)
         {
-            currentScreen = menuScreen;
+            gameScreen = (GameScreen)currentScreen;
+            currentScreen = new PauseScreen(Content, new EventHandler(PauseScreenEvent));
         }
+
+        private void PauseScreenEvent(object sender, EventArgs e)
+        {
+            PauseScreen screen = (PauseScreen)currentScreen;
+
+            if (screen.selectedButton == 0)
+            {
+                currentScreen = gameScreen;
+            }
+            else if (screen.selectedButton == 1)
+            {
+                optionsScreen = new OptionsScreen(Content, new EventHandler(PausedOptionsScreenEvent));
+                currentScreen = optionsScreen;
+            }
+            else if (screen.selectedButton == 2)
+            {
+                currentScreen = menuScreen;
+            }
+        }
+
+        private void PausedOptionsScreenEvent(object sender, EventArgs e)
+        {
+            OptionsScreen screen = (OptionsScreen)currentScreen;
+
+            if (optionsScreen.selectedButton == 0) // Sound
+            {
+            }
+            else if (optionsScreen.selectedButton == 1) // Color
+            {
+                currentScreen = colorScreen;
+            }
+            else if (optionsScreen.selectedButton == 2) // Credits
+            {
+
+            }
+            else if (optionsScreen.selectedButton == 3) //Reset
+            {
+                currentScreen = new ResetScreen(Content, new EventHandler(ResetScreenEvent));
+            }
+            else if (optionsScreen.selectedButton == 4) // Back
+            {
+                currentScreen = new PauseScreen(Content, new EventHandler(PauseScreenEvent));
+            }
+        }
+
         private void ResetScreenEvent(object sender, EventArgs e)
         {
             ResetScreen resetScreen = (ResetScreen)currentScreen;
@@ -297,6 +345,48 @@ namespace BPA_Tank_Racer_Game
                         {
                             //Intersection found
                             return true;
+                        }
+                    }
+                }
+            }
+
+            //No intersection
+            return false;
+        }
+
+        public static bool IntersectColor(GameObject objA, GameObject objB, List<Color> colors)
+        {
+            // Calculate a matrix which transforms from A's local space into
+            // world space and then into B's local space
+            Matrix transformAToB = objA.transformMatrix * Matrix.Invert(objB.transformMatrix);
+
+            //For each row of pixel in A
+            for (int yA = 0; yA < objA.Height; yA++)
+            {
+                //For each pixel in that row
+                for (int xA = 0; xA < objA.Width; xA++)
+                {
+                    //Calculate this pixel's location in B
+                    Vector2 positionInB = Vector2.Transform(new Vector2(xA, yA), transformAToB);
+
+                    int xB = (int)Math.Round(positionInB.X);
+                    int yB = (int)Math.Round(positionInB.Y);
+
+                    if (xB >= 0 && xB < objB.Width &&
+                        yB >= 0 && yB < objB.Height)
+                    {
+                        //Get colors of the overlapping pixels
+                        Color colorA = objA.colorData[xA + yA * objA.Width];
+                        Color colorB = objB.colorData[xB + yB * objB.Width];
+
+                        foreach (Color color in colors)
+                        {
+                            //If color A is not transparent and color B is the desired color
+                            if (colorA.A != 0 && colorB == color)
+                            {
+                                //Intersection found
+                                return true;
+                            }
                         }
                     }
                 }

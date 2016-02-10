@@ -41,8 +41,8 @@ namespace BPA_Tank_Racer_Game
             {
                 Matrix transformTankToLevel = transformMatrix * Matrix.Invert(background.transformMatrix);
 
-                Vector2 positionInLevelL = Vector2.Transform(new Vector2(-40, -Height * 3), transformTankToLevel);
-                Vector2 positionInLevelR = Vector2.Transform(new Vector2(40, -Height * 3), transformTankToLevel);
+                Vector2 positionInLevelL = Vector2.Transform(new Vector2(-20, -Height * 3), transformTankToLevel);
+                Vector2 positionInLevelR = Vector2.Transform(new Vector2(20 + Width, -Height * 3), transformTankToLevel);
 
                 int xL = (int)Math.Round(positionInLevelL.X);
                 int yL = (int)Math.Round(positionInLevelL.Y);
@@ -84,8 +84,11 @@ namespace BPA_Tank_Racer_Game
                 colors.Add(new Color(111, 66, 54));
                 colors.Add(new Color(116, 31, 9));
                 colors.Add(new Color(154, 123, 93));
-
+                //City Colors (Avoid Specific Ones)
                 colors.Add(new Color(43, 48, 53));
+                colors.Add(new Color(72, 79, 85));
+                colors.Add(new Color(146, 149, 152));
+                colors.Add(new Color(153, 167, 183));
 
                 //Steer away from border
                 foreach (Color color in colors)
@@ -232,8 +235,8 @@ namespace BPA_Tank_Racer_Game
 
 
                 //Fire
-                //if (angleToTarget < 0.2f || angleToTarget > -0.2f)
-                    //Shoot();
+                if (angleToTarget < 0.2f || angleToTarget > -0.2f)
+                    Shoot();
             }
             
         }
