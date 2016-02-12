@@ -89,6 +89,13 @@ namespace BPA_Tank_Racer_Game
                 colors.Add(new Color(72, 79, 85));
                 colors.Add(new Color(146, 149, 152));
                 colors.Add(new Color(153, 167, 183));
+                //Mesa Colors
+                colors.Add(new Color(97, 34, 6));
+                colors.Add(new Color(109, 41, 12));
+                colors.Add(new Color(118, 48, 18));
+                colors.Add(new Color(142, 67, 34));
+                colors.Add(new Color(136, 49, 19));
+                colors.Add(new Color(121, 55, 29));
 
                 //Steer away from border
                 foreach (Color color in colors)

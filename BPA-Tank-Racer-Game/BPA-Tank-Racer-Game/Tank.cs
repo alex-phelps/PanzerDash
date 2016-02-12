@@ -163,7 +163,7 @@ namespace BPA_Tank_Racer_Game
                 tankGun = new TankGun(content.Load<Texture2D>("SnowTankGun"));
 
                 baseCooldown = 5;
-                gunDamage = 2.8;
+                gunDamage = 2.6;
                 bulletSpeed = 7;
             }
             else if (gunType == TankPartType.urban) //Urban

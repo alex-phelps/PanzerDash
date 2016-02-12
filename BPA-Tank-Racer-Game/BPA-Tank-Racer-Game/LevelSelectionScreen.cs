@@ -60,6 +60,7 @@ namespace BPA_Tank_Racer_Game
             levels.Add(content.Load<Texture2D>("Level2Icon"));
             levels.Add(content.Load<Texture2D>("Level3Icon"));
             levels.Add(content.Load<Texture2D>("Level4Icon"));
+            levels.Add(content.Load<Texture2D>("Level5Icon"));
         }
 
         public override void Update(GameTime gametime)

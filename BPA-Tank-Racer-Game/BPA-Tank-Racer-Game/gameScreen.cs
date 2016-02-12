@@ -12,7 +12,7 @@ namespace BPA_Tank_Racer_Game
     /// </summary>
     public class GameScreen : Screen
     {
-        private const int levelCount = 4;
+        private const int levelCount = 5;
 
         private PlayerTank playerTank;
         private AITank enemyTank;
@@ -59,7 +59,7 @@ namespace BPA_Tank_Racer_Game
             //Random Level
             int level = random.Next(1, levelCount + 1);
             this.level = level;
-            Setup(content, level);
+            Setup(content, 5);
         }
 
         public GameScreen(ContentManager content, EventHandler screenEvent, int level,
@@ -293,11 +293,27 @@ namespace BPA_Tank_Racer_Game
 
                 foreach (Bullet bullet in bulletHandler.bullets)
                 {
-                    //check for collision with level
-                    if (bullet.active && Game1.IntersectColor(bullet, background, new Color(0, 0, 0)))
+
+                    //Check for collision with level
+                    if (level == 4)
                     {
-                        bulletHandler.Destroy(bullet);
+                        if (Game1.IntersectColor(playerTank, background, new List<Color>
+                        {
+                            new Color(0, 0, 0),
+                            new Color(87, 87, 87),
+                            new Color(162, 162, 162),
+                            new Color(138, 138, 138),
+                            new Color(75, 69, 66),
+                            new Color(59, 69, 77),
+                            new Color(58, 37, 28),
+                            new Color(111, 66, 54),
+                            new Color(116, 31, 9),
+                            new Color(154, 123, 93)
+                        }))
+                            bulletHandler.Destroy(bullet);
                     }
+                    else if (bullet.active && Game1.IntersectColor(bullet, background, new Color(0, 0, 0)))
+                        bulletHandler.Destroy(bullet);
 
                     //Check for enemy bullets
                     if (bullet.active && bullet.ownerTank == enemyTank)
@@ -520,6 +536,19 @@ namespace BPA_Tank_Racer_Game
                 powerupSpawns.Add(new Vector2(2434, 2544));
                 powerupSpawns.Add(new Vector2(2560, 3280));
 
+            }
+            else if (level == 5)
+            {
+                background = new Background(content.Load<Texture2D>("Level5"));
+                startPosInImage = new Vector2(1560, 1320);
+                finishPosInImage = new Vector2(1255, 630);
+
+                //Powerup spawn locations in the image
+                powerupSpawns.Add(new Vector2(2306, 1027));
+                powerupSpawns.Add(new Vector2(1783, 1738));
+                powerupSpawns.Add(new Vector2(2170, 2060));
+                powerupSpawns.Add(new Vector2(892, 2288));
+                powerupSpawns.Add(new Vector2(1088, 1032));
             }
             else // Level 1
             {
