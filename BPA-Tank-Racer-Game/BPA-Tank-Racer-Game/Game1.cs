@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 using System.IO;
 
 namespace BPA_Tank_Racer_Game
@@ -22,6 +23,19 @@ namespace BPA_Tank_Racer_Game
         public static Color backGroundColor = Color.CornflowerBlue;
         public static int WindowWidth = 800;
         public static int WindowHeight = 480;
+
+        public static SoundEffect bumpFX;
+        public static SoundEffect explodeFX;
+        public static SoundEffect powerUpFX;
+        public static SoundEffect selectFX;
+        public static SoundEffect shootFX;
+        public static SoundEffect winFX;
+        public static SoundEffect loseFX;
+
+        public static SoundEffect gameMusic;
+
+        public static float effectVolume = 1.0f;
+        public static float musicVolume = 1.0f;
 
         //Save Data
         public static int levelsUnlocked;
@@ -67,6 +81,18 @@ namespace BPA_Tank_Racer_Game
             colorScreen = new ColorScreen(Content, new EventHandler(ColorScreenEvent), backGroundColor);
 
             currentScreen = menuScreen;
+
+
+            //Sound Content
+            bumpFX = Content.Load<SoundEffect>("Sounds\\BumpNoise");
+            explodeFX = Content.Load<SoundEffect>("Sounds\\ExplosionSound");
+            powerUpFX = Content.Load<SoundEffect>("Sounds\\PowerUp");
+            selectFX = Content.Load<SoundEffect>("Sounds\\SelectSound");
+            shootFX = Content.Load<SoundEffect>("Sounds\\ShootSound");
+            winFX = Content.Load<SoundEffect>("Sounds\\WinSound");
+            loseFX = Content.Load<SoundEffect>("Sounds\\YouLose");
+
+            gameMusic = Content.Load<SoundEffect>("Sounds\\GameMusic");
         }
 
         /// <summary>

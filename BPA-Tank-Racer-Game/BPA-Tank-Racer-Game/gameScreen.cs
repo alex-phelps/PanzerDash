@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace BPA_Tank_Racer_Game
 {
@@ -44,6 +45,8 @@ namespace BPA_Tank_Racer_Game
         private bool unlockContent;
         private int level;
 
+        private SoundEffectInstance bumpFX;
+
         public GameScreen(ContentManager content, EventHandler screenEvent)
             : base(screenEvent)
         {
@@ -59,7 +62,7 @@ namespace BPA_Tank_Racer_Game
             //Random Level
             int level = random.Next(1, levelCount + 1);
             this.level = level;
-            Setup(content, 6); //TEMP
+            Setup(content, level);
         }
 
         public GameScreen(ContentManager content, EventHandler screenEvent, int level,
@@ -595,6 +598,10 @@ namespace BPA_Tank_Racer_Game
                     ((loc.X - levelSize.X / 2) + background.position.X),
                     ((loc.Y - levelSize.Y / 2) + background.position.Y)), type));
             }
+
+
+            //Sound Init
+            bumpFX = Game1.bumpFX.CreateInstance();
         }
 
         private void MoveBoard(Vector2 vector)

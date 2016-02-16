@@ -272,13 +272,30 @@
     </Content>
     <Content Include="Content\Sound-Selected.png" />
     <Content Include="Content\Sound.png" />
-    <Content Include="Content\Sounds\BumpNoise.wav" />
-    <Content Include="Content\Sounds\ExplosionSound.wav" />
-    <Content Include="Content\Sounds\PowerUp.wav" />
-    <Content Include="Content\Sounds\SelectSound.wav" />
-    <Content Include="Content\Sounds\ShootSound.wav" />
-    <Content Include="Content\Sounds\WinSound.wav" />
-    <Content Include="Content\Sounds\YouLose.wav" />
+    <Content Include="Content\Sounds\BumpNoise.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sounds\ExplosionSound.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sounds\GameMusic.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sounds\PowerUp.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sounds\SelectSound.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sounds\ShootSound.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sounds\WinSound.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sounds\YouLose.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\SpeedPowerUp.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
