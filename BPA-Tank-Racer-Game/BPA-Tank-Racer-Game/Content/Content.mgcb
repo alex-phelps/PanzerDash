@@ -1604,3 +1604,45 @@
 /processorParam:TextureFormat=Color
 /build:Level6Icon.png
 
+#begin Sounds/BumpNoise.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/BumpNoise.wav
+
+#begin Sounds/ExplosionSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/ExplosionSound.wav
+
+#begin Sounds/PowerUp.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/PowerUp.wav
+
+#begin Sounds/SelectSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SelectSound.wav
+
+#begin Sounds/ShootSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/ShootSound.wav
+
+#begin Sounds/WinSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/WinSound.wav
+
+#begin Sounds/YouLose.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/YouLose.wav
+

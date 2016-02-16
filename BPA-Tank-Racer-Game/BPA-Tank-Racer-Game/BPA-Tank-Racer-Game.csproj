@@ -272,6 +272,13 @@
     </Content>
     <Content Include="Content\Sound-Selected.png" />
     <Content Include="Content\Sound.png" />
+    <Content Include="Content\Sounds\BumpNoise.wav" />
+    <Content Include="Content\Sounds\ExplosionSound.wav" />
+    <Content Include="Content\Sounds\PowerUp.wav" />
+    <Content Include="Content\Sounds\SelectSound.wav" />
+    <Content Include="Content\Sounds\ShootSound.wav" />
+    <Content Include="Content\Sounds\WinSound.wav" />
+    <Content Include="Content\Sounds\YouLose.wav" />
     <Content Include="Content\SpeedPowerUp.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
