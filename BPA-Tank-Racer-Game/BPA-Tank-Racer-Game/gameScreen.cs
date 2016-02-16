@@ -59,7 +59,7 @@ namespace BPA_Tank_Racer_Game
             //Random Level
             int level = random.Next(1, levelCount + 1);
             this.level = level;
-            Setup(content, 5);
+            Setup(content, 6); //TEMP
         }
 
         public GameScreen(ContentManager content, EventHandler screenEvent, int level,
@@ -549,6 +549,14 @@ namespace BPA_Tank_Racer_Game
                 powerupSpawns.Add(new Vector2(2170, 2060));
                 powerupSpawns.Add(new Vector2(892, 2288));
                 powerupSpawns.Add(new Vector2(1088, 1032));
+            }
+            else if (level == 6)
+            {
+                background = new Background(content.Load<Texture2D>("Level6"));
+                startPosInImage = new Vector2(1800, 2200);
+                finishPosInImage = new Vector2(1444, 2570);
+
+                //Powerup spawn locations in the image
             }
             else // Level 1
             {

@@ -212,6 +212,7 @@
     <Content Include="Content\Level5.png" />
     <Content Include="Content\Level5Icon.png" />
     <Content Include="Content\Level6.png" />
+    <Content Include="Content\Level6Icon.png" />
     <Content Include="Content\LevelSelection.png" />
     <Content Include="Content\LockScreen.png" />
     <Content Include="Content\Logo.png">
