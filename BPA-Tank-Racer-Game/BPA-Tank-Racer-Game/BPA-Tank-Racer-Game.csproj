@@ -275,10 +275,12 @@
     <Content Include="Content\Sounds\BumpNoise.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Sounds\countdown.wav" />
     <Content Include="Content\Sounds\ExplosionSound.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sounds\GameMusic.wma" />
+    <Content Include="Content\Sounds\gosound.wav" />
     <Content Include="Content\Sounds\PowerUp.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
