@@ -61,6 +61,7 @@
     <Compile Include="PauseScreen.cs" />
     <Compile Include="PlayerTankSelectionScreen.cs" />
     <Compile Include="ResetScreen.cs" />
+    <Compile Include="SoundScreen.cs" />
     <Compile Include="TankSelectionScreen.cs" />
     <Compile Include="PlayerTank.cs" />
     <Compile Include="Powerup.cs" />
@@ -218,6 +219,7 @@
     <Content Include="Content\Logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Music.png" />
     <Content Include="Content\No-Selected.png" />
     <Content Include="Content\No.png" />
     <Content Include="Content\Options-Selected.png">
@@ -258,6 +260,7 @@
     <Content Include="Content\Reset-Selected.png" />
     <Content Include="Content\Reset.png" />
     <Content Include="Content\ResetQuestion.png" />
+    <Content Include="Content\SFX.png" />
     <Content Include="Content\Shield.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -272,15 +275,19 @@
     </Content>
     <Content Include="Content\Sound-Selected.png" />
     <Content Include="Content\Sound.png" />
+    <Content Include="Content\SoundBar-Selected.png" />
+    <Content Include="Content\SoundBar.png" />
+    <Content Include="Content\SoundBarBackground.png" />
+    <Content Include="Content\SoundPicker.png" />
     <Content Include="Content\Sounds\BumpNoise.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Sounds\countdown.wav" />
+    <Content Include="Content\Sounds\countdownSound.wav" />
     <Content Include="Content\Sounds\ExplosionSound.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sounds\GameMusic.wma" />
-    <Content Include="Content\Sounds\gosound.wav" />
+    <Content Include="Content\Sounds\goSound.wav" />
     <Content Include="Content\Sounds\PowerUp.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

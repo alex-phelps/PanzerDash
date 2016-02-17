@@ -32,10 +32,12 @@ namespace BPA_Tank_Racer_Game
         public static SoundEffect shootFX;
         public static SoundEffect winFX;
         public static SoundEffect loseFX;
+        public static SoundEffect countdownFX;
+        public static SoundEffect goFX;
         public static Song gameMusic;
 
         public static float effectVolume = 0.5f;
-        public static float musicVolume = 0.2f;
+        public static float musicVolume = 0.3f;
 
         //Save Data
         public static int levelsUnlocked;
@@ -86,6 +88,8 @@ namespace BPA_Tank_Racer_Game
             shootFX = Content.Load<SoundEffect>("Sounds\\ShootSound");
             winFX = Content.Load<SoundEffect>("Sounds\\WinSound");
             loseFX = Content.Load<SoundEffect>("Sounds\\YouLose");
+            countdownFX = Content.Load<SoundEffect>("Sounds\\countdownSound");
+            goFX = Content.Load<SoundEffect>("Sounds\\goSound");
             gameMusic = Content.Load<Song>("Sounds\\GameMusic");
 
             menuScreen = new MenuScreen(Content, new EventHandler(MenuScreenEvent));
@@ -202,6 +206,7 @@ namespace BPA_Tank_Racer_Game
         {
             if (optionsScreen.selectedButton == 0) // Sound
             {
+                currentScreen = new SoundScreen(Content, new EventHandler(SoundScreenEvent));
             }
             else if (optionsScreen.selectedButton == 1) // Color
             {
@@ -226,6 +231,12 @@ namespace BPA_Tank_Racer_Game
             Save();
             currentScreen = optionsScreen;
         }
+
+        private void SoundScreenEvent(object sender, EventArgs e)
+        {
+            currentScreen = optionsScreen;
+        }
+
 
         private void GameScreenEvent(object sender, EventArgs e)
         {

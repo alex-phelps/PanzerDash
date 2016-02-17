@@ -34,8 +34,8 @@ namespace BPA_Tank_Racer_Game
         private bool firstUpdate = true;
         private bool gameWon = false;
 
-        private string winText;
-        private Color winTextColor;
+        private string endText;
+        private Color endTextColor;
         private SpriteFont winTextFont;
         private SpriteFont winSubFont;
 
@@ -51,6 +51,8 @@ namespace BPA_Tank_Racer_Game
         private SoundEffectInstance winFX;
         private SoundEffectInstance loseFX;
         private SoundEffectInstance powerUpFX;
+        private SoundEffectInstance countdownFX;
+        private SoundEffectInstance goFX;
 
         public GameScreen(ContentManager content, EventHandler screenEvent)
             : base(screenEvent)
@@ -92,7 +94,7 @@ namespace BPA_Tank_Racer_Game
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 screenEvent.Invoke(this, new EventArgs());
 
-            if ((gameActive || firstUpdate) && !gameWon)
+            if ((gameActive || firstUpdate) && !gameOver)
             {
                 playerTank.Update(gametime);
                 bulletHandler.Update(gametime);
@@ -405,8 +407,8 @@ namespace BPA_Tank_Racer_Game
                     MediaPlayer.Stop();
                     gameOver = true;
                     gameWon = true;
-                    winText = "Congratulations!\nYou won!";
-                    winTextColor = Color.Lime;
+                    endText = "Congratulations!\nYou won!";
+                    endTextColor = Color.Lime;
                 }
                 else if (finishObjective.enemyHealth <= 0)
                 {
@@ -414,8 +416,8 @@ namespace BPA_Tank_Racer_Game
                     MediaPlayer.Stop();
                     gameOver = true;
                     gameWon = false;
-                    winText = "You lost!\nToo bad";
-                    winTextColor = Color.Red;
+                    endText = "You lost!\nToo bad";
+                    endTextColor = Color.Red;
                 }
 
                 if (firstUpdate)
@@ -439,12 +441,15 @@ namespace BPA_Tank_Racer_Game
                 //Before Game; Countdown
                 if (countdown <= 0)
                 {
+                    goFX.Play();
                     MediaPlayer.Play(Game1.gameMusic);
                     gameActive = true;
                 }
                 else if (gametime.TotalGameTime.TotalSeconds - 1 >= countdownOldTime.TotalSeconds)
                 {
                     countdown--;
+                    if (countdown != 0)
+                        countdownFX.Play();
                     countdownOldTime = gametime.TotalGameTime;
                 }
             }
@@ -501,11 +506,11 @@ namespace BPA_Tank_Racer_Game
             }
 
             //Draw win text
-            if (gameWon)
+            if (gameOver)
             {
-                spritebatch.DrawString(winTextFont, winText, new Vector2(
-                    Game1.WindowWidth / 2 - winTextFont.MeasureString(winText).X / 2, Game1.WindowHeight / 3
-                    - winTextFont.MeasureString(winText).Y / 2), winTextColor, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                spritebatch.DrawString(winTextFont, endText, new Vector2(
+                    Game1.WindowWidth / 2 - winTextFont.MeasureString(endText).X / 2, Game1.WindowHeight / 3
+                    - winTextFont.MeasureString(endText).Y / 2), endTextColor, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
 
                 spritebatch.DrawString(winSubFont, "> Press Enter to Continue <", new Vector2(
                     Game1.WindowWidth / 2 - winSubFont.MeasureString("> Press Enter to Continue <").X / 2,
@@ -689,6 +694,8 @@ namespace BPA_Tank_Racer_Game
             powerUpFX = Game1.powerUpFX.CreateInstance();
             winFX = Game1.winFX.CreateInstance();
             loseFX = Game1.loseFX.CreateInstance();
+            countdownFX = Game1.countdownFX.CreateInstance();
+            goFX = Game1.goFX.CreateInstance();
         }
     }
 }
