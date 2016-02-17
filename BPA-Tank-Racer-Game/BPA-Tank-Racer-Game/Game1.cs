@@ -54,6 +54,8 @@ namespace BPA_Tank_Racer_Game
             graphics.ApplyChanges();
 
             LoadSaveData();
+
+            SoundEffect.MasterVolume = 1.0f;
         }
 
         /// <summary>

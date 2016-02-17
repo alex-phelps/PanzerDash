@@ -64,6 +64,8 @@ namespace BPA_Tank_Racer_Game
             //Keyboard logic
             if (newState.IsKeyDown(Keys.Down) && oldState.IsKeyUp(Keys.Down))
             {
+                Game1.selectFX.Play();
+
                 //Change selected button
 
                 if (selectedButton == 0)
@@ -98,6 +100,8 @@ namespace BPA_Tank_Racer_Game
             }
             else if (newState.IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up))
             {
+                Game1.selectFX.Play();
+
                 //Change selected button
 
                 if (selectedButton == 0)

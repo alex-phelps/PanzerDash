@@ -124,6 +124,8 @@ namespace BPA_Tank_Racer_Game
                         //Set player's speed variables to 0;
                         playerTank.speed = 0;
                         playerTank.rotSpeed = 0;
+
+                        Game1.bumpFX.Play();
                     }
 
                 }
@@ -138,6 +140,8 @@ namespace BPA_Tank_Racer_Game
                     //Set player's speed variables to 0;
                     playerTank.speed = 0;
                     playerTank.rotSpeed = 0;
+
+                    Game1.bumpFX.Play();
                 }
 
                 //Check if player is colliding with the finish objective
