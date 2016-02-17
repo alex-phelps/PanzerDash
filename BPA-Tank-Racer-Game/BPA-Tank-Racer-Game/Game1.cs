@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 using System.IO;
 
 namespace BPA_Tank_Racer_Game
@@ -31,11 +32,10 @@ namespace BPA_Tank_Racer_Game
         public static SoundEffect shootFX;
         public static SoundEffect winFX;
         public static SoundEffect loseFX;
+        public static Song gameMusic;
 
-        public static SoundEffect gameMusic;
-
-        public static float effectVolume = 1.0f;
-        public static float musicVolume = 1.0f;
+        public static float effectVolume = 0.5f;
+        public static float musicVolume = 0.2f;
 
         //Save Data
         public static int levelsUnlocked;
@@ -55,7 +55,7 @@ namespace BPA_Tank_Racer_Game
 
             LoadSaveData();
 
-            SoundEffect.MasterVolume = 1.0f;
+            MediaPlayer.IsRepeating = true;
         }
 
         /// <summary>
@@ -77,14 +77,7 @@ namespace BPA_Tank_Racer_Game
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            menuScreen = new MenuScreen(Content, new EventHandler(MenuScreenEvent));
-            optionsScreen = new OptionsScreen(Content, new EventHandler(OptionsScreenEvent));
-            colorScreen = new ColorScreen(Content, new EventHandler(ColorScreenEvent), backGroundColor);
-
-            currentScreen = menuScreen;
-
-
+            
             //Sound Content
             bumpFX = Content.Load<SoundEffect>("Sounds\\BumpNoise");
             explodeFX = Content.Load<SoundEffect>("Sounds\\ExplosionSound");
@@ -93,8 +86,13 @@ namespace BPA_Tank_Racer_Game
             shootFX = Content.Load<SoundEffect>("Sounds\\ShootSound");
             winFX = Content.Load<SoundEffect>("Sounds\\WinSound");
             loseFX = Content.Load<SoundEffect>("Sounds\\YouLose");
+            gameMusic = Content.Load<Song>("Sounds\\GameMusic");
 
-            gameMusic = Content.Load<SoundEffect>("Sounds\\GameMusic");
+            menuScreen = new MenuScreen(Content, new EventHandler(MenuScreenEvent));
+            optionsScreen = new OptionsScreen(Content, new EventHandler(OptionsScreenEvent));
+            colorScreen = new ColorScreen(Content, new EventHandler(ColorScreenEvent), backGroundColor);
+
+            currentScreen = menuScreen;
         }
 
         /// <summary>
@@ -112,6 +110,13 @@ namespace BPA_Tank_Racer_Game
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            //Sound Updates
+            if (SoundEffect.MasterVolume != effectVolume)
+                SoundEffect.MasterVolume = effectVolume;
+
+            if (MediaPlayer.Volume != musicVolume)
+                MediaPlayer.Volume = musicVolume;
+
             //Update the current screen
             currentScreen.Update(gameTime);
 
@@ -225,7 +230,10 @@ namespace BPA_Tank_Racer_Game
         private void GameScreenEvent(object sender, EventArgs e)
         {
             gameScreen = (GameScreen)currentScreen;
-            currentScreen = new PauseScreen(Content, new EventHandler(PauseScreenEvent));
+
+            if (!gameScreen.gameOver)
+                currentScreen = new PauseScreen(Content, new EventHandler(PauseScreenEvent));
+            else currentScreen = menuScreen;
         }
 
         private void PauseScreenEvent(object sender, EventArgs e)
@@ -234,6 +242,7 @@ namespace BPA_Tank_Racer_Game
 
             if (screen.selectedButton == 0)
             {
+                MediaPlayer.Resume();
                 currentScreen = gameScreen;
             }
             else if (screen.selectedButton == 1)

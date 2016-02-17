@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 namespace BPA_Tank_Racer_Game
 {
@@ -64,6 +65,8 @@ namespace BPA_Tank_Racer_Game
         public bool isStunned;
         public double stunLength;
 
+        private SoundEffectInstance shootFX;
+
         /// <summary>
         /// Creates a new tank
         /// </summary>
@@ -77,6 +80,8 @@ namespace BPA_Tank_Racer_Game
             this.baseType = baseType;
             this.gunType = gunType;
             this.bulletHandler = bulletHandler;
+
+            shootFX = Game1.shootFX.CreateInstance();
 
             bulletTexture = content.Load<Texture2D>("Bullet");
             bulletExplosionTexture = content.Load<Texture2D>("BulletExplosion");
@@ -294,6 +299,7 @@ namespace BPA_Tank_Racer_Game
         {
             if (currentCooldown == 0)
             {
+                shootFX.Play();
                 Vector2 bulletVelocity = new Vector2((float)Math.Sin(gunRotation), (float)Math.Cos(gunRotation));
                 bulletHandler.NewBullet(new Bullet(bulletTexture, bulletExplosionTexture,
                     bulletVelocity, position, gunRotation, gunDamage + damageMod, bulletSpeed, this));

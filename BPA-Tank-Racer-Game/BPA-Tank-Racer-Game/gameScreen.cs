@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace BPA_Tank_Racer_Game
 {
@@ -28,9 +29,9 @@ namespace BPA_Tank_Racer_Game
         private List<Powerup> powerups;
         private List<Powerup> powerupsToRemove;
 
+        public bool gameOver { get; private set; }
         private bool gameActive = false;
         private bool firstUpdate = true;
-        private bool gameOver = false;
         private bool gameWon = false;
 
         private string winText;
@@ -46,6 +47,10 @@ namespace BPA_Tank_Racer_Game
         private int level;
 
         private SoundEffectInstance bumpFX;
+        private SoundEffectInstance explodeFX;
+        private SoundEffectInstance winFX;
+        private SoundEffectInstance loseFX;
+        private SoundEffectInstance powerUpFX;
 
         public GameScreen(ContentManager content, EventHandler screenEvent)
             : base(screenEvent)
@@ -63,6 +68,7 @@ namespace BPA_Tank_Racer_Game
             int level = random.Next(1, levelCount + 1);
             this.level = level;
             Setup(content, level);
+            SoundInit();
         }
 
         public GameScreen(ContentManager content, EventHandler screenEvent, int level,
@@ -78,6 +84,7 @@ namespace BPA_Tank_Racer_Game
             random = new Random();
 
             Setup(content, level);
+            SoundInit();
         }
 
         public override void Update(GameTime gametime)
@@ -125,7 +132,8 @@ namespace BPA_Tank_Racer_Game
                         playerTank.speed = 0;
                         playerTank.rotSpeed = 0;
 
-                        Game1.bumpFX.Play();
+                        if (bumpFX.State != SoundState.Playing)
+                            bumpFX.Play();
                     }
 
                 }
@@ -141,7 +149,8 @@ namespace BPA_Tank_Racer_Game
                     playerTank.speed = 0;
                     playerTank.rotSpeed = 0;
 
-                    Game1.bumpFX.Play();
+                    if (bumpFX.State != SoundState.Playing)
+                        bumpFX.Play();
                 }
 
                 //Check if player is colliding with the finish objective
@@ -304,7 +313,7 @@ namespace BPA_Tank_Racer_Game
                     //Check for collision with level
                     if (level == 4)
                     {
-                        if (Game1.IntersectColor(playerTank, background, new List<Color>
+                        if (bullet.active && Game1.IntersectColor(bullet, background, new List<Color>
                         {
                             new Color(0, 0, 0),
                             new Color(87, 87, 87),
@@ -317,10 +326,16 @@ namespace BPA_Tank_Racer_Game
                             new Color(116, 31, 9),
                             new Color(154, 123, 93)
                         }))
+                        {
+                            explodeFX.Play();
                             bulletHandler.Destroy(bullet);
+                        }
                     }
                     else if (bullet.active && Game1.IntersectColor(bullet, background, new Color(0, 0, 0)))
+                    {
+                        explodeFX.Play();
                         bulletHandler.Destroy(bullet);
+                    }
 
                     //Check for enemy bullets
                     if (bullet.active && bullet.ownerTank == enemyTank)
@@ -329,11 +344,13 @@ namespace BPA_Tank_Racer_Game
                         {
                             if (playerTank.currentPowerupType != PowerUpType.shield)
                                 playerTank.stunLength = bullet.damage;
+                            explodeFX.Play();
                             bulletHandler.Destroy(bullet);
                         }
                         else if (Game1.IntersectPixels(bullet, finishObjective))
                         {
                             finishObjective.enemyHealth -= bullet.damage + 0.8f; // To buff the AI a bit
+                            explodeFX.Play();
                             bulletHandler.Destroy(bullet);
                         }
 
@@ -346,11 +363,13 @@ namespace BPA_Tank_Racer_Game
                         {
                             if (enemyTank.currentPowerupType != PowerUpType.shield)
                                 enemyTank.stunLength = bullet.damage;
+                            explodeFX.Play();
                             bulletHandler.Destroy(bullet);
                         }
                         else if (Game1.IntersectPixels(bullet, finishObjective))
                         {
                             finishObjective.playerHealth -= bullet.damage;
+                            explodeFX.Play();
                             bulletHandler.Destroy(bullet);
                         }
                     }
@@ -362,11 +381,13 @@ namespace BPA_Tank_Racer_Game
                     if (Game1.IntersectPixels(playerTank, powerup))
                     {
                         playerTank.CollectPowerUp(powerup);
+                        powerUpFX.Play();
                         powerupsToRemove.Add(powerup);
                     }
                     else if (Game1.IntersectPixels(enemyTank, powerup))
                     {
                         enemyTank.CollectPowerUp(powerup);
+                        powerUpFX.Play();
                         powerupsToRemove.Add(powerup);
                     }
                 }
@@ -380,6 +401,8 @@ namespace BPA_Tank_Racer_Game
 
                 if (finishObjective.playerHealth <= 0)
                 {
+                    winFX.Play();
+                    MediaPlayer.Stop();
                     gameOver = true;
                     gameWon = true;
                     winText = "Congratulations!\nYou won!";
@@ -387,6 +410,8 @@ namespace BPA_Tank_Racer_Game
                 }
                 else if (finishObjective.enemyHealth <= 0)
                 {
+                    loseFX.Play();
+                    MediaPlayer.Stop();
                     gameOver = true;
                     gameWon = false;
                     winText = "You lost!\nToo bad";
@@ -413,7 +438,10 @@ namespace BPA_Tank_Racer_Game
             {
                 //Before Game; Countdown
                 if (countdown <= 0)
+                {
+                    MediaPlayer.Play(Game1.gameMusic);
                     gameActive = true;
+                }
                 else if (gametime.TotalGameTime.TotalSeconds - 1 >= countdownOldTime.TotalSeconds)
                 {
                     countdown--;
@@ -602,10 +630,6 @@ namespace BPA_Tank_Racer_Game
                     ((loc.X - levelSize.X / 2) + background.position.X),
                     ((loc.Y - levelSize.Y / 2) + background.position.Y)), type));
             }
-
-
-            //Sound Init
-            bumpFX = Game1.bumpFX.CreateInstance();
         }
 
         private void MoveBoard(Vector2 vector)
@@ -656,6 +680,15 @@ namespace BPA_Tank_Racer_Game
             else if (number == 6)
                 return TankPartType.urban;
             else return TankPartType.basic;
+        }
+
+        private void SoundInit()
+        {
+            bumpFX = Game1.bumpFX.CreateInstance();
+            explodeFX = Game1.explodeFX.CreateInstance();
+            powerUpFX = Game1.powerUpFX.CreateInstance();
+            winFX = Game1.winFX.CreateInstance();
+            loseFX = Game1.loseFX.CreateInstance();
         }
     }
 }

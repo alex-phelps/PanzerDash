@@ -154,6 +154,8 @@ namespace BPA_Tank_Racer_Game
 
             if (newState.IsKeyDown(Keys.Left) && oldState.IsKeyUp(Keys.Left))
             {
+                Game1.selectFX.Play();
+
                 //Set old button to not selected icon
                 if (selectedButton == 0)
                     backButton = backButtonDefault;
@@ -179,6 +181,8 @@ namespace BPA_Tank_Racer_Game
 
             if (newState.IsKeyDown(Keys.Right) && oldState.IsKeyUp(Keys.Right))
             {
+                Game1.selectFX.Play();
+
                 //Set old button to not selected icon
                 if (selectedButton == 0)
                     backButton = backButtonDefault;
@@ -203,6 +207,8 @@ namespace BPA_Tank_Racer_Game
 
             if (newState.IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up))
             {
+                Game1.selectFX.Play();
+
                 leftUpArrow.scale = 1.2f;
                 rightUpArrow.scale = 1.2f;
 
@@ -225,6 +231,8 @@ namespace BPA_Tank_Racer_Game
 
             if (newState.IsKeyDown(Keys.Down) && oldState.IsKeyUp(Keys.Down))
             {
+                Game1.selectFX.Play();
+
                 leftDownArrow.scale = 1.2f;
                 rightDownArrow.scale = 1.2f;
 

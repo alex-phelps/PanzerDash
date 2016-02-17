@@ -1646,9 +1646,9 @@
 /processorParam:Quality=Best
 /build:Sounds/YouLose.wav
 
-#begin Sounds/GameMusic.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
+#begin Sounds/GameMusic.wma
+/importer:WmaImporter
+/processor:SongProcessor
 /processorParam:Quality=Best
-/build:Sounds/GameMusic.wav
+/build:Sounds/GameMusic.wma
 

@@ -43,6 +43,8 @@ namespace BPA_Tank_Racer_Game
 
             if (newState.IsKeyDown(Keys.Left) && oldState.IsKeyUp(Keys.Left))
             {
+                Game1.selectFX.Play();
+
                 if (selectedButton == 0)
                     noButton = noButtonDefault;
                 else if (selectedButton == 1)
@@ -60,6 +62,8 @@ namespace BPA_Tank_Racer_Game
 
             if (newState.IsKeyDown(Keys.Right) && oldState.IsKeyUp(Keys.Right))
             {
+                Game1.selectFX.Play();
+
                 if (selectedButton == 0)
                     noButton = noButtonDefault;
                 else if (selectedButton == 1)
