@@ -71,6 +71,9 @@
     <Compile Include="Tank.cs" />
     <Compile Include="TankBase.cs" />
     <Compile Include="TankGun.cs" />
+    <Compile Include="TutorialScreen.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
@@ -407,6 +410,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
+    <None Include="Content\PopupText.spritefont" />
     <None Include="Content\WinSubFont.spritefont">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

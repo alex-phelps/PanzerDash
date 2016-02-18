@@ -14,43 +14,47 @@ namespace BPA_Tank_Racer_Game
     /// </summary>
     public class GameScreen : Screen
     {
-        private PlayerTank playerTank;
-        private AITank enemyTank;
-        private Background background;
-        private BulletHandler bulletHandler;
-        private Texture2D cooldownBar;
-        private Texture2D powerupBar;
-        private FinishObjective finishObjective;
-        private Random random;
+        protected PlayerTank playerTank;
+        protected AITank enemyTank;
+        protected Background background;
+        protected BulletHandler bulletHandler;
+        protected Texture2D cooldownBar;
+        protected Texture2D powerupBar;
+        protected FinishObjective finishObjective;
+        protected Random random;
 
-        private List<Vector2> powerupSpawns;
-        private List<Powerup> powerups;
-        private List<Powerup> powerupsToRemove;
+        protected List<Vector2> powerupSpawns;
+        protected List<Powerup> powerups;
+        protected List<Powerup> powerupsToRemove;
 
-        public bool gameOver { get; private set; }
-        private bool gameActive = false;
-        private bool firstUpdate = true;
-        private bool gameWon = false;
+        public bool gameOver { get; protected set; }
+        protected bool gameActive = false;
+        protected bool firstUpdate = true;
+        protected bool gameWon = false;
 
-        private string endText;
-        private Color endTextColor;
-        private SpriteFont winTextFont;
-        private SpriteFont winSubFont;
+        protected bool cooldownZeroFirstTime = false;
+        protected bool collectedPowerupFirstTime = false;
+        protected bool reachedObjective = false;
 
-        private SpriteFont countdownFont;
-        private TimeSpan countdownOldTime;
-        private int countdown = 6;
+        protected string endText;
+        protected Color endTextColor;
+        protected SpriteFont winTextFont;
+        protected SpriteFont winSubFont;
 
-        private bool unlockContent;
-        private int level;
+        protected SpriteFont countdownFont;
+        protected TimeSpan countdownOldTime;
+        protected int countdown = 6;
 
-        private SoundEffectInstance bumpFX;
-        private SoundEffectInstance explodeFX;
-        private SoundEffectInstance winFX;
-        private SoundEffectInstance loseFX;
-        private SoundEffectInstance powerUpFX;
-        private SoundEffectInstance countdownFX;
-        private SoundEffectInstance goFX;
+        protected bool unlockContent;
+        protected int level;
+
+        protected SoundEffectInstance bumpFX;
+        protected SoundEffectInstance explodeFX;
+        protected SoundEffectInstance winFX;
+        protected SoundEffectInstance loseFX;
+        protected SoundEffectInstance powerUpFX;
+        protected SoundEffectInstance countdownFX;
+        protected SoundEffectInstance goFX;
 
         public GameScreen(ContentManager content, EventHandler screenEvent)
             : base(screenEvent)
@@ -65,9 +69,9 @@ namespace BPA_Tank_Racer_Game
                 new Vector2(playerTank.position.X + 100, playerTank.position.Y));
 
             //Random Level
-            int level = random.Next(1, 7); // Pick a random level 1 - 6
-            this.level = level;
-            Setup(content, level);
+            level = random.Next(1, 7); // Pick a random level 1 - 6
+
+            Setup(content);
             SoundInit();
         }
 
@@ -83,14 +87,29 @@ namespace BPA_Tank_Racer_Game
 
             random = new Random();
 
-            Setup(content, level);
+            Setup(content);
             SoundInit();
+        }
+
+        protected GameScreen(ContentManager content, EventHandler screenEvent, string identifier) //Identifier to set this overload apart
+            : base(screenEvent)
+        {
         }
 
         public override void Update(GameTime gametime)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 screenEvent.Invoke(this, new EventArgs());
+
+            //Check for a few tutorial flags
+            if (!cooldownZeroFirstTime && playerTank.currentCooldown == 0)
+                cooldownZeroFirstTime = true;
+
+            double distanceToObjective = Math.Sqrt(Math.Pow(finishObjective.position.X - playerTank.position.X, 2) +
+                Math.Pow(finishObjective.position.Y - playerTank.position.Y, 2));
+
+            if (!reachedObjective && distanceToObjective <= 300)
+                reachedObjective = true;
 
             if ((gameActive || firstUpdate) && !gameOver)
             {
@@ -383,6 +402,9 @@ namespace BPA_Tank_Racer_Game
                         playerTank.CollectPowerUp(powerup);
                         powerUpFX.Play();
                         powerupsToRemove.Add(powerup);
+
+                        if (!collectedPowerupFirstTime)
+                            collectedPowerupFirstTime = true;
                     }
                     else if (Game1.IntersectPixels(enemyTank, powerup))
                     {
@@ -519,7 +541,7 @@ namespace BPA_Tank_Racer_Game
             base.Draw(spritebatch);
         }
 
-        private void Setup(ContentManager content, int level)
+        protected void Setup(ContentManager content)
         {
             //Main Setup
 
@@ -685,7 +707,7 @@ namespace BPA_Tank_Racer_Game
             else return TankPartType.basic;
         }
 
-        private void SoundInit()
+        protected void SoundInit()
         {
             bumpFX = Game1.bumpFX.CreateInstance();
             explodeFX = Game1.explodeFX.CreateInstance();

@@ -157,7 +157,7 @@ namespace BPA_Tank_Racer_Game
             }
             else if (menuScreen.selectedButton == 1) // Tutorial
             {
-
+                currentScreen = new TutorialScreen(Content, new EventHandler(GameScreenEvent));
             }
             else if (menuScreen.selectedButton == 2) // Career
             {
@@ -273,6 +273,7 @@ namespace BPA_Tank_Racer_Game
 
             if (optionsScreen.selectedButton == 0) // Sound
             {
+                currentScreen = new SoundScreen(Content, new EventHandler(SoundScreenEvent));
             }
             else if (optionsScreen.selectedButton == 1) // Color
             {

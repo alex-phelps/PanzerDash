@@ -1730,3 +1730,9 @@
 /processorParam:TextureFormat=Color
 /build:SoundBarBackground.png
 
+#begin PopupText.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:PopupText.spritefont
+
