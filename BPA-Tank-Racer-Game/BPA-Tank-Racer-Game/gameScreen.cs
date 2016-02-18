@@ -14,8 +14,6 @@ namespace BPA_Tank_Racer_Game
     /// </summary>
     public class GameScreen : Screen
     {
-        private const int levelCount = 5;
-
         private PlayerTank playerTank;
         private AITank enemyTank;
         private Background background;
@@ -67,7 +65,7 @@ namespace BPA_Tank_Racer_Game
                 new Vector2(playerTank.position.X + 100, playerTank.position.Y));
 
             //Random Level
-            int level = random.Next(1, levelCount + 1);
+            int level = random.Next(1, 7); // Pick a random level 1 - 6
             this.level = level;
             Setup(content, level);
             SoundInit();
@@ -538,7 +536,7 @@ namespace BPA_Tank_Racer_Game
             Vector2 startPosInImage;
             Vector2 finishPosInImage;
 
-            if (level == 2) // Level 2
+            if (level == 2) // Desert
             {
                 background = new Background(content.Load<Texture2D>("Level2"));
                 startPosInImage = new Vector2(2475, 2415);
@@ -550,18 +548,18 @@ namespace BPA_Tank_Racer_Game
                 powerupSpawns.Add(new Vector2(1422, 1833));
                 powerupSpawns.Add(new Vector2(815, 1744));
             }
-            else if (level == 3)
+            else if (level == 3) // Snow
             {
                 background = new Background(content.Load<Texture2D>("Level3"));
                 startPosInImage = new Vector2(576, 942);
                 finishPosInImage = new Vector2(2120, 1015);
 
                 //Powerup spawn locations in the image
-                powerupSpawns.Add(new Vector2(1414, 1025));
+                powerupSpawns.Add(new Vector2(1408, 995));
                 powerupSpawns.Add(new Vector2(1456, 2002));
                 powerupSpawns.Add(new Vector2(1938, 1809));
             }
-            else if (level == 4)
+            else if (level == 4) // City
             {
                 levelSize = new Vector2(3904, 3904);
 
@@ -577,7 +575,7 @@ namespace BPA_Tank_Racer_Game
                 powerupSpawns.Add(new Vector2(2560, 3280));
 
             }
-            else if (level == 5)
+            else if (level == 5) // Mesa
             {
                 background = new Background(content.Load<Texture2D>("Level5"));
                 startPosInImage = new Vector2(1560, 1320);
@@ -590,7 +588,7 @@ namespace BPA_Tank_Racer_Game
                 powerupSpawns.Add(new Vector2(892, 2288));
                 powerupSpawns.Add(new Vector2(1088, 1032));
             }
-            else if (level == 6)
+            else if (level == 6) // Jungle
             {
                 background = new Background(content.Load<Texture2D>("Level6"));
                 startPosInImage = new Vector2(1800, 2200);

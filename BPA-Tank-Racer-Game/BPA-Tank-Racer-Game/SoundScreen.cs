@@ -24,9 +24,15 @@ namespace BPA_Tank_Racer_Game
 
         private int selectedButton;
 
+        private float musicVolume;
+        private float sfxVolume;
+
         public SoundScreen(ContentManager content, EventHandler screenEvent)
             : base(screenEvent)
         {
+            musicVolume = Game1.musicVolume;
+            sfxVolume = Game1.effectVolume;
+
             logo = content.Load<Texture2D>("Sound");
             soundBarBackground = content.Load<Texture2D>("SoundBarBackground");
 
@@ -100,8 +106,50 @@ namespace BPA_Tank_Racer_Game
                     backButton = backButtonSelected;
             }
 
+            if (newState.IsKeyDown(Keys.Left) && oldState.IsKeyUp(Keys.Left))
+            {
+                if (selectedButton == 0)
+                {
+                    if (musicVolume <= 1.0f)
+                    {
+                        Game1.selectFX.Play();
+                        musicVolume += 0.1f;
+                    }
+                }
+                else if (selectedButton == 1)
+                {
+                    if (sfxVolume <= 1.0f)
+                    {
+                        Game1.selectFX.Play();
+                        sfxVolume += 0.1f;
+                    }
+                }
+            }
+            else if (newState.IsKeyDown(Keys.Right) && oldState.IsKeyUp(Keys.Right))
+            {
+                if (selectedButton == 0)
+                {
+                    if (musicVolume >= 0.1f)
+                    {
+                        Game1.selectFX.Play();
+                        musicVolume -= 0.1f;
+                    }
+                }
+                else if (selectedButton == 1)
+                {
+                    if (sfxVolume >= 0.1f)
+                    {
+                        Game1.selectFX.Play();
+                        sfxVolume -= 0.1f;
+                    }
+                }
+            }
+
             if (newState.IsKeyDown(Keys.Enter) && selectedButton == 2)
                 screenEvent.Invoke(this, new EventArgs());
+
+            Game1.musicVolume = (float)Math.Round(musicVolume, 1);
+            Game1.effectVolume = (float)Math.Round(sfxVolume, 1);
 
             oldState = newState;
         }
@@ -129,6 +177,12 @@ namespace BPA_Tank_Racer_Game
                 Color.White, 0, new Vector2(sfxBar.Width / 2, sfxBar.Height / 2), 1, SpriteEffects.None, 1f);
 
             //Draw sound pickers
+            spritebatch.Draw(soundPickerMusic, new Vector2((Game1.WindowWidth / 2 + musicBar.Width / 2) - (musicBar.Width * musicVolume), 200),
+                new Rectangle(0, 0, soundPickerMusic.Width, soundPickerMusic.Height), Color.White, 0,
+                new Vector2(soundPickerMusic.Width / 2, soundPickerMusic.Height / 2), 1, SpriteEffects.None, 1f);
+            spritebatch.Draw(soundPickerFX, new Vector2((Game1.WindowWidth / 2 + sfxBar.Width / 2) - (sfxBar.Width * sfxVolume), 300),
+                new Rectangle(0, 0, soundPickerFX.Width, soundPickerFX.Height), Color.White, 0,
+                new Vector2(soundPickerFX.Width / 2, soundPickerFX.Height / 2), 1, SpriteEffects.None, 1f);
 
             //Draw back button
             spritebatch.Draw(backButton, new Vector2(Game1.WindowWidth / 2, 400), new Rectangle(0, 0,
