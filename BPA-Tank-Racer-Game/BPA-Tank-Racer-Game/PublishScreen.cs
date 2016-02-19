@@ -9,6 +9,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BPA_Tank_Racer_Game
 {
+    /// <summary>
+    /// Game state for the beggining publishing screen
+    /// </summary>
     public class PublishScreen : Screen
     {
         private Background logo;
@@ -21,6 +24,7 @@ namespace BPA_Tank_Racer_Game
 
         public override void Update(GameTime gametime)
         {
+            //If 4 seconds have passed
             if (gametime.TotalGameTime.TotalSeconds >= 4 || Keyboard.GetState().IsKeyDown(Keys.Enter))
                 screenEvent.Invoke(this, new EventArgs());
         }

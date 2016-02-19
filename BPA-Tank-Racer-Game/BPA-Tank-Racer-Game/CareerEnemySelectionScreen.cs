@@ -48,6 +48,9 @@ namespace BPA_Tank_Racer_Game
             }
         }
 
+        /// <summary>
+        /// Checks if the game to be played will unlock new content
+        /// </summary>
         public bool unlockContent
         {
             get
@@ -202,12 +205,11 @@ namespace BPA_Tank_Racer_Game
 
             if (newState.IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up))
             {
-                Game1.selectFX.Play();
-
                 upArrow.scale = 1.2f;
 
                 if (selectedButton == 1)
                 {
+                    Game1.selectFX.Play();
                     selectedEnemy++;
                     selectedEnemy %= bases.Count;
                 }
@@ -216,12 +218,11 @@ namespace BPA_Tank_Racer_Game
 
             if (newState.IsKeyDown(Keys.Down) && oldState.IsKeyUp(Keys.Down))
             {
-                Game1.selectFX.Play();
-
                 downArrow.scale = 1.2f;
 
                 if (selectedButton == 1)
                 {
+                    Game1.selectFX.Play();
                     selectedEnemy--;
                     if (selectedEnemy < 0)
                         selectedEnemy = bases.Count - 1;

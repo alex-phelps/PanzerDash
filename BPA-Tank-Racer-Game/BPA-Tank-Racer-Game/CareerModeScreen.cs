@@ -57,6 +57,10 @@ namespace BPA_Tank_Racer_Game
             else if (careerEnemySelectionScreen.selectedButton == 2) //Confirm
                 StartGame();
         }
+
+        /// <summary>
+        /// Starts a new game
+        /// </summary>
         private void StartGame()
         {
             level = careerEnemySelectionScreen.selectedEnemy + 1; // +1 because selectedEnemy by default starts at 0

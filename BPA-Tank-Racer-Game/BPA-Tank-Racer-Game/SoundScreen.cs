@@ -9,6 +9,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BPA_Tank_Racer_Game
 {
+    /// <summary>
+    /// Game state for a sound options screen
+    /// </summary>
     public class SoundScreen : Screen
     {
         private Texture2D logo;
@@ -148,6 +151,7 @@ namespace BPA_Tank_Racer_Game
             if (newState.IsKeyDown(Keys.Enter) && selectedButton == 2)
                 screenEvent.Invoke(this, new EventArgs());
 
+            //Edit game volume
             Game1.musicVolume = (float)Math.Round(musicVolume, 1);
             Game1.effectVolume = (float)Math.Round(sfxVolume, 1);
 

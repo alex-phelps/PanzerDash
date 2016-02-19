@@ -7,6 +7,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BPA_Tank_Racer_Game
 {
+    /// <summary>
+    /// Game state for a basic tank selection screen
+    /// </summary>
     public class TankSelectionScreen : Screen
     {
         protected Texture2D backButton, backButtonDefault, backButtonSelected;
@@ -33,6 +36,9 @@ namespace BPA_Tank_Racer_Game
 
         protected bool isCareerMode;
 
+        /// <summary>
+        /// Gets the currently selected tank base
+        /// </summary>
         public TankPartType selectedTankBase
         {
             get
@@ -53,6 +59,9 @@ namespace BPA_Tank_Racer_Game
             }
         }
 
+        /// <summary>
+        /// Gets the currently selected tank gun
+        /// </summary>
         public TankPartType selectedTankGun
         {
             get

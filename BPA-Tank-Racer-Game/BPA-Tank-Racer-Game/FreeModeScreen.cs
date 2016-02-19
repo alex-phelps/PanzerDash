@@ -67,6 +67,9 @@ namespace BPA_Tank_Racer_Game
                 StartGame();
         }
 
+        /// <summary>
+        /// Starts a new game
+        /// </summary>
         private void StartGame()
         {
             level = levelSelectionScreen.selectedLevel + 1; // +1 because selectedLevel by default starts at 0

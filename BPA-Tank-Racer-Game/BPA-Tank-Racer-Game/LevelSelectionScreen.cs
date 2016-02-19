@@ -9,6 +9,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BPA_Tank_Racer_Game
 {
+    /// <summary>
+    /// Game state for a level selection screen
+    /// </summary>
     public class LevelSelectionScreen : Screen
     {
         private Texture2D backButton, backButtonDefault, backButtonSelected;
@@ -119,6 +122,7 @@ namespace BPA_Tank_Racer_Game
 
                 if (selectedButton == 1)
                 {
+                    Game1.selectFX.Play();
                     selectedLevel++;
                     selectedLevel %= levels.Count;
                 }
@@ -131,6 +135,7 @@ namespace BPA_Tank_Racer_Game
 
                 if (selectedButton == 1)
                 {
+                    Game1.selectFX.Play();
                     selectedLevel--;
                     if (selectedLevel < 0)
                         selectedLevel = levels.Count - 1;

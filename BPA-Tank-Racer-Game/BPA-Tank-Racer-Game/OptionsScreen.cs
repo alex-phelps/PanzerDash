@@ -9,6 +9,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BPA_Tank_Racer_Game
 {
+    /// <summary>
+    /// Game state for the options screen
+    /// </summary>
     public class OptionsScreen : Screen
     {
         private KeyboardState oldState;

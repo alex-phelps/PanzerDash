@@ -9,7 +9,7 @@ using System.IO;
 namespace BPA_Tank_Racer_Game
 {
     /// <summary>
-    /// This is the main type for your game.
+    /// This is the main type for the game
     /// </summary>
     public class Game1 : Game
     {
@@ -74,7 +74,7 @@ namespace BPA_Tank_Racer_Game
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
+        /// all the content.
         /// </summary>
         protected override void LoadContent()
         {
@@ -94,14 +94,6 @@ namespace BPA_Tank_Racer_Game
             gameMusic = Content.Load<Song>("Sounds\\GameMusic");
 
             currentScreen = new PublishScreen(Content, new EventHandler(PublishScreenEvent));
-        }
-
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
-        protected override void UnloadContent()
-        {
         }
 
         /// <summary>
@@ -178,6 +170,7 @@ namespace BPA_Tank_Racer_Game
         {
             FreeModeScreen freeModeScreen = (FreeModeScreen)currentScreen;
 
+            //If there is a game ready to start
             if (freeModeScreen.gameReady)
             {
                 currentScreen = new GameScreen(Content, new EventHandler(GameScreenEvent), freeModeScreen.level,
@@ -190,6 +183,7 @@ namespace BPA_Tank_Racer_Game
         {
             CareerModeScreen careerModeScreen = (CareerModeScreen)currentScreen;
 
+            //If there is a game ready to start
             if (careerModeScreen.gameReady)
             {
                 currentScreen = new GameScreen(Content, new EventHandler(GameScreenEvent), careerModeScreen.level,
@@ -225,7 +219,7 @@ namespace BPA_Tank_Racer_Game
 
         private void ColorScreenEvent(object sender, EventArgs e)
         {
-            Save();
+            Save(); //Saves the background screen color
             currentScreen = optionsScreen;
         }
 
@@ -241,6 +235,7 @@ namespace BPA_Tank_Racer_Game
 
         private void PublishScreenEvent(object sender, EventArgs e)
         {
+            //Create a new menuscreen
             menuScreen = new MenuScreen(Content, new EventHandler(MenuScreenEvent));
             currentScreen = menuScreen;
         }
@@ -249,6 +244,7 @@ namespace BPA_Tank_Racer_Game
         {
             gameScreen = (GameScreen)currentScreen;
 
+            //If the game is not over, then the user paused the game
             if (!gameScreen.gameOver)
                 currentScreen = new PauseScreen(Content, new EventHandler(PauseScreenEvent));
             else currentScreen = menuScreen;
@@ -313,6 +309,7 @@ namespace BPA_Tank_Racer_Game
                 hasRainbowBase = false;
                 hasRainbowGun = false;
 
+                //Save the resets
                 Save();
 
                 currentScreen = menuScreen;
@@ -365,11 +362,11 @@ namespace BPA_Tank_Racer_Game
         }
 
         /// <summary>
-        /// Checks if an object is colliding with a specific collor in another object
+        /// Checks if an object is colliding with a specific color in another object
         /// </summary>
         /// <param name="objA">An object to check collision for</param>
         /// <param name="objB">An object to check for collision of the color in</param>
-        /// <param name="color">The collor to check collision against</param>
+        /// <param name="color">The color to check collision against</param>
         /// <returns></returns>
         public static bool IntersectColor(GameObject objA, GameObject objB, Color color)
         {
@@ -410,6 +407,13 @@ namespace BPA_Tank_Racer_Game
             return false;
         }
 
+        /// <summary>
+        /// Checks if an object is colliding with a specific set of colors in another object
+        /// </summary>
+        /// <param name="objA">An object to check collision for</param>
+        /// <param name="objB">An object to check for collision of the color in</param>
+        /// <param name="colors">List of colors to check against</param>
+        /// <returns></returns>
         public static bool IntersectColor(GameObject objA, GameObject objB, List<Color> colors)
         {
             // Calculate a matrix which transforms from A's local space into
@@ -435,6 +439,7 @@ namespace BPA_Tank_Racer_Game
                         Color colorA = objA.colorData[xA + yA * objA.Width];
                         Color colorB = objB.colorData[xB + yB * objB.Width];
 
+                        //Loop through the colors provided
                         foreach (Color color in colors)
                         {
                             //If color A is not transparent and color B is the desired color
@@ -452,6 +457,9 @@ namespace BPA_Tank_Racer_Game
             return false;
         }
 
+        /// <summary>
+        /// Loads save data if possible
+        /// </summary>
         public static void LoadSaveData()
         {
             if (File.Exists("SaveData.txt"))
@@ -481,6 +489,7 @@ namespace BPA_Tank_Racer_Game
             }
         }
 
+        //Saves game data to a file
         public static void Save() 
         {
             StreamWriter outFile = File.CreateText("SaveData.txt");

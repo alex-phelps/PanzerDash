@@ -9,6 +9,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BPA_Tank_Racer_Game
 {
+    /// <summary>
+    /// Game state for a reset screen
+    /// </summary>
     public class ResetScreen : Screen
     {
         private Texture2D logo;
@@ -45,6 +48,8 @@ namespace BPA_Tank_Racer_Game
             {
                 Game1.selectFX.Play();
 
+                //Cycle buttons
+
                 if (selectedButton == 0)
                     noButton = noButtonDefault;
                 else if (selectedButton == 1)
@@ -63,6 +68,8 @@ namespace BPA_Tank_Racer_Game
             if (newState.IsKeyDown(Keys.Right) && oldState.IsKeyUp(Keys.Right))
             {
                 Game1.selectFX.Play();
+
+                //Cycle buttons
 
                 if (selectedButton == 0)
                     noButton = noButtonDefault;

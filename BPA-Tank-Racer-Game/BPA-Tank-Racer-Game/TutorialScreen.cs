@@ -9,6 +9,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BPA_Tank_Racer_Game
 {
+    /// <summary>
+    /// Game state for a tutorial
+    /// </summary>
     public class TutorialScreen : GameScreen
     {
         private bool isPopup = true;

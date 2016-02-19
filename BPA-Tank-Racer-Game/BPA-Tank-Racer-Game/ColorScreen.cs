@@ -160,7 +160,7 @@ namespace BPA_Tank_Racer_Game
             if (newState.IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.Enter) && selectedButton == 0)
                 screenEvent.Invoke(this, new EventArgs());
 
-            //Set color
+            //Set background color
             Game1.backGroundColor.R = (byte)colorR;
             Game1.backGroundColor.G = (byte)colorG;
             Game1.backGroundColor.B = (byte)colorB;

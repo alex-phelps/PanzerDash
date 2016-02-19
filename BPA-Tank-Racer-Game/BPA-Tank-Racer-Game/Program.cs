@@ -5,6 +5,7 @@ using System.Net.Mail;
 namespace BPA_Tank_Racer_Game
 {
 #if WINDOWS || LINUX
+
     /// <summary>
     /// The main class.
     /// </summary>
@@ -21,7 +22,6 @@ namespace BPA_Tank_Racer_Game
 
             // For crash reporting, commented out for debug atm
 
-            /*
             try
             {
                 using (var game = new Game1())
@@ -62,7 +62,6 @@ namespace BPA_Tank_Racer_Game
                     smtp.Send(message);
                 }
             }
-            */
         }
     }
 #endif

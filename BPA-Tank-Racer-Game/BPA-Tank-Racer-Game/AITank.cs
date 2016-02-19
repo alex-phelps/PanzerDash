@@ -5,6 +5,9 @@ using Microsoft.Xna.Framework.Content;
 
 namespace BPA_Tank_Racer_Game
 {
+    /// <summary>
+    /// An AI controlled tank
+    /// </summary>
     public class AITank : Tank
     {
         private bool atFinish = false;
@@ -35,6 +38,11 @@ namespace BPA_Tank_Racer_Game
                 position += velocity;
         }
 
+        /// <summary>
+        /// Rotates the tank based on whether or not it thinks it should turn
+        /// </summary>
+        /// <param name="background">Background to steer against</param>
+        /// <returns></returns>
         public bool SteerAi(Background background)
         {
             if (!isStunned)
@@ -124,6 +132,11 @@ namespace BPA_Tank_Racer_Game
             return false;
         }
 
+        /// <summary>
+        /// Rotates the tank based on whwther or not it thinks it should turn
+        /// </summary>
+        /// <param name="enemy">Enemy tank to check steering against</param>
+        /// <returns></returns>
         public bool SteerAi(Tank enemy)
         {
             if (!isStunned)
@@ -190,6 +203,11 @@ namespace BPA_Tank_Racer_Game
             return false;
         }
 
+        /// <summary>
+        /// Checks for a finish object
+        /// </summary>
+        /// <param name="finishObj"></param>
+        /// <returns></returns>
         public bool CheckForFinish(FinishObjective finishObj)
         {
             if (!atFinish)
@@ -214,6 +232,10 @@ namespace BPA_Tank_Racer_Game
             else return true;
         }
 
+        /// <summary>
+        /// Shoot and aim at a object
+        /// </summary>
+        /// <param name="target"></param>
         public void ShootAi(GameObject target)
         {
             if (!isStunned)

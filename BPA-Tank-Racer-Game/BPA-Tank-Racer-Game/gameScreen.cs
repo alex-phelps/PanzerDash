@@ -91,6 +91,9 @@ namespace BPA_Tank_Racer_Game
             SoundInit();
         }
 
+        /// <summary>
+        /// Constructor for child classes that doesn't auto set aanything up
+        /// </summary>
         protected GameScreen(ContentManager content, EventHandler screenEvent, string identifier) //Identifier to set this overload apart
             : base(screenEvent)
         {
@@ -260,6 +263,7 @@ namespace BPA_Tank_Racer_Game
 
                 enemyTank.Update(gametime);
 
+                //Check who enemy tank should aim for
                 if (enemyTank.CheckForFinish(finishObjective))
                     enemyTank.ShootAi(finishObjective);
                 else enemyTank.ShootAi(playerTank);
@@ -420,7 +424,7 @@ namespace BPA_Tank_Racer_Game
                     powerups.Remove(powerup);
                 }
 
-
+                //Game end conditions
                 if (finishObjective.playerHealth <= 0)
                 {
                     winFX.Play();
@@ -446,6 +450,7 @@ namespace BPA_Tank_Racer_Game
             else if (gameOver)
             {
                 //After game, before screen change
+
                 if (Keyboard.GetState().IsKeyDown(Keys.Enter))
                 {
                     if (unlockContent && gameWon)
@@ -541,6 +546,9 @@ namespace BPA_Tank_Racer_Game
             base.Draw(spritebatch);
         }
 
+        /// <summary>
+        /// Main setup for the class
+        /// </summary>
         protected void Setup(ContentManager content)
         {
             //Main Setup
@@ -631,13 +639,16 @@ namespace BPA_Tank_Racer_Game
                 powerupSpawns.Add(new Vector2(1448, 2324));
             }
 
+            //Set background position
             background.position.X = (levelSize.X / 2 - startPosInImage.X) + Game1.WindowWidth / 2;
             background.position.Y = (levelSize.Y / 2 - startPosInImage.Y) + Game1.WindowHeight / 2;
 
+            //Set finish position
             finishObjective = new FinishObjective(content, new Vector2(
                 ((finishPosInImage.X - levelSize.X / 2) + background.position.X),
                 ((finishPosInImage.Y - levelSize.Y / 2) + background.position.Y)));
 
+            //Add powerups
             foreach (Vector2 loc in powerupSpawns)
             {
                 PowerUpType type;
@@ -664,6 +675,10 @@ namespace BPA_Tank_Racer_Game
             }
         }
 
+        /// <summary>
+        /// Moves the board by the specified vector
+        /// </summary>
+        /// <param name="vector">Move the board by this</param>
         private void MoveBoard(Vector2 vector)
         {
             background.position += vector;
@@ -677,6 +692,11 @@ namespace BPA_Tank_Racer_Game
             }
         }
 
+        /// <summary>
+        /// Moves the board by the specified amounts
+        /// </summary>
+        /// <param name="x">Move the board this amount on the x axis</param>
+        /// <param name="y">Move the board this amount on the y axis</param>
         private void MoveBoard(float x, float y)
         {
             background.position.X += x;
@@ -696,6 +716,9 @@ namespace BPA_Tank_Racer_Game
             }
         }
 
+        /// <summary>
+        /// Generates a random tank part
+        /// </summary>
         private TankPartType RandomTankPart()
         {
             int number = random.Next(1, 7);
@@ -714,6 +737,9 @@ namespace BPA_Tank_Racer_Game
             else return TankPartType.basic;
         }
 
+        /// <summary>
+        /// Sets up the sound for this class
+        /// </summary>
         protected void SoundInit()
         {
             bumpFX = Game1.bumpFX.CreateInstance();

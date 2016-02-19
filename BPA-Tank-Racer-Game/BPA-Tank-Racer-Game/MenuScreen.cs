@@ -58,7 +58,6 @@ namespace BPA_Tank_Racer_Game
             selectedButton = 0;
         }
 
-
         public override void Update(GameTime gametime)
         {
             KeyboardState newState = Keyboard.GetState();

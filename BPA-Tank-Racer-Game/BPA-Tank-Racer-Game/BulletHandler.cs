@@ -5,6 +5,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BPA_Tank_Racer_Game
 {
+    /// <summary>
+    /// Handler for bullets
+    /// </summary>
     public class BulletHandler
     {
         public List<Bullet> bullets;
@@ -19,6 +22,10 @@ namespace BPA_Tank_Racer_Game
             bulletsToDestroy = new List<Bullet>();
         }
 
+        /// <summary>
+        /// Add a new bullet to this handler
+        /// </summary>
+        /// <param name="bullet"></param>
         public void NewBullet(Bullet bullet)
         {
             bullets.Add(bullet);

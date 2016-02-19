@@ -8,6 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BPA_Tank_Racer_Game
 {
+    /// <summary>
+    /// Different powerup types
+    /// </summary>
     public enum PowerUpType
     {
         speed, 
@@ -18,6 +21,9 @@ namespace BPA_Tank_Racer_Game
         none
     }
 
+    /// <summary>
+    /// Represents a powerup object
+    /// </summary>
     public class Powerup : GameObject
     {
         public float effectPower { get; private set; }

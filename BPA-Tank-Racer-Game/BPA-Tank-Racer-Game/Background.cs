@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BPA_Tank_Racer_Game
 {
+    /// <summary>
+    /// Basic game object to hold a background
+    /// </summary>
     public class Background : GameObject
     {
         public Background(Texture2D texture) 

@@ -5,6 +5,9 @@ using Microsoft.Xna.Framework.Content;
 
 namespace BPA_Tank_Racer_Game
 {
+    /// <summary>
+    /// Represents a player controlled tank
+    /// </summary>
     public class PlayerTank : Tank
     {
         private KeyboardState oldState = Keyboard.GetState();

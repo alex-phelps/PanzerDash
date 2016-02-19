@@ -295,6 +295,9 @@ namespace BPA_Tank_Racer_Game
             }
         }
 
+        /// <summary>
+        /// Fires a bullet from this tank
+        /// </summary>
         public void Shoot()
         {
             if (currentCooldown == 0)
@@ -310,6 +313,9 @@ namespace BPA_Tank_Racer_Game
             }
         }
 
+        /// <summary>
+        /// Have this tank collect a powerup
+        /// </summary>
         public void CollectPowerUp(Powerup powerup)
         {
             currentPowerupType = powerup.type;

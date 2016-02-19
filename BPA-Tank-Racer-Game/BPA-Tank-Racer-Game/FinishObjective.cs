@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework.Content;
 
 namespace BPA_Tank_Racer_Game
 {
+    /// <summary>
+    /// Represents the objective at the end of each level
+    /// </summary>
     public class FinishObjective : GameObject
     {
         public double baseHealth = 7;
@@ -21,6 +24,10 @@ namespace BPA_Tank_Racer_Game
             enemyHealth = baseHealth;
         }
 
+        /// <summary>
+        /// Draws the health of this object to the screen
+        /// </summary>
+        /// <param name="spritebatch"></param>
         public void DrawHUD(SpriteBatch spritebatch)
         {
             Rectangle healthBarSource = new Rectangle(0, 0,

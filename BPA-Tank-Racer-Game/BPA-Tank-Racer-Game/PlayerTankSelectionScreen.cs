@@ -5,6 +5,9 @@ using Microsoft.Xna.Framework.Content;
 
 namespace BPA_Tank_Racer_Game
 {
+    /// <summary>
+    /// Game state for the player's tank selection screen
+    /// </summary>
     public class PlayerTankSelectionScreen : TankSelectionScreen
     {
         Texture2D logo;

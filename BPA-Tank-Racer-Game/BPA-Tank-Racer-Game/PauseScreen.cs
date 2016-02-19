@@ -10,6 +10,9 @@ using Microsoft.Xna.Framework.Media;
 
 namespace BPA_Tank_Racer_Game
 {
+    /// <summary>
+    /// Game state for a pause screen
+    /// </summary>
     public class PauseScreen : Screen
     {
         public int selectedButton { get; private set; }
@@ -24,6 +27,7 @@ namespace BPA_Tank_Racer_Game
         public PauseScreen(ContentManager content, EventHandler screenEvent)
             : base(screenEvent)
         {
+            //Pause music
             MediaPlayer.Pause();
 
             selectedButton = 0;

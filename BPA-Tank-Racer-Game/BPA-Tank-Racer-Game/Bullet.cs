@@ -3,6 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BPA_Tank_Racer_Game
 {
+    /// <summary>
+    /// Represents a bullet shot by a tank
+    /// </summary>
     public class Bullet : GameObject
     {
         public Vector2 velocity;
@@ -35,6 +38,9 @@ namespace BPA_Tank_Racer_Game
             position += velocity;
         }
 
+        /// <summary>
+        /// Turns the bullet into an explosion
+        /// </summary>
         public void Explode()
         {
             active = false;
