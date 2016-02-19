@@ -21,7 +21,7 @@ namespace BPA_Tank_Racer_Game
         ColorScreen colorScreen;
         GameScreen gameScreen;
 
-        public static Color backGroundColor = Color.CornflowerBlue;
+        //Default window size
         public static int WindowWidth = 800;
         public static int WindowHeight = 480;
 
@@ -40,6 +40,7 @@ namespace BPA_Tank_Racer_Game
         public static float musicVolume = 0.3f;
 
         //Save Data
+        public static Color backGroundColor = Color.CornflowerBlue; //Default color
         public static int levelsUnlocked;
         public static bool hasRainbowBase;
         public static bool hasRainbowGun;
@@ -92,11 +93,7 @@ namespace BPA_Tank_Racer_Game
             goFX = Content.Load<SoundEffect>("Sounds\\goSound");
             gameMusic = Content.Load<Song>("Sounds\\GameMusic");
 
-            menuScreen = new MenuScreen(Content, new EventHandler(MenuScreenEvent));
-            optionsScreen = new OptionsScreen(Content, new EventHandler(OptionsScreenEvent));
-            colorScreen = new ColorScreen(Content, new EventHandler(ColorScreenEvent), backGroundColor);
-
-            currentScreen = menuScreen;
+            currentScreen = new PublishScreen(Content, new EventHandler(PublishScreenEvent));
         }
 
         /// <summary>
@@ -210,11 +207,11 @@ namespace BPA_Tank_Racer_Game
             }
             else if (optionsScreen.selectedButton == 1) // Color
             {
-                currentScreen = colorScreen;
+                currentScreen = new ColorScreen(Content, new EventHandler(ColorScreenEvent));
             }
             else if (optionsScreen.selectedButton == 2) // Credits
             {
-
+                currentScreen = new CreditsScreen(Content, new EventHandler(CreditsScreenEvent));
             }
             else if (optionsScreen.selectedButton == 3) //Reset
             {
@@ -237,6 +234,16 @@ namespace BPA_Tank_Racer_Game
             currentScreen = optionsScreen;
         }
 
+        private void CreditsScreenEvent(object sender, EventArgs e)
+        {
+            currentScreen = optionsScreen;
+        }
+
+        private void PublishScreenEvent(object sender, EventArgs e)
+        {
+            menuScreen = new MenuScreen(Content, new EventHandler(MenuScreenEvent));
+            currentScreen = menuScreen;
+        }
 
         private void GameScreenEvent(object sender, EventArgs e)
         {
@@ -277,11 +284,11 @@ namespace BPA_Tank_Racer_Game
             }
             else if (optionsScreen.selectedButton == 1) // Color
             {
-                currentScreen = colorScreen;
+                currentScreen = new ColorScreen(Content, new EventHandler(ColorScreenEvent));
             }
             else if (optionsScreen.selectedButton == 2) // Credits
             {
-
+                currentScreen = new CreditsScreen(Content, new EventHandler(CreditsScreenEvent));
             }
             else if (optionsScreen.selectedButton == 3) //Reset
             {

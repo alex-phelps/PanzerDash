@@ -641,15 +641,22 @@ namespace BPA_Tank_Racer_Game
             foreach (Vector2 loc in powerupSpawns)
             {
                 PowerUpType type;
-                int typeInInt = random.Next(4);
+                if (random.Next(300) == 0)
+                {
+                    type = PowerUpType.rainbow;
+                }
+                else
+                {
+                    int typeInInt = random.Next(4);
 
-                if (typeInInt == 0)
-                    type = PowerUpType.speed;
-                else if (typeInInt == 1)
-                    type = PowerUpType.shield;
-                else if (typeInInt == 2)
-                    type = PowerUpType.rapid;
-                else type = PowerUpType.damage;
+                    if (typeInInt == 0)
+                        type = PowerUpType.speed;
+                    else if (typeInInt == 1)
+                        type = PowerUpType.shield;
+                    else if (typeInInt == 2)
+                        type = PowerUpType.rapid;
+                    else type = PowerUpType.damage;
+                }
 
                 powerups.Add(new Powerup(content, new Vector2(
                     ((loc.X - levelSize.X / 2) + background.position.X),

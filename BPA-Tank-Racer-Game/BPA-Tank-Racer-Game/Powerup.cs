@@ -14,6 +14,7 @@ namespace BPA_Tank_Racer_Game
         shield,
         rapid,
         damage,
+        rainbow,
         none
     }
 
@@ -42,6 +43,10 @@ namespace BPA_Tank_Racer_Game
             {
                 texture = content.Load<Texture2D>("RapidFirePowerUp");
                 effectPower = 0.4f; //Sets tank's shot cooldown to this
+            }
+            else if (type == PowerUpType.rainbow)
+            {
+                texture = content.Load<Texture2D>("RainbowPowerup");
             }
             else // damage
             {

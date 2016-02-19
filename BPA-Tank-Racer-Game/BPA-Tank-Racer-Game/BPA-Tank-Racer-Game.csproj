@@ -49,6 +49,7 @@
     <Compile Include="ColorScreen.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CreditsScreen.cs" />
     <Compile Include="EnemyTankSelectionScreen.cs" />
     <Compile Include="FinishObjective.cs" />
     <Compile Include="FreeModeScreen.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="OptionsScreen.cs" />
     <Compile Include="PauseScreen.cs" />
     <Compile Include="PlayerTankSelectionScreen.cs" />
+    <Compile Include="PublishScreen.cs" />
     <Compile Include="ResetScreen.cs" />
     <Compile Include="SoundScreen.cs" />
     <Compile Include="TankSelectionScreen.cs" />
@@ -242,12 +244,14 @@
     <Content Include="Content\PowerupBar.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\PublishCredits.png" />
     <Content Include="Content\Quit-Selected.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Quit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\RainbowPowerup.png" />
     <Content Include="Content\RainbowTankBase.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

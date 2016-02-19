@@ -336,6 +336,17 @@ namespace BPA_Tank_Racer_Game
                 damageMod = powerup.effectPower;
                 powerupTime = 7;
             }
+            else if (powerup.type == PowerUpType.rainbow)
+            {
+                if (this is PlayerTank)
+                {
+                    Game1.hasRainbowBase = true;
+                    Game1.hasRainbowGun = true;
+                    Game1.Save();
+                }
+
+                return;
+            }
 
             basePowerupTime = powerupTime;
         }

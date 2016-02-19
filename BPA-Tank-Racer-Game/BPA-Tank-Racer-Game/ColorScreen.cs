@@ -28,14 +28,14 @@ namespace BPA_Tank_Racer_Game
         public int colorG { get; private set; }
         public int colorB { get; private set; }
 
-        public ColorScreen(ContentManager content, EventHandler screenEvent, Color defaultColor)
+        public ColorScreen(ContentManager content, EventHandler screenEvent)
             : base(screenEvent)
         {
             logo = content.Load<Texture2D>("Color");
 
-            colorR = defaultColor.R;
-            colorG = defaultColor.G;
-            colorB = defaultColor.B;
+            colorR = Game1.backGroundColor.R;
+            colorG = Game1.backGroundColor.G;
+            colorB = Game1.backGroundColor.B;
 
             backButtonDefault = content.Load<Texture2D>("Back");
             colorBarDefault = content.Load<Texture2D>("ColorBar");

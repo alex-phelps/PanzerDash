@@ -27,6 +27,8 @@ namespace BPA_Tank_Racer_Game
         public MenuScreen(ContentManager content, EventHandler screenEvent)
             : base(screenEvent)
         {
+            oldState = Keyboard.GetState();
+
             //Load all title text images
 
             logo = content.Load<Texture2D>("Logo");
