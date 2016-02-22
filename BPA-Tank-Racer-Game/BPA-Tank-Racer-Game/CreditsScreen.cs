@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace BPA_Tank_Racer_Game
+namespace PanzerDash
 {
     public class CreditsScreen : Screen
     {
