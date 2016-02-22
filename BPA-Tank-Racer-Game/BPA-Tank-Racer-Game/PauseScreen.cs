@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace PanzerDash
+namespace BPA_Tank_Racer_Game
 {
     /// <summary>
     /// Game state for a pause screen

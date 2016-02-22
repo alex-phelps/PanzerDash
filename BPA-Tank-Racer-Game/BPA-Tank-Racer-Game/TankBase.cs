@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
-namespace PanzerDash
+namespace BPA_Tank_Racer_Game
 {
     /// <summary>
     /// Represents the base of the tank

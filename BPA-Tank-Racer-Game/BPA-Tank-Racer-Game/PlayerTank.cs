@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 
-namespace PanzerDash
+namespace BPA_Tank_Racer_Game
 {
     /// <summary>
     /// Represents a player controlled tank

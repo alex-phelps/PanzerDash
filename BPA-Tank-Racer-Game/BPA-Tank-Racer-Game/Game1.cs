@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using System.IO;
 
-namespace PanzerDash
+namespace BPA_Tank_Racer_Game
 {
     /// <summary>
     /// This is the main type for the game

@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Mail;
 
-namespace PanzerDash
+namespace BPA_Tank_Racer_Game
 {
 #if WINDOWS || LINUX
 
