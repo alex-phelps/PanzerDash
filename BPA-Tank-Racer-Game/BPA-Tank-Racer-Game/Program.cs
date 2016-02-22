@@ -17,9 +17,6 @@ namespace BPA_Tank_Racer_Game
         [STAThread]
         static void Main()
         {
-            using (var game = new Game1())
-                game.Run();
-
             // For crash reporting, commented out for debug atm
 
             try
