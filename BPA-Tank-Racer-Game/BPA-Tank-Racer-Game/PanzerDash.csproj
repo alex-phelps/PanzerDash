@@ -438,7 +438,6 @@
     </MonoGameContentReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="BPA-Tank-Racer-Game_TemporaryKey.pfx" />
     <None Include="Content\CountdownFont.spritefont">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
