@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace BPA_Tank_Racer_Game
+namespace PanzerDash
 {
     /// <summary>
     /// Represents a bullet shot by a tank

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace BPA_Tank_Racer_Game
+namespace PanzerDash
 {
     /// <summary>
     /// Game state for the beggining publishing screen

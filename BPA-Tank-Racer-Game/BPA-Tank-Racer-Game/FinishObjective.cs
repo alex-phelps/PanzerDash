@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
-namespace BPA_Tank_Racer_Game
+namespace PanzerDash
 {
     /// <summary>
     /// Represents the objective at the end of each level
