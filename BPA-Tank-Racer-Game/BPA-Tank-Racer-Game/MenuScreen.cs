@@ -16,6 +16,7 @@ namespace PanzerDash
         private Texture2D playNowButton, playNowButtonDefault, playNowButtonSelected;
         private Texture2D careerModeButton, careerModeButtonDefault, careerModeButtonSelected;
         private Texture2D freeModeButton, freeModeButtonDefault, freeModeButtonSelected;
+        private Texture2D multiplayerButton, multiplayerButtonDefault, multiplayerButtonSelected;
         private Texture2D optionsButton, optionsButtonDefault, optionsButtonSelected;
         private Texture2D quitButton, quitButtonDefault, quitButtonSelected;
         private Texture2D tutorialButton, tutorialButtonDefault, tutorialButtonSelected;
@@ -37,6 +38,7 @@ namespace PanzerDash
             tutorialButtonDefault = content.Load<Texture2D>("Tutorial");
             careerModeButtonDefault = content.Load<Texture2D>("CareerMode");
             freeModeButtonDefault = content.Load<Texture2D>("FreeMode");
+            multiplayerButtonDefault = content.Load<Texture2D>("Multiplayer");
             optionsButtonDefault = content.Load<Texture2D>("Options");
             quitButtonDefault = content.Load<Texture2D>("Quit");
 
@@ -44,6 +46,7 @@ namespace PanzerDash
             tutorialButtonSelected = content.Load<Texture2D>("Tutorial-Selected");
             careerModeButtonSelected = content.Load<Texture2D>("CareerMode-Selected");
             freeModeButtonSelected = content.Load<Texture2D>("FreeMode-Selected");
+            multiplayerButtonSelected = content.Load<Texture2D>("Multiplayer-Selected");
             optionsButtonSelected = content.Load<Texture2D>("Options-Selected");
             quitButtonSelected = content.Load<Texture2D>("Quit-Selected");
 
@@ -51,6 +54,7 @@ namespace PanzerDash
             tutorialButton = tutorialButtonDefault;
             careerModeButton = careerModeButtonDefault;
             freeModeButton = freeModeButtonDefault;
+            multiplayerButton = multiplayerButtonDefault;
             optionsButton = optionsButtonDefault;
             quitButton = quitButtonDefault;
 
@@ -78,11 +82,13 @@ namespace PanzerDash
                 else if (selectedButton == 3)
                     freeModeButton = freeModeButtonDefault;
                 else if (selectedButton == 4)
-                    optionsButton = optionsButtonDefault;
+                    multiplayerButton = multiplayerButtonDefault;
                 else if (selectedButton == 5)
+                    optionsButton = optionsButtonDefault;
+                else if (selectedButton == 6)
                     quitButton = quitButtonDefault;
 
-                if (selectedButton == 5)
+                if (selectedButton == 6)
                     selectedButton = 0;
                 else selectedButton++;
 
@@ -95,8 +101,10 @@ namespace PanzerDash
                 else if (selectedButton == 3)
                     freeModeButton = freeModeButtonSelected;
                 else if (selectedButton == 4)
-                    optionsButton = optionsButtonSelected;
+                    multiplayerButton = multiplayerButtonSelected;
                 else if (selectedButton == 5)
+                    optionsButton = optionsButtonSelected;
+                else if (selectedButton == 6)
                     quitButton = quitButtonSelected;
             }
             else if (newState.IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up))
@@ -114,12 +122,14 @@ namespace PanzerDash
                 else if (selectedButton == 3)
                     freeModeButton = freeModeButtonDefault;
                 else if (selectedButton == 4)
-                    optionsButton = optionsButtonDefault;
+                    multiplayerButton = multiplayerButtonDefault;
                 else if (selectedButton == 5)
+                    optionsButton = optionsButtonDefault;
+                else if (selectedButton == 6)
                     quitButton = quitButtonDefault;
 
                 if (selectedButton == 0)
-                    selectedButton = 5;
+                    selectedButton = 6;
                 else selectedButton--;
 
                 if (selectedButton == 0)
@@ -131,8 +141,10 @@ namespace PanzerDash
                 else if (selectedButton == 3)
                     freeModeButton = freeModeButtonSelected;
                 else if (selectedButton == 4)
-                    optionsButton = optionsButtonSelected;
+                    multiplayerButton = multiplayerButtonSelected;
                 else if (selectedButton == 5)
+                    optionsButton = optionsButtonSelected;
+                else if (selectedButton == 6)
                     quitButton = quitButtonSelected;
             }
             
@@ -149,17 +161,19 @@ namespace PanzerDash
                 Color.White, 0, new Vector2(logo.Width / 2, logo.Height / 2), 1, SpriteEffects.None, 1f);
 
             //Draw selection buttons
-            spritebatch.Draw(playNowButton, new Vector2(Game1.WindowWidth / 2, 150), new Rectangle(0, 0, playNowButton.Width, playNowButton.Height),
+            spritebatch.Draw(playNowButton, new Vector2(Game1.WindowWidth / 2, 140), new Rectangle(0, 0, playNowButton.Width, playNowButton.Height),
                 Color.White, 0, new Vector2(playNowButton.Width / 2, playNowButton.Height / 2), 1, SpriteEffects.None, 1f);
-            spritebatch.Draw(tutorialButton, new Vector2(Game1.WindowWidth / 2, 200), new Rectangle(0, 0, tutorialButton.Width, tutorialButton.Height),
+            spritebatch.Draw(tutorialButton, new Vector2(Game1.WindowWidth / 2, 190), new Rectangle(0, 0, tutorialButton.Width, tutorialButton.Height),
                 Color.White, 0, new Vector2(tutorialButton.Width / 2, tutorialButton.Height / 2), 1, SpriteEffects.None, 1f);
-            spritebatch.Draw(careerModeButton, new Vector2(Game1.WindowWidth / 2, 250), new Rectangle(0, 0, careerModeButton.Width, careerModeButton.Height),
+            spritebatch.Draw(careerModeButton, new Vector2(Game1.WindowWidth / 2, 240), new Rectangle(0, 0, careerModeButton.Width, careerModeButton.Height),
                 Color.White, 0, new Vector2(careerModeButton.Width / 2, careerModeButton.Height / 2), 1, SpriteEffects.None, 1f);
-            spritebatch.Draw(freeModeButton, new Vector2(Game1.WindowWidth / 2, 300), new Rectangle(0, 0, freeModeButton.Width, freeModeButton.Height),
+            spritebatch.Draw(freeModeButton, new Vector2(Game1.WindowWidth / 2, 290), new Rectangle(0, 0, freeModeButton.Width, freeModeButton.Height),
                 Color.White, 0, new Vector2(freeModeButton.Width / 2, freeModeButton.Height / 2), 1, SpriteEffects.None, 1f);
-            spritebatch.Draw(optionsButton, new Vector2(Game1.WindowWidth / 2, 350), new Rectangle(0, 0, optionsButton.Width, optionsButton.Height),
+            spritebatch.Draw(multiplayerButton, new Vector2(Game1.WindowWidth / 2, 340), new Rectangle(0, 0, multiplayerButton.Width, multiplayerButton.Height),
+                Color.White, 0, new Vector2(multiplayerButton.Width / 2, multiplayerButton.Height / 2), 1, SpriteEffects.None, 1f);
+            spritebatch.Draw(optionsButton, new Vector2(Game1.WindowWidth / 2, 390), new Rectangle(0, 0, optionsButton.Width, optionsButton.Height),
                 Color.White, 0, new Vector2(optionsButton.Width / 2, optionsButton.Height / 2), 1, SpriteEffects.None, 1f);
-            spritebatch.Draw(quitButton, new Vector2(Game1.WindowWidth / 2, 400), new Rectangle(0, 0, quitButton.Width, quitButton.Height),
+            spritebatch.Draw(quitButton, new Vector2(Game1.WindowWidth / 2, 440), new Rectangle(0, 0, quitButton.Width, quitButton.Height),
                 Color.White, 0, new Vector2(quitButton.Width / 2, quitButton.Height / 2), 1, SpriteEffects.None, 1f);
         }
     }

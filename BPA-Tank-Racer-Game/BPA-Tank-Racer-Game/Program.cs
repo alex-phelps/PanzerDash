@@ -17,8 +17,11 @@ namespace PanzerDash
         [STAThread]
         static void Main()
         {
-            // For crash reporting, commented out for debug atm
+            using (var game = new Game1())
+                game.Run();
 
+            // For crash reporting, commented out for debug atm
+            /*
             try
             {
                 using (var game = new Game1())
@@ -59,6 +62,8 @@ namespace PanzerDash
                     smtp.Send(message);
                 }
             }
+            */
+
         }
     }
 #endif

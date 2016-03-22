@@ -15,6 +15,7 @@ namespace PanzerDash
     /// </summary>
     public class PauseScreen : Screen
     {
+        public Screen resumeScreen { get; private set; }
         public int selectedButton { get; private set; }
 
         private KeyboardState oldState;
@@ -24,11 +25,13 @@ namespace PanzerDash
         private Texture2D optionsButton, optionsButtonDefault, optionsButtonSelected;
         private Texture2D quitButton, quitButtonDefault, quitButtonSelected;
 
-        public PauseScreen(ContentManager content, EventHandler screenEvent)
+        public PauseScreen(ContentManager content, EventHandler screenEvent, Screen resumeScreen)
             : base(screenEvent)
         {
             //Pause music
             MediaPlayer.Pause();
+
+            this.resumeScreen = resumeScreen;
 
             selectedButton = 0;
             oldState = Keyboard.GetState();

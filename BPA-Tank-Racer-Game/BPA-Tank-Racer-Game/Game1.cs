@@ -18,7 +18,6 @@ namespace PanzerDash
         Screen currentScreen;
         MenuScreen menuScreen;
         OptionsScreen optionsScreen;
-        GameScreen gameScreen;
 
         //Default window size
         public static int WindowWidth = 800;
@@ -79,7 +78,7 @@ namespace PanzerDash
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+
             //Sound Content
             bumpFX = Content.Load<SoundEffect>("Sounds\\BumpNoise");
             explodeFX = Content.Load<SoundEffect>("Sounds\\ExplosionSound");
@@ -156,10 +155,14 @@ namespace PanzerDash
                 //New freemode screen
                 currentScreen = new FreeModeScreen(Content, new EventHandler(FreeModeScreenEvent));
             }
-            else if (menuScreen.selectedButton == 4) // Options
+            else if (menuScreen.selectedButton == 4) // Multiplayer
+            {
+                currentScreen = new MultiplayerSelectScreen(Content, new EventHandler(MultiplayerSelectScreenEvent));
+            }
+            else if (menuScreen.selectedButton == 5) // Options
             {
                 //New Options Screen
-                optionsScreen = new OptionsScreen(Content, new EventHandler(OptionsScreenEvent));
+                optionsScreen = new OptionsScreen(Content, new EventHandler(OptionsScreenEvent), currentScreen);
                 currentScreen = optionsScreen;
             }
             else Environment.Exit(0); // Quit
@@ -191,6 +194,27 @@ namespace PanzerDash
             }
             else currentScreen = menuScreen;
         }
+        private void MultiplayerSelectScreenEvent(object sender, EventArgs e)
+        {
+            MultiplayerSelectScreen multiplayerSelectScreen = (MultiplayerSelectScreen)currentScreen;
+
+            //If there is a game ready to start
+            if (multiplayerSelectScreen.gameReady)
+            {
+                //Start new multiplayer game
+                currentScreen = new MultiplayerGameScreen(GraphicsDevice, Content, new EventHandler(MultiplayerGameScreenEvent), multiplayerSelectScreen.level,
+                    multiplayerSelectScreen.bulletHandler, multiplayerSelectScreen.player1, multiplayerSelectScreen.player2);
+            }
+            else currentScreen = menuScreen;
+        }
+
+        private void MultiplayerGameScreenEvent(object sender, EventArgs e)
+        {
+            //If the game is not over, then the user paused the game
+            if ( !((MultiplayerGameScreen)currentScreen).gameOver)
+                currentScreen = new PauseScreen(Content, new EventHandler(PauseScreenEvent), currentScreen);
+            else currentScreen = menuScreen;
+        }
 
         private void OptionsScreenEvent(object sender, EventArgs e)
         {
@@ -212,7 +236,7 @@ namespace PanzerDash
             }
             else if (optionsScreen.selectedButton == 4) // Back
             {
-                currentScreen = menuScreen;
+                currentScreen = optionsScreen.backScreen;
             }
         }
 
@@ -241,11 +265,9 @@ namespace PanzerDash
 
         private void GameScreenEvent(object sender, EventArgs e)
         {
-            gameScreen = (GameScreen)currentScreen;
-
             //If the game is not over, then the user paused the game
-            if (!gameScreen.gameOver)
-                currentScreen = new PauseScreen(Content, new EventHandler(PauseScreenEvent));
+            if ( !((GameScreen)currentScreen).gameOver)
+                currentScreen = new PauseScreen(Content, new EventHandler(PauseScreenEvent), currentScreen);
             else currentScreen = menuScreen;
         }
 
@@ -256,42 +278,16 @@ namespace PanzerDash
             if (screen.selectedButton == 0)
             {
                 MediaPlayer.Resume();
-                currentScreen = gameScreen;
+                currentScreen = screen.resumeScreen;
             }
             else if (screen.selectedButton == 1)
             {
-                optionsScreen = new OptionsScreen(Content, new EventHandler(PausedOptionsScreenEvent));
+                optionsScreen = new OptionsScreen(Content, new EventHandler(OptionsScreenEvent), currentScreen);
                 currentScreen = optionsScreen;
             }
             else if (screen.selectedButton == 2)
             {
                 currentScreen = menuScreen;
-            }
-        }
-
-        private void PausedOptionsScreenEvent(object sender, EventArgs e)
-        {
-            OptionsScreen screen = (OptionsScreen)currentScreen;
-
-            if (optionsScreen.selectedButton == 0) // Sound
-            {
-                currentScreen = new SoundScreen(Content, new EventHandler(SoundScreenEvent));
-            }
-            else if (optionsScreen.selectedButton == 1) // Color
-            {
-                currentScreen = new ColorScreen(Content, new EventHandler(ColorScreenEvent));
-            }
-            else if (optionsScreen.selectedButton == 2) // Credits
-            {
-                currentScreen = new CreditsScreen(Content, new EventHandler(CreditsScreenEvent));
-            }
-            else if (optionsScreen.selectedButton == 3) //Reset
-            {
-                currentScreen = new ResetScreen(Content, new EventHandler(ResetScreenEvent));
-            }
-            else if (optionsScreen.selectedButton == 4) // Back
-            {
-                currentScreen = new PauseScreen(Content, new EventHandler(PauseScreenEvent));
             }
         }
 

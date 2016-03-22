@@ -72,6 +72,7 @@
     <Compile Include="Background.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="BulletHandler.cs" />
+    <Compile Include="Camera.cs" />
     <Compile Include="CareerEnemySelectionScreen.cs" />
     <Compile Include="CareerModeScreen.cs" />
     <Compile Include="ColorScreen.cs">
@@ -86,6 +87,8 @@
     <Compile Include="GameScreen.cs" />
     <Compile Include="LevelSelectionScreen.cs" />
     <Compile Include="MenuScreen.cs" />
+    <Compile Include="MultiplayerGameScreen.cs" />
+    <Compile Include="MultiplayerSelectScreen.cs" />
     <Compile Include="OptionsScreen.cs" />
     <Compile Include="PauseScreen.cs" />
     <Compile Include="PlayerTankSelectionScreen.cs" />
@@ -252,6 +255,8 @@
     <Content Include="Content\Logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Multiplayer-Selected.png" />
+    <Content Include="Content\Multiplayer.png" />
     <Content Include="Content\Music.png" />
     <Content Include="Content\No-Selected.png" />
     <Content Include="Content\No.png" />
@@ -262,6 +267,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Paused.png" />
+    <Content Include="Content\Player1.png" />
+    <Content Include="Content\Player2.png" />
     <Content Include="Content\PlayerTankSelectionLogo.png" />
     <Content Include="Content\PlayNow-Selected.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

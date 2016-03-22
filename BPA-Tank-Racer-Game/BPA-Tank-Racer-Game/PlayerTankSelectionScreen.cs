@@ -10,7 +10,7 @@ namespace PanzerDash
     /// </summary>
     public class PlayerTankSelectionScreen : TankSelectionScreen
     {
-        Texture2D logo;
+        public Texture2D logo;
 
         public PlayerTankSelectionScreen(ContentManager content, EventHandler screenEvent, bool isCareerMode) 
             : base(content, screenEvent, isCareerMode)

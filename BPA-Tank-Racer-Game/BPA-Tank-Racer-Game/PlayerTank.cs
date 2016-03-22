@@ -12,10 +12,22 @@ namespace PanzerDash
     {
         private KeyboardState oldState = Keyboard.GetState();
 
-        public PlayerTank(ContentManager content, BulletHandler bulletHandler, TankPartType baseType, TankPartType gunType) 
+        private Keys forward, backward, turnLeft, turnRight, rotateLeft, rotateRight, fire;
+
+        public PlayerTank(ContentManager content, BulletHandler bulletHandler, TankPartType baseType, TankPartType gunType,
+            Keys forward = Keys.W, Keys backward = Keys.S, Keys turnLeft = Keys.A, Keys turnRight = Keys.D,
+            Keys rotateLeft = Keys.Left, Keys rotateRight = Keys.Right, Keys fire = Keys.Space)
             : base(content, bulletHandler, baseType, gunType)
         {
             position = new Vector2(Game1.WindowWidth / 2, Game1.WindowHeight / 2);
+
+            this.forward = forward;
+            this.backward = backward;
+            this.turnLeft = turnLeft;
+            this.turnRight = turnRight;
+            this.rotateLeft = rotateLeft;
+            this.rotateRight = rotateRight;
+            this.fire = fire;
         }
 
         public override void Update(GameTime gametime)
@@ -25,31 +37,31 @@ namespace PanzerDash
                 KeyboardState newState = Keyboard.GetState();
 
                 //Player input from keyboard
-                if (newState.IsKeyDown(Keys.W))
+                if (newState.IsKeyDown(forward))
                 {
                     speed += accel;
                 }
-                if (newState.IsKeyDown(Keys.S))
+                if (newState.IsKeyDown(backward))
                 {
                     speed -= accel;
                 }
-                if (newState.IsKeyDown(Keys.A))
+                if (newState.IsKeyDown(turnLeft))
                 {
                     rotSpeed -= rotAccel;
                 }
-                if (newState.IsKeyDown(Keys.D))
+                if (newState.IsKeyDown(turnLeft))
                 {
                     rotSpeed += rotAccel;
                 }
-                if (newState.IsKeyDown(Keys.Left))
+                if (newState.IsKeyDown(rotateLeft))
                 {
                     gunRotation -= 0.04f;
                 }
-                if (newState.IsKeyDown(Keys.Right))
+                if (newState.IsKeyDown(rotateRight))
                 {
                     gunRotation += 0.04f;
                 }
-                if (newState.IsKeyUp(Keys.W) && newState.IsKeyUp(Keys.S))
+                if (newState.IsKeyUp(forward) && newState.IsKeyUp(backward))
                 {
                     if (speed < -0.25f) // Not 0 here to fix any rounding errors
                         speed += 0.25f;
@@ -57,7 +69,7 @@ namespace PanzerDash
                         speed -= 0.25f;
                     else speed = 0;
                 }
-                if (newState.IsKeyUp(Keys.A) && newState.IsKeyUp(Keys.D))
+                if (newState.IsKeyUp(turnLeft) && newState.IsKeyUp(turnRight))
                 {
                     if (rotSpeed < -0.05f) // Not 0 here to fix any rounding errors
                         rotSpeed += 0.03f;
@@ -66,7 +78,7 @@ namespace PanzerDash
                     else rotSpeed = 0;
                 }
 
-                if (newState.IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
+                if (newState.IsKeyDown(fire) && oldState.IsKeyUp(fire))
                 {
                     Shoot();
                 }

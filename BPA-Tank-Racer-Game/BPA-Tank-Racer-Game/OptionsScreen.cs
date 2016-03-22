@@ -24,11 +24,14 @@ namespace PanzerDash
 
         private Texture2D logo;
 
+        public Screen backScreen { get; private set; }
         public int selectedButton { get; private set; }
 
-        public OptionsScreen(ContentManager content, EventHandler screenEvent)
+        public OptionsScreen(ContentManager content, EventHandler screenEvent, Screen backScreen)
             : base(screenEvent)
         {
+            this.backScreen = backScreen;
+
             selectedButton = 0;
             oldState = Keyboard.GetState();
 
