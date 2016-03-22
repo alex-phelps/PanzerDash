@@ -453,7 +453,8 @@ namespace PanzerDash
 
                 if (Keyboard.GetState().IsKeyDown(Keys.Enter))
                 {
-                    if (unlockContent && gameWon)
+                    if (unlockContent && gameWon && playerTank.baseType != TankPartType.rainbow &&
+                        playerTank.gunType != TankPartType.rainbow)
                     {
                         Game1.levelsUnlocked++;
                         Game1.Save();

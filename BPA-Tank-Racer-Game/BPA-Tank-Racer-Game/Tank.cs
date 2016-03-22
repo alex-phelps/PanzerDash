@@ -26,8 +26,8 @@ namespace PanzerDash
     /// </summary>
     public class Tank : GameObject
     {
-        private TankPartType baseType;
-        private TankPartType gunType;
+        public TankPartType baseType { get; private set; }
+        public TankPartType gunType { get; private set; }
 
         private Texture2D bulletTexture;
         private BulletHandler bulletHandler;

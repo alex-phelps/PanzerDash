@@ -18,7 +18,6 @@ namespace PanzerDash
         Screen currentScreen;
         MenuScreen menuScreen;
         OptionsScreen optionsScreen;
-        ColorScreen colorScreen;
         GameScreen gameScreen;
 
         //Default window size

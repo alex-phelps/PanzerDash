@@ -69,19 +69,19 @@ namespace PanzerDash
                 }
                 else if (bases[selectedEnemy] == urbanBase)
                 {
-                    if (Game1.levelsUnlocked > 2)
+                    if (Game1.levelsUnlocked > 3)
                         return false;
                     else return true;
                 }
                 else if (bases[selectedEnemy] == redBase)
                 {
-                    if (Game1.levelsUnlocked > 2)
+                    if (Game1.levelsUnlocked > 4)
                         return false;
                     else return true;
                 }
                 else if (bases[selectedEnemy] == jungleBase)
                 {
-                    if (Game1.levelsUnlocked > 2)
+                    if (Game1.levelsUnlocked > 5)
                         return false;
                     else return true;
                 }
