@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace PanzerDash
 {
@@ -20,6 +21,8 @@ namespace PanzerDash
 
         private Camera camera1;
         private Camera camera2;
+
+        private Texture2D border;
 
         private PlayerTank player1;
         private PlayerTank player2;
@@ -37,18 +40,16 @@ namespace PanzerDash
         public bool gameOver { get; private set; }
         private bool gameActive = false;
         private bool firstUpdate = true;
-        private bool gameWon = false;
 
-        private string endText;
-        private Color endTextColor;
+        private int winner = 0;
         private SpriteFont winTextFont;
         private SpriteFont winSubFont;
+        private SpriteFont winTextMultiplayerFont;
 
         private SpriteFont countdownFont;
         private TimeSpan countdownOldTime;
         private int countdown = 6;
 
-        private bool unlockContent;
         private int level;
 
         private SoundEffectInstance bumpFX;
@@ -87,35 +88,465 @@ namespace PanzerDash
 
         public override void Update(GameTime gametime)
         {
+
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 screenEvent.Invoke(this, new EventArgs());
 
-            player1.position += player1.velocity;
-            player1.Update(gametime);
-            player2.position += player2.velocity;
-            player2.Update(gametime);
+            if ((gameActive || firstUpdate) && !gameOver)
+            {
+                bulletHandler.Update(gametime);
 
-            camera1.Update(player1.position);
-            camera2.Update(player2.position);
+                player1.Update(gametime);
+                if (!player1.isStunned)
+                    player1.position += player1.velocity;
+                player2.Update(gametime);
+                if (!player2.isStunned)
+                    player2.position += player2.velocity;
+
+                camera1.Update(player1.position);
+                camera2.Update(player2.position);
+
+                //Check if player1 is colliding with the color black in the background
+                if (level == 4)
+                {
+                    //City Specific collision colors
+                    if (Game1.IntersectColor(player1, background, new List<Color>
+                        {
+                            new Color(0, 0, 0),
+                            new Color(87, 87, 87),
+                            new Color(162, 162, 162),
+                            new Color(138, 138, 138),
+                            new Color(75, 69, 66),
+                            new Color(59, 69, 77),
+                            new Color(58, 37, 28),
+                            new Color(111, 66, 54),
+                            new Color(116, 31, 9),
+                            new Color(154, 123, 93)
+                        }))
+                    {
+                        //Undo tank movement
+                        player1.position -= player1.velocity;
+
+                        //Undo player1's rotation
+                        player1.rotation -= player1.rotSpeed;
+
+                        //Set player1's speed variables to 0;
+                        player1.speed = 0;
+                        player1.rotSpeed = 0;
+
+                        if (bumpFX.State != SoundState.Playing)
+                            bumpFX.Play();
+                    }
+
+                }
+                else if (Game1.IntersectColor(player1, background, new Color(0, 0, 0)))
+                {
+                    //Undo tank movement
+                    player1.position -= player1.velocity;
+
+                    //Undo player1's rotation
+                    player1.rotation -= player1.rotSpeed;
+
+                    //Set player1's speed variables to 0
+                    player1.speed = 0;
+                    player1.rotSpeed = 0;
+
+                    if (bumpFX.State != SoundState.Playing)
+                        bumpFX.Play();
+                }
+
+
+                //Check if player2 is colliding with the color black in the background
+                if (level == 4)
+                {
+                    //City Specific collision colors
+                    if (Game1.IntersectColor(player2, background, new List<Color>
+                        {
+                            new Color(0, 0, 0),
+                            new Color(87, 87, 87),
+                            new Color(162, 162, 162),
+                            new Color(138, 138, 138),
+                            new Color(75, 69, 66),
+                            new Color(59, 69, 77),
+                            new Color(58, 37, 28),
+                            new Color(111, 66, 54),
+                            new Color(116, 31, 9),
+                            new Color(154, 123, 93)
+                        }))
+                    {
+                        //Undo tank movement
+                        player2.position -= player2.velocity;
+
+                        //Undo player2's rotation
+                        player2.rotation -= player2.rotSpeed;
+
+                        //Set player2's speed variables to 0;
+                        player2.speed = 0;
+                        player2.rotSpeed = 0;
+
+                        if (bumpFX.State != SoundState.Playing)
+                            bumpFX.Play();
+                    }
+
+                }
+                else if (Game1.IntersectColor(player2, background, new Color(0, 0, 0)))
+                {
+                    //Undo tank movement
+                    player2.position -= player2.velocity;
+
+                    //Undo player2's rotation
+                    player2.rotation -= player2.rotSpeed;
+
+                    //Set player2's speed variables to 0;
+                    player2.speed = 0;
+                    player2.rotSpeed = 0;
+
+                    if (bumpFX.State != SoundState.Playing)
+                        bumpFX.Play();
+                }
+
+                //Check if player1 is colliding with the player2 tank
+                //Since we have yet to update player2, if this is true we know player1 caused the collision
+                if (Game1.IntersectPixels(player1, player2))
+                {
+                    if (bumpFX.State != SoundState.Playing)
+                        bumpFX.Play();
+
+                    //Undo tank movement
+                    player1.position -= player1.velocity;
+
+                    //Redo tank movement on X axis
+                    player1.position.X += player1.velocity.X;
+
+                    //If colliding, collision comes from either X direction or both directions
+                    //If it was not colliding, then collision comes from Y direction or both directions
+                    if (Game1.IntersectPixels(player1, player2))
+                    {
+                        //Undo X movement
+                        player1.position.X -= player1.velocity.X;
+
+                        //Redo tank movement on Y axis
+                        player1.position.Y += player1.velocity.Y;
+
+                        //If colliding, collision comes from both directions, and movement from both directions is reversed
+                        //If not colliding, then undo all X direction movement but keep Y movement
+                        if (Game1.IntersectPixels(player1, player2))
+                        {
+                            //Undo tank movement on Y axis since colliding from both direction
+                            player1.position.Y -= player1.velocity.Y;
+                        }
+                    }
+                    else //Collision from Y or both directions
+                    {
+                        //Undo X movement
+                        player1.position.X -= player1.velocity.X;
+
+                        //Redo Y movement
+                        player1.position.Y += player1.velocity.Y;
+
+                        //If colliding, collision comes from Y only
+                        //If not colliding, the collision comes from both directions when combined only
+                        if (Game1.IntersectPixels(player1, player2))
+                        {
+                            //Undo Y (Cause of collision)
+                            player1.position.Y -= player1.velocity.Y;
+                            //Redo X (Not cause of collision)
+                            player1.position.X += player1.velocity.X;
+                        }
+                        else //Collision from both sides when combined only
+                        {
+                            //Undo Y movement
+                            player1.position.Y -= player1.velocity.Y;
+                        }
+                    }
+
+                    //Either way, collision is player1's fault, so reset his movement and rotation speeds
+
+                    //Undo player1's rotation
+                    player1.rotation -= player1.rotSpeed;
+
+                    //Set player1's speed variables to 0;
+                    player1.speed = 0;
+                    player1.rotSpeed = 0;
+                }
+
+                //Check if player1 is colliding with the player2 tank
+                //Since we have yet to update player2, if this is true we know player1 caused the collision
+                if (Game1.IntersectPixels(player2, player1))
+                {
+                    if (bumpFX.State != SoundState.Playing)
+                        bumpFX.Play();
+
+                    //Undo tank movement
+                    player2.position -= player2.velocity;
+
+                    //Redo tank movement on X axis
+                    player2.position.X += player2.velocity.X;
+
+                    //If colliding, collision comes from either X direction or both directions
+                    //If it was not colliding, then collision comes from Y direction or both directions
+                    if (Game1.IntersectPixels(player1, player1))
+                    {
+                        //Undo X movement
+                        player2.position.X -= player2.velocity.X;
+
+                        //Redo tank movement on Y axis
+                        player2.position.Y += player2.velocity.Y;
+
+                        //If colliding, collision comes from both directions, and movement from both directions is reversed
+                        //If not colliding, then undo all X direction movement but keep Y movement
+                        if (Game1.IntersectPixels(player2, player1))
+                        {
+                            //Undo tank movement on Y axis since colliding from both direction
+                            player2.position.Y -= player2.velocity.Y;
+                        }
+                    }
+                    else //Collision from Y or both directions
+                    {
+                        //Undo X movement
+                        player2.position.X -= player2.velocity.X;
+
+                        //Redo Y movement
+                        player2.position.Y += player2.velocity.Y;
+
+                        //If colliding, collision comes from Y only
+                        //If not colliding, the collision comes from both directions when combined only
+                        if (Game1.IntersectPixels(player2, player1))
+                        {
+                            //Undo Y (Cause of collision)
+                            player2.position.Y -= player2.velocity.Y;
+                            //Redo X (Not cause of collision)
+                            player2.position.X += player2.velocity.X;
+                        }
+                        else //Collision from both sides when combined only
+                        {
+                            //Undo Y movement
+                            player2.position.Y -= player2.velocity.Y;
+                        }
+                    }
+
+                    //Either way, collision is player2's fault, so reset his movement and rotation speeds
+
+                    //Undo player2's rotation
+                    player2.rotation -= player2.rotSpeed;
+
+                    //Set player2's speed variables to 0;
+                    player2.speed = 0;
+                    player2.rotSpeed = 0;
+                }
+
+                foreach (Bullet bullet in bulletHandler.bullets)
+                {
+
+                    //Check for collision with level
+                    if (level == 4)
+                    {
+                        if (bullet.active && Game1.IntersectColor(bullet, background, new List<Color>
+                        {
+                            new Color(0, 0, 0),
+                            new Color(87, 87, 87),
+                            new Color(162, 162, 162),
+                            new Color(138, 138, 138),
+                            new Color(75, 69, 66),
+                            new Color(59, 69, 77),
+                            new Color(58, 37, 28),
+                            new Color(111, 66, 54),
+                            new Color(116, 31, 9),
+                            new Color(154, 123, 93)
+                        }))
+                        {
+                            explodeFX.Play();
+                            bulletHandler.Destroy(bullet);
+                        }
+                    }
+                    else if (bullet.active && Game1.IntersectColor(bullet, background, new Color(0, 0, 0)))
+                    {
+                        explodeFX.Play();
+                        bulletHandler.Destroy(bullet);
+                    }
+
+                    //Check for player1 bullets
+                    if (bullet.active && bullet.ownerTank == player2)
+                    {
+                        if (Game1.IntersectPixels(bullet, player1))
+                        {
+                            if (player1.currentPowerupType != PowerUpType.shield)
+                                player1.stunLength = bullet.damage;
+                            explodeFX.Play();
+                            bulletHandler.Destroy(bullet);
+                        }
+                        else if (Game1.IntersectPixels(bullet, finishObjective))
+                        {
+                            finishObjective.enemyHealth -= bullet.damage + 0.8f; // To buff the AI a bit
+                            explodeFX.Play();
+                            bulletHandler.Destroy(bullet);
+                        }
+
+                    }
+
+                    //Check for player bullets
+                    if (bullet.active && bullet.ownerTank == player1)
+                    {
+                        if (Game1.IntersectPixels(bullet, player2))
+                        {
+                            if (player2.currentPowerupType != PowerUpType.shield)
+                                player2.stunLength = bullet.damage;
+                            explodeFX.Play();
+                            bulletHandler.Destroy(bullet);
+                        }
+                        else if (Game1.IntersectPixels(bullet, finishObjective))
+                        {
+                            finishObjective.playerHealth -= bullet.damage;
+                            explodeFX.Play();
+                            bulletHandler.Destroy(bullet);
+                        }
+                    }
+                }
+
+                //Check for powerup collection
+                foreach (Powerup powerup in powerups)
+                {
+                    if (Game1.IntersectPixels(player1, powerup))
+                    {
+                        player1.CollectPowerUp(powerup);
+                        powerUpFX.Play();
+                        powerupsToRemove.Add(powerup);
+                    }
+                    else if (Game1.IntersectPixels(player2, powerup))
+                    {
+                        player2.CollectPowerUp(powerup);
+                        powerUpFX.Play();
+                        powerupsToRemove.Add(powerup);
+                    }
+                }
+
+                //Remove used powerups
+                foreach (Powerup powerup in powerupsToRemove)
+                {
+                    powerups.Remove(powerup);
+                }
+
+                if (finishObjective.playerHealth <= 0)
+                {
+                    winFX.Play();
+                    MediaPlayer.Stop();
+                    gameOver = true;
+                    winner = 1;
+                }
+                else if (finishObjective.enemyHealth <= 0)
+                {
+                    loseFX.Play();
+                    MediaPlayer.Stop();
+                    gameOver = true;
+                    winner = 2;
+                }
+
+                if (firstUpdate)
+                    firstUpdate = false;
+            }
+            else if (gameOver)
+            {
+                //After game, before screen change
+
+                if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                    screenEvent.Invoke(this, new EventArgs());
+            }
+            else
+            {
+                //Before Game; Countdown
+                if (countdown <= 0)
+                {
+                    goFX.Play();
+                    MediaPlayer.Play(Game1.gameMusic);
+                    gameActive = true;
+                }
+                else if (gametime.TotalGameTime.TotalSeconds - 1 >= countdownOldTime.TotalSeconds)
+                {
+                    countdown--;
+                    if (countdown != 0)
+                        countdownFX.Play();
+                    countdownOldTime = gametime.TotalGameTime;
+                }
+            }
+
+            base.Update(gametime);
         }
+
 
         public override void Draw(SpriteBatch spritebatch)
         {
             spritebatch.End();
 
+            //Left side view
             graphicsDevice.Viewport = leftView;
             DrawSprites(spritebatch, camera1);
 
+            //Right side view
             graphicsDevice.Viewport = rightView;
             DrawSprites(spritebatch, camera2);
 
+            //Default view
             graphicsDevice.Viewport = defaultView;
+            spritebatch.Draw(border, new Vector2(Game1.WindowWidth / 2, Game1.WindowHeight / 2),
+                new Rectangle(0, 0, border.Width, border.Height), Color.White, 0,
+                new Vector2(border.Width / 2, border.Height / 2), 1, SpriteEffects.None, 0);
 
-            spritebatch.Begin();
+            //Draw countdown
+            if (countdown > 0 && countdown < 6)
+            {
+                Color countdownColor;
+                if (countdown > 3)
+                    countdownColor = Color.Red;
+                else if (countdown > 1)
+                    countdownColor = Color.OrangeRed;
+                else countdownColor = Color.Yellow;
+
+                spritebatch.DrawString(countdownFont, countdown.ToString(),
+                    new Vector2(Game1.WindowWidth / 2 - countdownFont.MeasureString(countdown.ToString()).X / 2,
+                    Game1.WindowHeight / 2 - countdownFont.MeasureString(countdown.ToString()).Y / 2),
+                    countdownColor, 0, new Vector2(0, 0), 1, SpriteEffects.None, 1);
+            }
+
+            if (gameOver)
+            {
+                string player1Text;
+                Color player1Color;
+                string player2Text;
+                Color player2Color;
+                if (winner == 1)
+                {
+                    player1Text = "Congratulations!\nYou won!";
+                    player1Color = Color.Lime;
+                    player2Text = "You lost!\nToo bad";
+                    player2Color = Color.Red;
+                }
+                else
+                {
+                    player2Text = "Congratulations!\nYou won!";
+                    player2Color = Color.Lime;
+                    player1Text = "You lost!\nToo bad";
+                    player1Color = Color.Red;
+                }
+
+                spritebatch.DrawString(winTextMultiplayerFont, player1Text, new Vector2(
+                    Game1.WindowWidth / 4 - winTextMultiplayerFont.MeasureString(player1Text).X / 2, Game1.WindowHeight / 3
+                    - winTextMultiplayerFont.MeasureString(player1Text).Y / 2), player1Color, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+
+
+                spritebatch.DrawString(winTextMultiplayerFont, player2Text, new Vector2(
+                    Game1.WindowWidth * 3 / 4 - winTextMultiplayerFont.MeasureString(player2Text).X / 2, Game1.WindowHeight / 3
+                    - winTextMultiplayerFont.MeasureString(player2Text).Y / 2), player2Color, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+
+                spritebatch.DrawString(winSubFont, "> Press Enter to Continue <", new Vector2(
+                    Game1.WindowWidth / 2 - winSubFont.MeasureString("> Press Enter to Continue <").X / 2,
+                    (2 * Game1.WindowHeight) / 3 - winSubFont.MeasureString("> Press Enter to Continue <").Y / 2),
+                    Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+            }
         }
 
         private void DrawSprites(SpriteBatch spritebatch, Camera camera)
         {
+            spritebatch.End();
             spritebatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
                 null, null, null, null, camera.transform);
 
@@ -130,6 +561,7 @@ namespace PanzerDash
             bulletHandler.Draw(spritebatch);
 
             spritebatch.End();
+            spritebatch.Begin();
         }
 
         /// <summary>
@@ -139,10 +571,12 @@ namespace PanzerDash
         {
             //Main Setup
 
+            border = content.Load<Texture2D>("SplitScreenBorder");
             cooldownBar = content.Load<Texture2D>("CooldownBar");
             countdownFont = content.Load<SpriteFont>("CountdownFont");
             powerupBar = content.Load<Texture2D>("PowerupBar");
             winTextFont = content.Load<SpriteFont>("WinTextFont");
+            winTextMultiplayerFont = content.Load<SpriteFont>("WinTextMultiplayerFont");
             winSubFont = content.Load<SpriteFont>("WinSubFont");
             powerupSpawns = new List<Vector2>();
             powerups = new List<Powerup>();

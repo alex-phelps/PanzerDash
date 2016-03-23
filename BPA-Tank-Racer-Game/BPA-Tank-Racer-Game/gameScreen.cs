@@ -241,12 +241,12 @@ namespace PanzerDash
                         }
                     }
 
-                    //Either way, collision is enemy's fault, so reset his movement and rotation speeds
+                    //Either way, collision is players's fault, so reset his movement and rotation speeds
 
-                    //Undo enemy's rotation
+                    //Undo players's rotation
                     playerTank.rotation -= playerTank.rotSpeed;
 
-                    //Set enemy's speed variables to 0;
+                    //Set players's speed variables to 0;
                     playerTank.speed = 0;
                     playerTank.rotSpeed = 0;
                 }

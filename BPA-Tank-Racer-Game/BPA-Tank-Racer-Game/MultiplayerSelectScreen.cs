@@ -86,10 +86,9 @@ namespace PanzerDash
             bulletHandler = new BulletHandler();
             player1 = new PlayerTank(content, bulletHandler, player1SelectionScreen.selectedTankBase, player1SelectionScreen.selectedTankGun,
                 Keys.W, Keys.S, Keys.A, Keys.D, Keys.F, Keys.G, Keys.C);
-            player1.position = new Vector2(Game1.WindowWidth / 4, Game1.WindowHeight / 2);
             player2 = new PlayerTank(content, bulletHandler, player2SelectionScreen.selectedTankBase, player2SelectionScreen.selectedTankGun,
                 Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.OemComma, Keys.OemPeriod, Keys.RightControl);
-            player2.position = new Vector2(player1.position.X + Game1.WindowWidth / 2, player1.position.Y);
+            player2.position = new Vector2(player1.position.X + 100, player1.position.Y);
 
             gameReady = true;
 

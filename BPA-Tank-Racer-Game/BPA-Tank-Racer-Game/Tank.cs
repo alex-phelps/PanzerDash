@@ -236,9 +236,10 @@ namespace PanzerDash
             tankGun.rotation = gunRotation;
 
             if (stunLength == 0)
+            {
                 if (isStunned)
                     isStunned = false;
-                else { }
+            }
             else if (!isStunned)
             {
                 isStunned = true;

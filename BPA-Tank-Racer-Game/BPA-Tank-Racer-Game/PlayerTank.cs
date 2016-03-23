@@ -49,7 +49,7 @@ namespace PanzerDash
                 {
                     rotSpeed -= rotAccel;
                 }
-                if (newState.IsKeyDown(turnLeft))
+                if (newState.IsKeyDown(turnRight))
                 {
                     rotSpeed += rotAccel;
                 }
