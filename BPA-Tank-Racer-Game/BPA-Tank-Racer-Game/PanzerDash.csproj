@@ -87,7 +87,9 @@
     <Compile Include="GameScreen.cs" />
     <Compile Include="LevelSelectionScreen.cs" />
     <Compile Include="MenuScreen.cs" />
-    <Compile Include="MultiplayerControlsScreen.cs" />
+    <Compile Include="MultiplayerControlsScreen.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MultiplayerGameScreen.cs" />
     <Compile Include="MultiplayerSelectScreen.cs" />
     <Compile Include="OptionsScreen.cs" />
