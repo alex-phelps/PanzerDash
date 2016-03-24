@@ -194,6 +194,7 @@ namespace PanzerDash
             }
             else currentScreen = menuScreen;
         }
+
         private void MultiplayerSelectScreenEvent(object sender, EventArgs e)
         {
             MultiplayerSelectScreen multiplayerSelectScreen = (MultiplayerSelectScreen)currentScreen;
@@ -202,10 +203,17 @@ namespace PanzerDash
             if (multiplayerSelectScreen.gameReady)
             {
                 //Start new multiplayer game
-                currentScreen = new MultiplayerGameScreen(GraphicsDevice, Content, new EventHandler(MultiplayerGameScreenEvent), multiplayerSelectScreen.level,
-                    multiplayerSelectScreen.bulletHandler, multiplayerSelectScreen.player1, multiplayerSelectScreen.player2);
+                currentScreen = new MultiplayerControlsScreen(Content, 
+                    new MultiplayerGameScreen(GraphicsDevice, Content, new EventHandler(MultiplayerGameScreenEvent), multiplayerSelectScreen.level,
+                    multiplayerSelectScreen.bulletHandler, multiplayerSelectScreen.player1, multiplayerSelectScreen.player2),
+                    new EventHandler(MultiplayerControlsScreenEvent));
             }
             else currentScreen = menuScreen;
+        }
+
+        private void MultiplayerControlsScreenEvent(object sender, EventArgs e)
+        {
+            currentScreen = ((MultiplayerControlsScreen)currentScreen).screen;
         }
 
         private void MultiplayerGameScreenEvent(object sender, EventArgs e)

@@ -335,6 +335,34 @@ namespace PanzerDash
                     player2.rotSpeed = 0;
                 }
 
+                //Check if player1 is colliding with the finish objective
+                if (Game1.IntersectPixels(player1, finishObjective))
+                {
+                    //Undo tank movement
+                    player1.position -= player1.velocity;
+
+                    //Undo player's rotation
+                    player1.rotation -= player1.rotSpeed;
+
+                    //Set player's speed variables to 0;
+                    player1.speed = 0;
+                    player1.rotSpeed = 0;
+                }
+
+                //Check if player2 is colliding with the finish objective
+                if (Game1.IntersectPixels(player2, finishObjective))
+                {
+                    //Undo tank movement
+                    player2.position -= player2.velocity;
+
+                    //Undo player's rotation
+                    player2.rotation -= player2.rotSpeed;
+
+                    //Set player's speed variables to 0;
+                    player2.speed = 0;
+                    player2.rotSpeed = 0;
+                }
+
                 foreach (Bullet bullet in bulletHandler.bullets)
                 {
 
@@ -435,7 +463,7 @@ namespace PanzerDash
                 }
                 else if (finishObjective.enemyHealth <= 0)
                 {
-                    loseFX.Play();
+                    winFX.Play();
                     MediaPlayer.Stop();
                     gameOver = true;
                     winner = 2;
@@ -490,6 +518,45 @@ namespace PanzerDash
             spritebatch.Draw(border, new Vector2(Game1.WindowWidth / 2, Game1.WindowHeight / 2),
                 new Rectangle(0, 0, border.Width, border.Height), Color.White, 0,
                 new Vector2(border.Width / 2, border.Height / 2), 1, SpriteEffects.None, 0);
+
+            //Draw HUDs
+
+            finishObjective.DrawHUDMultiplayer(spritebatch);
+
+            //Draw player1 HUD
+
+            //Create a rectangle representing how much of the bars should be shown
+            Rectangle cooldownSource = new Rectangle(0, 0, cooldownBar.Width,
+                (int)(cooldownBar.Height * ((float)player1.currentCooldown / (float)player1.baseCooldown)));
+            Rectangle powerupSource = new Rectangle(0, 0, powerupBar.Width,
+                (int)(powerupBar.Height * ((float)player1.powerupTime / (float)player1.basePowerupTime)));
+
+            //Draw cooldownBar
+            spritebatch.Draw(cooldownBar, new Vector2(30, (Game1.WindowHeight / 2) + (cooldownBar.Height / 2) +
+                cooldownBar.Height - (int)(cooldownBar.Height * ((float)player1.currentCooldown / (float)player1.baseCooldown))),
+                cooldownSource, Color.White, 0, new Vector2(cooldownBar.Width / 2, cooldownBar.Height / 2), 1, SpriteEffects.None, 1);
+            //Draw Powerup cooldown bar
+            spritebatch.Draw(powerupBar, new Vector2(Game1.WindowWidth / 2 - 30, (Game1.WindowHeight / 2) + (powerupBar.Height / 2) +
+                powerupBar.Height - (int)(powerupBar.Height * ((float)player1.powerupTime / (float)player1.basePowerupTime))),
+                powerupSource, Color.White, 0, new Vector2(powerupBar.Width / 2, powerupBar.Height / 2), 1, SpriteEffects.None, 1);
+
+            //Draw player2 HUD
+
+            //Create a rectangle representing how much of the bars should be shown
+            cooldownSource = new Rectangle(0, 0, cooldownBar.Width,
+                (int)(cooldownBar.Height * ((float)player2.currentCooldown / (float)player2.baseCooldown)));
+            powerupSource = new Rectangle(0, 0, powerupBar.Width,
+                (int)(powerupBar.Height * ((float)player2.powerupTime / (float)player2.basePowerupTime)));
+
+            //Draw cooldownBar
+            spritebatch.Draw(cooldownBar, new Vector2(Game1.WindowWidth - 30, (Game1.WindowHeight / 2) + (cooldownBar.Height / 2) +
+                cooldownBar.Height - (int)(cooldownBar.Height * ((float)player2.currentCooldown / (float)player2.baseCooldown))),
+                cooldownSource, Color.White, 0, new Vector2(cooldownBar.Width / 2, cooldownBar.Height / 2), 1, SpriteEffects.None, 1);
+            //Draw Powerup cooldown bar
+            spritebatch.Draw(powerupBar, new Vector2(Game1.WindowWidth / 2 + 30, (Game1.WindowHeight / 2) + (powerupBar.Height / 2) +
+                powerupBar.Height - (int)(powerupBar.Height * ((float)player2.powerupTime / (float)player2.basePowerupTime))),
+                powerupSource, Color.White, 0, new Vector2(powerupBar.Width / 2, powerupBar.Height / 2), 1, SpriteEffects.None, 1);
+
 
             //Draw countdown
             if (countdown > 0 && countdown < 6)
