@@ -13,7 +13,6 @@ namespace PanzerDash
 
         public Camera()
         {
-
         }
 
         public void Update(Vector2 position)
